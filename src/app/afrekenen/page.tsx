@@ -3,10 +3,18 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useCart } from "@/store/cart";
-import { formatPrice, cleanProductName } from "@/lib/woocommerce/client";
+import {
+  formatPrice,
+  cleanProductName,
+  getAanmaakProducts,
+  Product,
+} from "@/lib/woocommerce/client";
+import { calculateShipping } from "@/lib/shipping";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { CheckoutForm } from "@/components/checkout/checkout-form";
 import {
   ShoppingBag,
   Trash2,
@@ -14,152 +22,79 @@ import {
   Minus,
   ArrowLeft,
   Truck,
-  ExternalLink,
-  AlertCircle,
+  Flame,
+  Sparkles,
+  Lock,
 } from "lucide-react";
 
-// Shipping rates by first 2 digits of postcode
-const SHIPPING_RATES: Record<string, number> = {
-  "50": 15,
-  "51": 15,
-  "52": 20,
-  "53": 25,
-  "54": 20,
-  "55": 25,
-  "56": 30,
-  "57": 35,
-  "58": 30,
-  "59": 30,
-  "46": 25,
-  "47": 30,
-  "48": 35,
-  "49": 30,
-  "60": 25,
-  "61": 25,
-  "62": 30,
-  "63": 35,
-  "64": 40,
-  "65": 35,
-  "66": 40,
-  "67": 45,
-  "68": 40,
-  "69": 40,
-  "30": 35,
-  "31": 35,
-  "32": 40,
-  "33": 40,
-  "34": 45,
-  "35": 45,
-  "36": 50,
-  "37": 45,
-  "38": 50,
-  "39": 50,
-  "70": 40,
-  "71": 40,
-  "72": 45,
-  "73": 45,
-  "74": 50,
-  "75": 50,
-  "76": 55,
-  "77": 50,
-  "78": 55,
-  "79": 50,
-  "80": 55,
-  "81": 55,
-  "82": 60,
-  "83": 60,
-  "84": 55,
-  "85": 55,
-  "86": 60,
-  "87": 65,
-  "88": 65,
-  "89": 70,
-  "90": 70,
-  "91": 70,
-  "92": 75,
-  "93": 75,
-  "94": 75,
-  "95": 80,
-  "96": 80,
-  "97": 75,
-  "98": 80,
-  "99": 85,
-  "10": 50,
-  "11": 50,
-  "12": 45,
-  "13": 45,
-  "14": 50,
-  "15": 55,
-  "16": 55,
-  "17": 60,
-  "18": 65,
-  "19": 55,
-  "20": 50,
-  "21": 45,
-  "22": 50,
-  "23": 50,
-  "24": 55,
-  "25": 55,
-  "26": 50,
-  "27": 55,
-  "28": 50,
-  "29": 45,
-  "40": 35,
-  "41": 30,
-  "42": 35,
-  "43": 35,
-  "44": 40,
-  "45": 35,
-};
+// Volume per product type (approximation based on product names)
+function estimateCartVolume(
+  items: { product: Product; quantity: number }[]
+): number {
+  let totalVolume = 0;
 
-const DEPOT_POSTCODES = ["5091", "5094", "5095"];
+  for (const item of items) {
+    const name = item.product.name.toLowerCase();
+    let volumePerUnit = 1; // default 1 m³
 
-function getShippingCost(postcode: string): number | null {
-  if (!postcode || postcode.length < 4) return null;
+    // Estimate volume based on product name
+    if (name.includes("2 m³") || name.includes("2m³")) {
+      volumePerUnit = 2;
+    } else if (name.includes("1,5 m³") || name.includes("1.5 m³")) {
+      volumePerUnit = 1.5;
+    } else if (name.includes("0,5 m³") || name.includes("halve")) {
+      volumePerUnit = 0.5;
+    } else if (
+      name.includes("aanmaak") ||
+      name.includes("lucifer") ||
+      name.includes("fakkel")
+    ) {
+      volumePerUnit = 0.1; // Small items
+    }
 
-  const prefix4 = postcode.substring(0, 4);
-  if (DEPOT_POSTCODES.includes(prefix4)) {
-    return 5;
+    totalVolume += volumePerUnit * item.quantity;
   }
 
-  const prefix2 = postcode.substring(0, 2);
-  return SHIPPING_RATES[prefix2] ?? null;
+  return Math.max(1, Math.ceil(totalVolume)); // Minimum 1 m³
 }
 
 export default function AfrekenPage() {
-  const { items, updateQuantity, removeItem, getSubtotal, clearCart } =
+  const router = useRouter();
+  const { items, updateQuantity, removeItem, getSubtotal, clearCart, addItem } =
     useCart();
   const [postcode, setPostcode] = useState("");
   const [shippingCost, setShippingCost] = useState<number | null>(null);
   const [mounted, setMounted] = useState(false);
+  const [aanmaakProducts, setAanmaakProducts] = useState<Product[]>([]);
 
   useEffect(() => {
     setMounted(true);
+    // Load aanmaak products for cross-sell
+    getAanmaakProducts().then(setAanmaakProducts).catch(console.error);
   }, []);
 
   useEffect(() => {
     if (postcode.length >= 4) {
-      setShippingCost(getShippingCost(postcode));
+      const volume = estimateCartVolume(items);
+      const result = calculateShipping(postcode, volume);
+      setShippingCost(result?.price ?? null);
     } else {
       setShippingCost(null);
     }
-  }, [postcode]);
+  }, [postcode, items]);
 
   const subtotal = getSubtotal();
   const total = shippingCost !== null ? subtotal + shippingCost : null;
 
-  // Build WooCommerce cart URL with products
-  const buildWooCommerceCartUrl = () => {
-    const baseUrl = "https://vuurmeester.shop/winkelwagen/";
-    const params = items
-      .map((item) => `add-to-cart=${item.product.id}&quantity=${item.quantity}`)
-      .join("&");
-    return `${baseUrl}?${params}`;
-  };
-
-  const handleCheckout = () => {
-    // Open WooCommerce checkout in new tab
-    window.open(buildWooCommerceCartUrl(), "_blank");
+  // Handle successful checkout - redirect to payment or success page
+  const handleCheckoutSuccess = (redirectUrl: string) => {
+    // For iDEAL, this will be the Mollie payment URL (external)
+    // For COD, this will be our success page (internal)
+    if (redirectUrl.startsWith("http")) {
+      window.location.href = redirectUrl;
+    } else {
+      router.push(redirectUrl);
+    }
   };
 
   if (!mounted) {
@@ -211,101 +146,197 @@ export default function AfrekenPage() {
         </h1>
 
         <div className="grid lg:grid-cols-3 gap-8">
-          {/* Cart Items */}
-          <div className="lg:col-span-2 space-y-4">
-            {items.map((item) => (
-              <div
-                key={item.product.id}
-                className="bg-white rounded-xl p-4 lg:p-6 shadow-sm flex gap-4"
-              >
-                {/* Product Image */}
-                <div className="relative w-24 h-24 lg:w-32 lg:h-32 flex-shrink-0 rounded-lg overflow-hidden bg-stone-100">
-                  {item.product.images?.[0] ? (
-                    <Image
-                      src={item.product.images[0].src}
-                      alt={item.product.images[0].alt || item.product.name}
-                      fill
-                      className="object-cover"
-                    />
-                  ) : (
-                    <div className="h-full w-full flex items-center justify-center">
-                      <span className="text-3xl">🪵</span>
-                    </div>
-                  )}
-                </div>
+          {/* Left Column: Cart Items + Checkout Form */}
+          <div className="lg:col-span-2 space-y-6">
+            {/* Cart Items */}
+            <div className="space-y-4">
+              <h2 className="text-lg font-semibold text-stone-900">
+                Je winkelwagen
+              </h2>
+              {items.map((item) => (
+                <div
+                  key={item.product.id}
+                  className="bg-white rounded-xl p-4 lg:p-6 shadow-sm flex gap-4"
+                >
+                  {/* Product Image */}
+                  <div className="relative w-20 h-20 lg:w-24 lg:h-24 flex-shrink-0 rounded-lg overflow-hidden bg-stone-100">
+                    {item.product.images?.[0] ? (
+                      <Image
+                        src={item.product.images[0].src}
+                        alt={item.product.images[0].alt || item.product.name}
+                        fill
+                        className="object-cover"
+                      />
+                    ) : (
+                      <div className="h-full w-full flex items-center justify-center">
+                        <span className="text-3xl">🪵</span>
+                      </div>
+                    )}
+                  </div>
 
-                {/* Product Info */}
-                <div className="flex-1 min-w-0">
-                  <h3 className="font-semibold text-stone-900 mb-1">
-                    {cleanProductName(item.product.name)}
-                  </h3>
-                  <p className="text-lg font-bold text-orange-600 mb-3">
-                    {formatPrice(item.product.prices.price)}
-                  </p>
+                  {/* Product Info */}
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-semibold text-stone-900 mb-1">
+                      {cleanProductName(item.product.name)}
+                    </h3>
+                    <p className="text-lg font-bold text-orange-600 mb-3">
+                      {formatPrice(item.product.prices.price)}
+                    </p>
 
-                  {/* Quantity & Remove */}
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
+                    {/* Quantity & Remove */}
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <button
+                          onClick={() =>
+                            updateQuantity(item.product.id, item.quantity - 1)
+                          }
+                          className="h-8 w-8 rounded-full bg-stone-100 flex items-center justify-center hover:bg-stone-200 transition-colors"
+                        >
+                          <Minus className="h-4 w-4" />
+                        </button>
+                        <span className="w-8 text-center font-medium">
+                          {item.quantity}
+                        </span>
+                        <button
+                          onClick={() =>
+                            updateQuantity(item.product.id, item.quantity + 1)
+                          }
+                          className="h-8 w-8 rounded-full bg-stone-100 flex items-center justify-center hover:bg-stone-200 transition-colors"
+                        >
+                          <Plus className="h-4 w-4" />
+                        </button>
+                      </div>
+
                       <button
-                        onClick={() =>
-                          updateQuantity(item.product.id, item.quantity - 1)
-                        }
-                        className="h-8 w-8 rounded-full bg-stone-100 flex items-center justify-center hover:bg-stone-200 transition-colors"
+                        onClick={() => removeItem(item.product.id)}
+                        className="text-stone-400 hover:text-red-500 transition-colors p-2"
                       >
-                        <Minus className="h-4 w-4" />
-                      </button>
-                      <span className="w-8 text-center font-medium">
-                        {item.quantity}
-                      </span>
-                      <button
-                        onClick={() =>
-                          updateQuantity(item.product.id, item.quantity + 1)
-                        }
-                        className="h-8 w-8 rounded-full bg-stone-100 flex items-center justify-center hover:bg-stone-200 transition-colors"
-                      >
-                        <Plus className="h-4 w-4" />
+                        <Trash2 className="h-5 w-5" />
                       </button>
                     </div>
+                  </div>
 
-                    <button
-                      onClick={() => removeItem(item.product.id)}
-                      className="text-stone-400 hover:text-red-500 transition-colors p-2"
-                    >
-                      <Trash2 className="h-5 w-5" />
-                    </button>
+                  {/* Line Total (desktop) */}
+                  <div className="hidden lg:flex flex-col items-end justify-center">
+                    <span className="text-sm text-stone-500">Totaal</span>
+                    <span className="text-lg font-bold text-stone-900">
+                      {formatPrice(
+                        parseInt(item.product.prices.price) * item.quantity
+                      )}
+                    </span>
                   </div>
                 </div>
+              ))}
 
-                {/* Line Total (desktop) */}
-                <div className="hidden lg:flex flex-col items-end justify-center">
-                  <span className="text-sm text-stone-500">Totaal</span>
-                  <span className="text-lg font-bold text-stone-900">
-                    {formatPrice(
-                      parseInt(item.product.prices.price) * item.quantity
-                    )}
-                  </span>
+              {/* Clear Cart */}
+              <button
+                onClick={clearCart}
+                className="text-sm text-stone-500 hover:text-red-500 transition-colors"
+              >
+                Winkelwagen legen
+              </button>
+            </div>
+
+            {/* Cross-sell: Aanmaakproducten */}
+            {aanmaakProducts.length > 0 && (
+              <div className="bg-gradient-to-r from-orange-50 to-amber-50 rounded-xl p-6 border border-orange-100">
+                <div className="flex items-center gap-2 mb-4">
+                  <Sparkles className="h-5 w-5 text-orange-500" />
+                  <h3 className="font-semibold text-stone-900">
+                    Vergeet je aanmaak niet!
+                  </h3>
+                </div>
+                <p className="text-sm text-stone-600 mb-4">
+                  Start je vuur snel en gemakkelijk met onze aanmaakproducten.
+                </p>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                  {aanmaakProducts.slice(0, 3).map((product) => {
+                    const isInCart = items.some(
+                      (item) => item.product.id === product.id
+                    );
+                    return (
+                      <div
+                        key={product.id}
+                        className="bg-white rounded-lg p-3 shadow-sm"
+                      >
+                        {/* Product Image */}
+                        <div className="relative w-full aspect-square rounded-md overflow-hidden bg-stone-100 mb-2">
+                          {product.images?.[0] ? (
+                            <Image
+                              src={product.images[0].src}
+                              alt={product.images[0].alt || product.name}
+                              fill
+                              className="object-cover"
+                            />
+                          ) : (
+                            <div className="h-full w-full flex items-center justify-center">
+                              <Flame className="h-8 w-8 text-orange-300" />
+                            </div>
+                          )}
+                        </div>
+                        <h4 className="text-xs font-medium text-stone-900 line-clamp-2 mb-1">
+                          {cleanProductName(product.name)}
+                        </h4>
+                        <p className="text-sm font-bold text-orange-600 mb-2">
+                          {formatPrice(product.prices.price)}
+                        </p>
+                        <Button
+                          size="sm"
+                          variant={isInCart ? "outline" : "default"}
+                          className={
+                            isInCart
+                              ? "w-full text-xs border-green-500 text-green-600"
+                              : "w-full text-xs bg-orange-500 hover:bg-orange-600"
+                          }
+                          onClick={() => !isInCart && addItem(product)}
+                          disabled={isInCart}
+                        >
+                          {isInCart ? "✓ Toegevoegd" : "+ Toevoegen"}
+                        </Button>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
-            ))}
+            )}
 
-            {/* Clear Cart */}
-            <button
-              onClick={clearCart}
-              className="text-sm text-stone-500 hover:text-red-500 transition-colors"
-            >
-              Winkelwagen legen
-            </button>
+            {/* Checkout Form */}
+            {shippingCost !== null && (
+              <CheckoutForm
+                shippingCost={shippingCost}
+                onSuccess={handleCheckoutSuccess}
+              />
+            )}
           </div>
 
-          {/* Order Summary */}
+          {/* Right Column: Order Summary */}
           <div className="lg:col-span-1">
             <div className="bg-white rounded-xl p-6 shadow-sm sticky top-4">
               <h2 className="text-lg font-semibold text-stone-900 mb-4">
                 Overzicht
               </h2>
 
+              {/* Items summary */}
+              <div className="space-y-3 mb-4">
+                {items.map((item) => (
+                  <div
+                    key={item.product.id}
+                    className="flex justify-between text-sm"
+                  >
+                    <span className="text-stone-600 truncate flex-1 mr-2">
+                      {item.quantity}x {cleanProductName(item.product.name)}
+                    </span>
+                    <span className="font-medium">
+                      {formatPrice(
+                        parseInt(item.product.prices.price) * item.quantity
+                      )}
+                    </span>
+                  </div>
+                ))}
+              </div>
+
               {/* Subtotal */}
-              <div className="flex justify-between py-3 border-b">
+              <div className="flex justify-between py-3 border-t">
                 <span className="text-stone-600">Subtotaal</span>
                 <span className="font-medium">
                   {formatPrice(subtotal * 100)}
@@ -313,7 +344,7 @@ export default function AfrekenPage() {
               </div>
 
               {/* Shipping */}
-              <div className="py-4 border-b">
+              <div className="py-4 border-t">
                 <div className="flex items-center gap-2 mb-3">
                   <Truck className="h-4 w-4 text-orange-500" />
                   <span className="font-medium text-stone-900">
@@ -352,7 +383,7 @@ export default function AfrekenPage() {
 
               {/* Total */}
               {total !== null && (
-                <div className="flex justify-between py-4 border-b">
+                <div className="flex justify-between py-4 border-t">
                   <span className="text-lg font-semibold text-stone-900">
                     Totaal
                   </span>
@@ -362,30 +393,16 @@ export default function AfrekenPage() {
                 </div>
               )}
 
-              {/* Checkout Notice */}
-              <div className="bg-stone-50 rounded-lg p-4 mt-4 mb-4">
-                <div className="flex gap-2">
-                  <AlertCircle className="h-5 w-5 text-stone-500 flex-shrink-0 mt-0.5" />
-                  <p className="text-sm text-stone-600">
-                    Je wordt doorgestuurd naar onze beveiligde checkout omgeving
-                    om je bestelling af te ronden.
-                  </p>
-                </div>
+              {/* Security badge */}
+              <div className="flex items-center justify-center gap-2 mt-4 pt-4 border-t text-stone-500 text-sm">
+                <Lock className="h-4 w-4" />
+                <span>Veilig betalen met iDEAL</span>
               </div>
 
-              {/* Checkout Button */}
-              <Button
-                onClick={handleCheckout}
-                disabled={shippingCost === null}
-                className="w-full bg-orange-500 hover:bg-orange-600 text-white py-6 text-lg"
-              >
-                Doorgaan naar afrekenen
-                <ExternalLink className="ml-2 h-4 w-4" />
-              </Button>
-
+              {/* Show message if postcode not yet entered */}
               {shippingCost === null && (
-                <p className="text-xs text-center text-stone-500 mt-2">
-                  Voer eerst je postcode in
+                <p className="text-xs text-center text-stone-500 mt-4">
+                  Voer je postcode in om door te gaan met afrekenen
                 </p>
               )}
             </div>

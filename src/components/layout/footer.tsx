@@ -33,18 +33,18 @@ export function Footer() {
             <h3 className="font-semibold text-white mb-4">Producten</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/haardhout" className="hover:text-orange-400 transition-colors">
+                <Link href="/#haardhout" className="hover:text-orange-400 transition-colors">
                   Haardhout
                 </Link>
               </li>
               <li>
-                <Link href="/aanmaak" className="hover:text-orange-400 transition-colors">
+                <Link href="/#aanmaak" className="hover:text-orange-400 transition-colors">
                   Aanmaakproducten
                 </Link>
               </li>
               <li>
-                <Link href="/houtskool" className="hover:text-orange-400 transition-colors">
-                  Houtskool & Briketten
+                <Link href="/bezorgkosten" className="hover:text-orange-400 transition-colors">
+                  Bezorgkosten berekenen
                 </Link>
               </li>
             </ul>
@@ -84,7 +84,7 @@ export function Footer() {
               <li className="flex items-center gap-2">
                 <MessageCircle className="h-4 w-4 text-green-400" />
                 <a
-                  href="https://wa.me/31682091984"
+                  href="https://wa.me/31682091984?text=Hoi!%20Ik%20heb%20een%20vraag%20over%20haardhout."
                   className="hover:text-green-400 transition-colors"
                 >
                   WhatsApp ons

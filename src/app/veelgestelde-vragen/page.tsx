@@ -224,7 +224,7 @@ export default function FAQPage() {
               graag verder.
             </p>
             <a
-              href="https://wa.me/31682091984"
+              href="https://wa.me/31682091984?text=Hoi!%20Ik%20heb%20een%20vraag%20die%20niet%20in%20de%20FAQ%20staat."
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center bg-green-500 hover:bg-green-600 text-white font-medium px-6 py-3 rounded-lg transition-colors"

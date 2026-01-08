@@ -58,7 +58,7 @@ export function Header() {
             asChild
           >
             <a
-              href="https://wa.me/31682091984"
+              href="https://wa.me/31682091984?text=Hoi!%20Ik%20heb%20interesse%20in%20haardhout."
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -105,7 +105,7 @@ export function Header() {
                 ))}
                 <hr className="my-4" />
                 <a
-                  href="https://wa.me/31682091984"
+                  href="https://wa.me/31682091984?text=Hoi!%20Ik%20heb%20interesse%20in%20haardhout."
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 text-lg font-medium text-green-600"

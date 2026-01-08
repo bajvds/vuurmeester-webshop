@@ -126,7 +126,7 @@ export function WhatsAppButton() {
             <button
               onClick={() => {
                 window.open(
-                  `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hoi!")}`,
+                  `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hoi! Ik heb interesse in haardhout en wil graag meer weten.")}`,
                   "_blank"
                 );
                 setIsOpen(false);
