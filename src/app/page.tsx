@@ -13,9 +13,15 @@ export default async function Home() {
   return (
     <main>
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-stone-900 via-stone-800 to-stone-900 text-white">
-        <div className="absolute inset-0 bg-[url('/fire-pattern.svg')] opacity-5" />
-        <div className="container mx-auto px-4 py-16 md:py-24">
+      <section className="relative text-white">
+        {/* Background Image */}
+        <div
+          className="absolute inset-0 bg-cover bg-top bg-no-repeat"
+          style={{ backgroundImage: "url('/images/hero-header.jpg')" }}
+        />
+        {/* Dark Overlay for text readability */}
+        <div className="absolute inset-0 bg-black/50" />
+        <div className="relative container mx-auto px-4 py-16 md:py-24">
           <div className="grid gap-8 md:grid-cols-2 items-center">
             {/* Left: Text */}
             <div>
@@ -47,21 +53,21 @@ export default async function Home() {
       {/* USPs */}
       <section className="bg-orange-500 text-white py-4">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center text-sm">
-            <div className="flex items-center justify-center gap-2">
-              <Truck className="h-5 w-5" />
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 text-center text-xs sm:text-sm">
+            <div className="flex items-center justify-center gap-1.5 sm:gap-2">
+              <Truck className="h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0" />
               <span>Heel Nederland</span>
             </div>
-            <div className="flex items-center justify-center gap-2">
-              <Shield className="h-5 w-5" />
-              <span>Goedkoopste garantie</span>
+            <div className="flex items-center justify-center gap-1.5 sm:gap-2">
+              <Shield className="h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0" />
+              <span className="break-words">Goedkoopste garantie</span>
             </div>
-            <div className="flex items-center justify-center gap-2">
-              <Phone className="h-5 w-5" />
+            <div className="flex items-center justify-center gap-1.5 sm:gap-2">
+              <Phone className="h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0" />
               <span>Persoonlijk contact</span>
             </div>
-            <div className="flex items-center justify-center gap-2">
-              <Clock className="h-5 w-5" />
+            <div className="flex items-center justify-center gap-1.5 sm:gap-2">
+              <Clock className="h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0" />
               <span>Snelle levering</span>
             </div>
           </div>
@@ -140,8 +146,8 @@ export default async function Home() {
             </p>
           </div>
 
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {aanmaakProducts.slice(0, 4).map((product) => (
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {aanmaakProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
