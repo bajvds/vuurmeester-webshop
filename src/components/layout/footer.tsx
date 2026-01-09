@@ -115,9 +115,9 @@ export function Footer() {
         {/* Bottom */}
         <div className="mt-12 pt-8 border-t border-stone-800 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-stone-500">
           <p>© {new Date().getFullYear()} De Vuurmeester. Alle rechten voorbehouden.</p>
-          <div className="flex items-center gap-4">
+          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4">
             <span>Betaalmethodes:</span>
-            <div className="flex gap-2">
+            <div className="flex flex-wrap gap-2">
               <span className="bg-stone-800 px-2 py-1 rounded text-xs">iDEAL</span>
               <span className="bg-stone-800 px-2 py-1 rounded text-xs">Bancontact</span>
               <span className="bg-stone-800 px-2 py-1 rounded text-xs">Contant</span>

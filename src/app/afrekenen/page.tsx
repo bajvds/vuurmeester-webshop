@@ -237,68 +237,79 @@ export default function AfrekenPage() {
               </button>
             </div>
 
-            {/* Cross-sell: Aanmaakproducten */}
-            {aanmaakProducts.length > 0 && (
-              <div className="bg-gradient-to-r from-orange-50 to-amber-50 rounded-xl p-6 border border-orange-100">
-                <div className="flex items-center gap-2 mb-4">
-                  <Sparkles className="h-5 w-5 text-orange-500" />
-                  <h3 className="font-semibold text-stone-900">
-                    Vergeet je aanmaak niet!
-                  </h3>
-                </div>
-                <p className="text-sm text-stone-600 mb-4">
-                  Start je vuur snel en gemakkelijk met onze aanmaakproducten.
-                </p>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                  {aanmaakProducts.slice(0, 3).map((product) => {
-                    const isInCart = items.some(
-                      (item) => item.product.id === product.id
-                    );
-                    return (
-                      <div
-                        key={product.id}
-                        className="bg-white rounded-lg p-3 shadow-sm"
-                      >
-                        {/* Product Image */}
-                        <div className="relative w-full aspect-square rounded-md overflow-hidden bg-stone-100 mb-2">
-                          {product.images?.[0] ? (
-                            <Image
-                              src={product.images[0].src}
-                              alt={product.images[0].alt || product.name}
-                              fill
-                              className="object-cover"
-                            />
-                          ) : (
-                            <div className="h-full w-full flex items-center justify-center">
-                              <Flame className="h-8 w-8 text-orange-300" />
-                            </div>
-                          )}
+            {/* Cross-sell: Aanmaakhoutjes (prominent suggestion) */}
+            {(() => {
+              // Find aanmaakhoutjes specifically (try multiple search terms)
+              const aanmaakhoutjes = aanmaakProducts.find(p => {
+                const slug = p.slug.toLowerCase();
+                const name = p.name.toLowerCase();
+                return slug.includes('aanmaakhoutje') ||
+                       slug.includes('aanmaak-houtje') ||
+                       name.includes('aanmaakhoutje') ||
+                       name.includes('aanmaak houtje');
+              });
+
+              // Debug: log what we found
+              console.log('Aanmaak products:', aanmaakProducts.map(p => ({ slug: p.slug, name: p.name })));
+              console.log('Found aanmaakhoutjes:', aanmaakhoutjes?.name);
+
+              const isAanmaakhoutjesInCart = aanmaakhoutjes && items.some(
+                (item) => item.product.id === aanmaakhoutjes.id
+              );
+
+              if (!aanmaakhoutjes || isAanmaakhoutjesInCart) return null;
+
+              return (
+                <div className="bg-gradient-to-r from-orange-50 to-amber-50 rounded-xl p-4 sm:p-6 border-2 border-orange-200">
+                  <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+                    {/* Product Image */}
+                    <div className="relative w-20 h-20 sm:w-24 sm:h-24 flex-shrink-0 rounded-lg overflow-hidden bg-white shadow-sm">
+                      {aanmaakhoutjes.images?.[0] ? (
+                        <Image
+                          src={aanmaakhoutjes.images[0].src}
+                          alt={aanmaakhoutjes.images[0].alt || aanmaakhoutjes.name}
+                          fill
+                          className="object-cover"
+                        />
+                      ) : (
+                        <div className="h-full w-full flex items-center justify-center">
+                          <Flame className="h-10 w-10 text-orange-300" />
                         </div>
-                        <h4 className="text-xs font-medium text-stone-900 line-clamp-2 mb-1">
-                          {cleanProductName(product.name)}
-                        </h4>
-                        <p className="text-sm font-bold text-orange-600 mb-2">
-                          {formatPrice(product.prices.price)}
-                        </p>
-                        <Button
-                          size="sm"
-                          variant={isInCart ? "outline" : "default"}
-                          className={
-                            isInCart
-                              ? "w-full text-xs border-green-500 text-green-600"
-                              : "w-full text-xs bg-orange-500 hover:bg-orange-600"
-                          }
-                          onClick={() => !isInCart && addItem(product)}
-                          disabled={isInCart}
-                        >
-                          {isInCart ? "✓ Toegevoegd" : "+ Toevoegen"}
-                        </Button>
+                      )}
+                    </div>
+
+                    {/* Content */}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-1">
+                        <Sparkles className="h-4 w-4 text-orange-500" />
+                        <span className="text-xs font-medium text-orange-600 uppercase tracking-wide">
+                          Populaire toevoeging
+                        </span>
                       </div>
-                    );
-                  })}
+                      <h3 className="font-semibold text-stone-900 mb-1">
+                        Aanmaakhoutjes erbij?
+                      </h3>
+                      <p className="text-sm text-stone-600 mb-2">
+                        Ideaal om je vuur snel aan te steken. 90% van onze klanten bestelt dit erbij!
+                      </p>
+                      <p className="text-lg font-bold text-orange-600">
+                        {formatPrice(aanmaakhoutjes.prices.price)}
+                      </p>
+                    </div>
+
+                    {/* Add Button */}
+                    <Button
+                      size="lg"
+                      className="w-full sm:w-auto bg-orange-500 hover:bg-orange-600 whitespace-nowrap"
+                      onClick={() => addItem(aanmaakhoutjes)}
+                    >
+                      <Plus className="h-4 w-4 mr-2" />
+                      Toevoegen
+                    </Button>
+                  </div>
                 </div>
-              </div>
-            )}
+              );
+            })()}
 
             {/* Checkout Form */}
             {shippingCost !== null && (

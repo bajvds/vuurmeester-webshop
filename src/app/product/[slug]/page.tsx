@@ -5,7 +5,9 @@ import Link from "next/link";
 import { woocommerce, formatPrice, cleanProductName, Product } from "@/lib/woocommerce/client";
 import { AddToCartButton } from "./add-to-cart-button";
 import { ProductCard } from "@/components/products/product-card";
-import { Truck, Phone, ShieldCheck, ArrowLeft } from "lucide-react";
+import { ProductReviews, ProductRatingBadge } from "@/components/products/product-reviews";
+import { CustomerPhotos } from "@/components/products/customer-photos";
+import { Truck, Phone, ShieldCheck, ArrowLeft, Star } from "lucide-react";
 
 interface ProductPageProps {
   params: Promise<{ slug: string }>;
@@ -130,9 +132,17 @@ export default async function ProductPage({ params }: ProductPageProps) {
           {/* Product Info */}
           <div className="space-y-6">
             <div>
-              <h1 className="text-2xl lg:text-3xl font-bold text-stone-900 mb-4">
+              <h1 className="text-2xl lg:text-3xl font-bold text-stone-900 mb-2">
                 {name}
               </h1>
+
+              {/* Rating Badge */}
+              <div className="flex items-center gap-3 mb-4">
+                <ProductRatingBadge productId={product.id} productName={product.name} />
+                <a href="#reviews" className="text-sm text-orange-600 hover:underline">
+                  Bekijk reviews
+                </a>
+              </div>
 
               {/* Price */}
               <div className="flex items-baseline gap-3 mb-6">
@@ -210,6 +220,14 @@ export default async function ProductPage({ params }: ProductPageProps) {
               </div>
             )}
           </div>
+        </div>
+
+        {/* Customer Photos Section */}
+        <CustomerPhotos productSlug={slug} productName={product.name} />
+
+        {/* Reviews Section */}
+        <div id="reviews" className="scroll-mt-20">
+          <ProductReviews productId={product.id} productName={product.name} />
         </div>
       </div>
 

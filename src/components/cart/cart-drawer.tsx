@@ -1,8 +1,9 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useCart } from "@/store/cart";
-import { formatPrice } from "@/lib/woocommerce/client";
-import { X, Plus, Minus, ShoppingBag, Trash2 } from "lucide-react";
+import { formatPrice, getAanmaakProducts, Product } from "@/lib/woocommerce/client";
+import { Plus, Minus, ShoppingBag, Trash2, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -14,10 +15,36 @@ import Image from "next/image";
 import Link from "next/link";
 
 export function CartDrawer() {
-  const { items, isOpen, closeCart, updateQuantity, removeItem, getSubtotal } =
+  const { items, isOpen, closeCart, updateQuantity, removeItem, getSubtotal, addItem } =
     useCart();
+  const [aanmaakhoutjes, setAanmaakhoutjes] = useState<Product | null>(null);
 
   const subtotal = getSubtotal();
+
+  // Fetch aanmaakhoutjes product for upsell
+  useEffect(() => {
+    if (isOpen && !aanmaakhoutjes) {
+      getAanmaakProducts()
+        .then((products) => {
+          console.log('Cart drawer - Aanmaak products:', products.map(p => ({ slug: p.slug, name: p.name })));
+          const product = products.find((p) => {
+            const slug = p.slug.toLowerCase();
+            const name = p.name.toLowerCase();
+            return slug.includes('aanmaakhoutje') ||
+                   slug.includes('aanmaak-houtje') ||
+                   name.includes('aanmaakhoutje') ||
+                   name.includes('aanmaak houtje');
+          });
+          console.log('Cart drawer - Found:', product?.name);
+          if (product) setAanmaakhoutjes(product);
+        })
+        .catch(console.error);
+    }
+  }, [isOpen, aanmaakhoutjes]);
+
+  const isAanmaakhoutjesInCart = aanmaakhoutjes && items.some(
+    (item) => item.product.id === aanmaakhoutjes.id
+  );
 
   return (
     <Sheet open={isOpen} onOpenChange={(open) => !open && closeCart()}>
@@ -45,10 +72,10 @@ export function CartDrawer() {
                 {items.map((item) => (
                   <div
                     key={item.product.id}
-                    className="flex gap-4 bg-stone-50 rounded-lg p-3"
+                    className="flex gap-3 bg-stone-50 rounded-lg p-3"
                   >
                     {/* Product Image */}
-                    <div className="relative h-20 w-20 flex-shrink-0 rounded-md overflow-hidden bg-white">
+                    <div className="relative h-16 w-16 flex-shrink-0 rounded-md overflow-hidden bg-white">
                       {item.product.images?.[0] ? (
                         <Image
                           src={item.product.images[0].src}
@@ -58,14 +85,14 @@ export function CartDrawer() {
                         />
                       ) : (
                         <div className="h-full w-full flex items-center justify-center bg-stone-200">
-                          <ShoppingBag className="h-8 w-8 text-stone-400" />
+                          <ShoppingBag className="h-6 w-6 text-stone-400" />
                         </div>
                       )}
                     </div>
 
                     {/* Product Info */}
                     <div className="flex-1 min-w-0">
-                      <h4 className="text-sm font-medium text-stone-900 truncate">
+                      <h4 className="text-sm font-medium text-stone-900 line-clamp-2 leading-tight">
                         {item.product.name
                           .replace(/&#8211;/g, "–")
                           .replace(/&amp;/g, "&")}
@@ -103,13 +130,55 @@ export function CartDrawer() {
                     {/* Remove Button */}
                     <button
                       onClick={() => removeItem(item.product.id)}
-                      className="text-stone-400 hover:text-red-500 transition-colors"
+                      className="text-stone-400 hover:text-red-500 transition-colors flex-shrink-0"
                       aria-label="Verwijder product"
                     >
                       <Trash2 className="h-4 w-4" />
                     </button>
                   </div>
                 ))}
+
+                {/* Upsell: Aanmaakhoutjes */}
+                {aanmaakhoutjes && !isAanmaakhoutjesInCart && (
+                  <div className="bg-gradient-to-r from-orange-50 to-amber-50 rounded-lg p-3 border border-orange-200">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Sparkles className="h-4 w-4 text-orange-500" />
+                      <span className="text-xs font-medium text-orange-600">
+                        Aanrader
+                      </span>
+                    </div>
+                    <div className="flex gap-3 items-center">
+                      <div className="relative h-12 w-12 flex-shrink-0 rounded-md overflow-hidden bg-white">
+                        {aanmaakhoutjes.images?.[0] ? (
+                          <Image
+                            src={aanmaakhoutjes.images[0].src}
+                            alt="Aanmaakhoutjes"
+                            fill
+                            className="object-cover"
+                          />
+                        ) : (
+                          <div className="h-full w-full flex items-center justify-center bg-stone-200">
+                            <span className="text-lg">🔥</span>
+                          </div>
+                        )}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium text-stone-900">Aanmaakhoutjes</p>
+                        <p className="text-xs text-orange-600 font-semibold">
+                          {formatPrice(aanmaakhoutjes.prices.price)}
+                        </p>
+                      </div>
+                      <Button
+                        size="sm"
+                        className="bg-orange-500 hover:bg-orange-600 text-xs h-8 px-3"
+                        onClick={() => addItem(aanmaakhoutjes)}
+                      >
+                        <Plus className="h-3 w-3 mr-1" />
+                        Erbij
+                      </Button>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
 

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import "./globals.css";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
@@ -12,7 +13,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://vuurmeester.shop"),
+  metadataBase: new URL("https://www.vuurmeester-haardhout.nl"),
   title: {
     default: "De Vuurmeester | Premium Haardhout - Goedkoopste van Nederland",
     template: "%s | De Vuurmeester",
@@ -34,7 +35,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "nl_NL",
-    url: "https://vuurmeester.shop",
+    url: "https://www.vuurmeester-haardhout.nl",
     siteName: "De Vuurmeester",
     title: "De Vuurmeester | Premium Haardhout - Goedkoopste van Nederland",
     description:
@@ -73,6 +74,9 @@ export default function RootLayout({
         <CartDrawer />
         <WhatsAppButton />
       </body>
+      {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
+        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
+      )}
     </html>
   );
 }

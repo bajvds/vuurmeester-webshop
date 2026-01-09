@@ -2,7 +2,7 @@ import { MetadataRoute } from "next";
 import { woocommerce } from "@/lib/woocommerce/client";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = "https://vuurmeester.shop";
+  const baseUrl = "https://www.vuurmeester-haardhout.nl";
 
   // Static pages
   const staticPages: MetadataRoute.Sitemap = [

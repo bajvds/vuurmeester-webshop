@@ -93,14 +93,23 @@ class WooCommerceStoreClient {
   private async fetch<T>(endpoint: string, options?: RequestInit): Promise<T> {
     const url = `${this.baseUrl}${endpoint}`;
 
-    const response = await fetch(url, {
+    // Check if we're on the server or client
+    const isServer = typeof window === 'undefined';
+
+    const fetchOptions: RequestInit = {
       ...options,
       headers: {
         'Content-Type': 'application/json',
         ...options?.headers,
       },
-      next: { revalidate: 60 }, // Cache for 60 seconds
-    });
+    };
+
+    // Only use Next.js caching on the server
+    if (isServer) {
+      (fetchOptions as RequestInit & { next?: { revalidate: number } }).next = { revalidate: 60 };
+    }
+
+    const response = await fetch(url, fetchOptions);
 
     if (!response.ok) {
       const error = await response.json().catch(() => ({}));
@@ -147,13 +156,16 @@ class WooCommerceStoreClient {
   async getHaardhoutProducts(): Promise<Product[]> {
     const products = await this.getProducts({ per_page: 50 });
 
-    // Filter for haardhout (contains "haardhout" or "hout" in name, not "aanmaak" or "houtskool")
+    // Filter for haardhout products
     return products.filter(p => {
       const name = p.name.toLowerCase();
       const isHaardhout = name.includes('haardhout') ||
                           name.includes('ovengedroogd') ||
                           name.includes('halfdroog') ||
                           name.includes('berkenhout') ||
+                          name.includes('beukenhout') ||
+                          name.includes('kozijnhout') ||
+                          name.includes('kozijn') ||
                           name.includes('ofyr');
       const isNotAanmaak = !name.includes('aanmaak') && !name.includes('houtskool') && !name.includes('briket');
       return isHaardhout && isNotAanmaak;

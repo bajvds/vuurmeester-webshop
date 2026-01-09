@@ -100,14 +100,17 @@ async function mollieRequest<T>(
 export async function createMolliePayment(
   request: CreatePaymentRequest
 ): Promise<MolliePayment> {
-  console.log("Creating Mollie payment:", request);
+  console.log("Creating Mollie payment with request:", JSON.stringify(request, null, 2));
 
   const payment = await mollieRequest<MolliePayment>("/payments", {
     method: "POST",
     body: JSON.stringify(request),
   });
 
+  // Log the full payment response to verify webhook URL is set
   console.log("Mollie payment created:", payment.id);
+  console.log("Mollie payment webhookUrl confirmed:", payment.webhookUrl);
+  console.log("Mollie payment redirectUrl:", payment.redirectUrl);
   return payment;
 }
 

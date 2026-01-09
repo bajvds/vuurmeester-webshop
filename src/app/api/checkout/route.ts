@@ -172,7 +172,15 @@ export async function POST(
     });
 
     // Build response based on payment method
-    const appUrl = process.env.NEXT_PUBLIC_APP_URL || "";
+    // Priority: 1) NEXT_PUBLIC_APP_URL (explicit config)
+    //           2) Stable production URL (hardcoded fallback for Mollie webhooks)
+    // We use the stable production URL because VERCEL_URL changes per deployment
+    const PRODUCTION_URL = "https://webshop-kappa-one.vercel.app";
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL || PRODUCTION_URL;
+
+    // Debug logging for webhook URL troubleshooting
+    console.log("Checkout - NEXT_PUBLIC_APP_URL:", process.env.NEXT_PUBLIC_APP_URL);
+    console.log("Checkout - Using appUrl:", appUrl);
 
     if (customer.paymentMethod === "ideal") {
       // For iDEAL, create payment directly in Mollie
@@ -181,6 +189,15 @@ export async function POST(
       // Only include webhook URL if we have a public URL (not localhost)
       // Mollie can't reach localhost for webhook calls
       const isLocalhost = appUrl.includes("localhost") || appUrl.includes("127.0.0.1");
+      const isEmptyUrl = !appUrl || appUrl.length === 0;
+
+      // Build webhook URL - skip if localhost OR if URL is empty/invalid
+      const webhookUrl = (isLocalhost || isEmptyUrl)
+        ? undefined
+        : `${appUrl}/api/webhooks/mollie`;
+
+      console.log("Checkout - isLocalhost:", isLocalhost, "isEmptyUrl:", isEmptyUrl);
+      console.log("Checkout - webhookUrl being sent to Mollie:", webhookUrl);
 
       const molliePayment = await createMolliePayment({
         amount: {
@@ -189,13 +206,15 @@ export async function POST(
         },
         description: `Vuurmeester bestelling #${order.id}`,
         redirectUrl: `${appUrl}/bestelling/succes?order_key=${order.order_key}`,
-        webhookUrl: isLocalhost ? undefined : `${appUrl}/api/webhooks/mollie`,
+        webhookUrl,
         method: "ideal",
         metadata: {
           order_id: String(order.id),
           order_key: order.order_key,
         },
       });
+
+      console.log("Checkout - Mollie payment created:", molliePayment.id);
 
       // Return Mollie checkout URL (direct to Mollie, not WooCommerce)
       const paymentUrl = molliePayment._links.checkout?.href;
