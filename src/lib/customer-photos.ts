@@ -173,22 +173,22 @@ export const photosByCategory: Record<ProductPhotoCategory, CustomerPhoto[]> = {
   // ------------------------------------------
   'algemeen': [
     {
-      src: '/reviews/_algemeen/levering-1.jpg',
-      alt: 'Bezorging van haardhout',
-      caption: 'Netjes losgestort in de tuin',
-      reviewerName: 'Monique de Boer'
+      src: '/reviews/_algemeen/berrie_rieswijk.jpg',
+      alt: 'Brandende open haard met haardhout',
+      caption: 'Ontzettend tevreden! Scherp geprijsd en netjes geleverd.',
+      reviewerName: 'Berrie Rieswijk'
     },
     {
-      src: '/reviews/_algemeen/stapel-tuin-1.jpg',
-      alt: 'Haardhout gestapeld in tuin',
-      caption: 'Mooi gestapeld, klaar voor de winter',
-      reviewerName: 'Frank Bos'
+      src: '/reviews/_algemeen/marco_blaas.jpg',
+      alt: 'Haardhout netjes gestapeld in de tuin',
+      caption: 'Super geregeld, goed bedrijf! Tot volgend jaar.',
+      reviewerName: 'Marco Blaas'
     },
     {
-      src: '/reviews/_algemeen/kachel-warm-1.jpg',
-      alt: 'Gezellige houtkachel',
-      caption: 'Lekker warm in huis!',
-      reviewerName: 'Sandra Jansen'
+      src: '/reviews/_algemeen/o_van_der_sluis_1.jpg',
+      alt: 'Haardhout opslag vol met gestapeld hout',
+      caption: 'Heel tevreden, vriendelijke communicatie en afspraken nagekomen.',
+      reviewerName: 'O. van der Sluis'
     },
   ],
 };

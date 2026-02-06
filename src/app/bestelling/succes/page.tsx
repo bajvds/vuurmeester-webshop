@@ -1,21 +1,67 @@
 "use client";
 
-import { Suspense, useEffect } from "react";
+import { Suspense, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { CheckCircle, Home, Mail, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/store/cart";
 
+// Extend window type for gtag
+declare global {
+  interface Window {
+    gtag?: (
+      command: string,
+      action: string,
+      params?: Record<string, unknown>
+    ) => void;
+  }
+}
+
 function BestellingSuccesContent() {
   const searchParams = useSearchParams();
   const orderKey = searchParams.get("order_key");
+  const orderId = searchParams.get("order_id");
+  const orderTotal = searchParams.get("total");
+  const itemCount = searchParams.get("items");
   const { clearCart } = useCart();
+  const conversionTracked = useRef(false);
 
   // Clear cart on successful order (in case it wasn't already cleared)
   useEffect(() => {
     clearCart();
   }, [clearCart]);
+
+  // Track purchase conversion for GA4 / Google Ads
+  useEffect(() => {
+    // Only track once per page load
+    if (conversionTracked.current) return;
+    if (!orderId || !orderTotal) return;
+
+    const value = parseFloat(orderTotal);
+    if (isNaN(value)) return;
+
+    // Mark as tracked to prevent duplicate events
+    conversionTracked.current = true;
+
+    // Fire GA4 purchase event (Google Ads can import this)
+    if (typeof window !== "undefined" && window.gtag) {
+      window.gtag("event", "purchase", {
+        transaction_id: orderId,
+        value: value,
+        currency: "EUR",
+        items: [
+          {
+            item_id: "haardhout",
+            item_name: "Haardhout bestelling",
+            quantity: parseInt(itemCount || "1"),
+            price: value,
+          },
+        ],
+      });
+      console.log("GA4 purchase event tracked:", { orderId, value });
+    }
+  }, [orderId, orderTotal, itemCount]);
 
   return (
     <main className="min-h-screen bg-stone-50 py-12">
@@ -39,11 +85,11 @@ function BestellingSuccesContent() {
           </p>
 
           {/* Order Reference */}
-          {orderKey && (
+          {(orderKey || orderId) && (
             <div className="bg-white rounded-xl p-6 shadow-sm mb-8">
-              <p className="text-sm text-stone-500 mb-1">Orderreferentie</p>
+              <p className="text-sm text-stone-500 mb-1">Ordernummer</p>
               <p className="text-lg font-mono font-medium text-stone-900">
-                {orderKey}
+                #{orderId || orderKey}
               </p>
             </div>
           )}

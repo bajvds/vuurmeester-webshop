@@ -199,13 +199,21 @@ export async function POST(
       console.log("Checkout - isLocalhost:", isLocalhost, "isEmptyUrl:", isEmptyUrl);
       console.log("Checkout - webhookUrl being sent to Mollie:", webhookUrl);
 
+      // Build success URL with conversion tracking data
+      const successParams = new URLSearchParams({
+        order_key: order.order_key,
+        order_id: String(order.id),
+        total: order.total,
+        items: String(body.items.length),
+      });
+
       const molliePayment = await createMolliePayment({
         amount: {
           value: formatMollieAmount(parseFloat(order.total)),
           currency: "EUR",
         },
         description: `Vuurmeester bestelling #${order.id}`,
-        redirectUrl: `${appUrl}/bestelling/succes?order_key=${order.order_key}`,
+        redirectUrl: `${appUrl}/bestelling/succes?${successParams.toString()}`,
         webhookUrl,
         method: "ideal",
         metadata: {
@@ -226,16 +234,24 @@ export async function POST(
         success: true,
         orderId: order.id,
         orderKey: order.order_key,
+        orderTotal: order.total,
         paymentUrl,
         redirectUrl: paymentUrl,
       });
     } else {
-      // For COD, redirect directly to success page
+      // For COD, redirect directly to success page with conversion data
+      const successParams = new URLSearchParams({
+        order_key: order.order_key,
+        order_id: String(order.id),
+        total: order.total,
+        items: String(body.items.length),
+      });
       return NextResponse.json({
         success: true,
         orderId: order.id,
         orderKey: order.order_key,
-        redirectUrl: `${appUrl}/bestelling/succes?order_key=${order.order_key}`,
+        orderTotal: order.total,
+        redirectUrl: `${appUrl}/bestelling/succes?${successParams.toString()}`,
       });
     }
   } catch (error) {
