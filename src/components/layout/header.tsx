@@ -50,7 +50,7 @@ export function Header() {
         {/* Logo */}
         <Link href="/" className="flex items-center">
           <Image
-            src="/images/Logo_De_Vuurmeester_wit_oranje_300.png"
+            src="/images/Logo_De_Vuurmeester_300.png"
             alt="De Vuurmeester"
             width={180}
             height={50}
