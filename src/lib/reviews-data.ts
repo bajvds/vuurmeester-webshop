@@ -1,5 +1,5 @@
 /**
- * Fake reviews data voor productpagina's
+ * Klantervaringen data voor productpagina's
  * Reviews worden gekoppeld aan producten op basis van producttype
  */
 
@@ -300,26 +300,6 @@ export function detectProductType(productName: string): Review['productType'] {
   }
 
   return 'general';
-}
-
-/**
- * Haal reviews op voor een specifiek product
- * Combineert producttype-specifieke reviews met algemene reviews
- */
-export function getReviewsForProduct(productName: string, limit: number = 5): Review[] {
-  const productType = detectProductType(productName);
-
-  // Filter reviews voor dit producttype
-  const typeReviews = allReviews.filter(r => r.productType === productType);
-
-  // Voeg algemene reviews toe als er niet genoeg zijn
-  const generalPool = allReviews.filter(r => r.productType === 'general');
-
-  // Combineer en shuffle voor variatie
-  const combined = [...typeReviews, ...generalPool];
-  const shuffled = combined.sort(() => Math.random() - 0.5);
-
-  return shuffled.slice(0, limit);
 }
 
 /**

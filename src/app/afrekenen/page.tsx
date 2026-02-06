@@ -77,7 +77,7 @@ export default function AfrekenPage() {
     if (postcode.length >= 4) {
       const volume = estimateCartVolume(items);
       const result = calculateShipping(postcode, volume);
-      setShippingCost(result?.price ?? null);
+      setShippingCost(result);
     } else {
       setShippingCost(null);
     }
@@ -99,20 +99,20 @@ export default function AfrekenPage() {
 
   if (!mounted) {
     return (
-      <main className="min-h-screen bg-stone-50 py-12">
+      <div className="min-h-screen bg-stone-50 py-12">
         <div className="container mx-auto px-4">
           <div className="animate-pulse">
             <div className="h-8 bg-stone-200 rounded w-48 mb-8"></div>
             <div className="h-64 bg-stone-200 rounded"></div>
           </div>
         </div>
-      </main>
+      </div>
     );
   }
 
   if (items.length === 0) {
     return (
-      <main className="min-h-screen bg-stone-50 py-12">
+      <div className="min-h-screen bg-stone-50 py-12">
         <div className="container mx-auto px-4 text-center">
           <ShoppingBag className="h-24 w-24 text-stone-300 mx-auto mb-6" />
           <h1 className="text-2xl font-bold text-stone-900 mb-4">
@@ -125,12 +125,12 @@ export default function AfrekenPage() {
             <Link href="/">Bekijk producten</Link>
           </Button>
         </div>
-      </main>
+      </div>
     );
   }
 
   return (
-    <main className="min-h-screen bg-stone-50 py-8 lg:py-12">
+    <div className="min-h-screen bg-stone-50 py-8 lg:py-12">
       <div className="container mx-auto px-4">
         {/* Back Link */}
         <Link
@@ -249,10 +249,6 @@ export default function AfrekenPage() {
                        name.includes('aanmaak houtje');
               });
 
-              // Debug: log what we found
-              console.log('Aanmaak products:', aanmaakProducts.map(p => ({ slug: p.slug, name: p.name })));
-              console.log('Found aanmaakhoutjes:', aanmaakhoutjes?.name);
-
               const isAanmaakhoutjesInCart = aanmaakhoutjes && items.some(
                 (item) => item.product.id === aanmaakhoutjes.id
               );
@@ -311,13 +307,11 @@ export default function AfrekenPage() {
               );
             })()}
 
-            {/* Checkout Form */}
-            {shippingCost !== null && (
-              <CheckoutForm
-                shippingCost={shippingCost}
-                onSuccess={handleCheckoutSuccess}
-              />
-            )}
+            {/* Checkout Form - always show, disable submit when no shipping */}
+            <CheckoutForm
+              shippingCost={shippingCost}
+              onSuccess={handleCheckoutSuccess}
+            />
           </div>
 
           {/* Right Column: Order Summary */}
@@ -420,6 +414,6 @@ export default function AfrekenPage() {
           </div>
         </div>
       </div>
-    </main>
+    </div>
   );
 }

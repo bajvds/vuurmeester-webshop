@@ -24,7 +24,7 @@ export function Footer() {
             </p>
             <div className="flex items-center gap-2 text-sm">
               <span className="text-yellow-400">★★★★★</span>
-              <span>65+ reviews</span>
+              <span>+10.000 tevreden klanten</span>
             </div>
           </div>
 
@@ -55,6 +55,11 @@ export function Footer() {
             <h3 className="font-semibold text-white mb-4">Informatie</h3>
             <ul className="space-y-2 text-sm">
               <li>
+                <Link href="/leveren-afhalen" className="hover:text-orange-400 transition-colors">
+                  Leveren & Afhalen
+                </Link>
+              </li>
+              <li>
                 <Link href="/bezorgkosten" className="hover:text-orange-400 transition-colors">
                   Bezorgkosten
                 </Link>
@@ -72,6 +77,11 @@ export function Footer() {
               <li>
                 <Link href="/algemene-voorwaarden" className="hover:text-orange-400 transition-colors">
                   Algemene voorwaarden
+                </Link>
+              </li>
+              <li>
+                <Link href="/privacybeleid" className="hover:text-orange-400 transition-colors">
+                  Privacybeleid
                 </Link>
               </li>
             </ul>
@@ -119,7 +129,6 @@ export function Footer() {
             <span>Betaalmethodes:</span>
             <div className="flex flex-wrap gap-2">
               <span className="bg-stone-800 px-2 py-1 rounded text-xs">iDEAL</span>
-              <span className="bg-stone-800 px-2 py-1 rounded text-xs">Bancontact</span>
               <span className="bg-stone-800 px-2 py-1 rounded text-xs">Contant</span>
             </div>
           </div>

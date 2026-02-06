@@ -11,7 +11,7 @@ function BestellingMisluktContent() {
   const orderKey = searchParams.get("order_key");
 
   return (
-    <main className="min-h-screen bg-stone-50 py-12">
+    <div className="min-h-screen bg-stone-50 py-12">
       <div className="container mx-auto px-4">
         <div className="max-w-2xl mx-auto text-center">
           {/* Failed Icon */}
@@ -63,7 +63,7 @@ function BestellingMisluktContent() {
                   <p className="font-medium text-stone-900">Bel ons</p>
                   <p className="text-sm text-stone-600">
                     Heb je hulp nodig of wil je telefonisch bestellen? Bel ons
-                    op 06 - 12345678.
+                    op 06 82 09 19 84.
                   </p>
                 </div>
               </li>
@@ -72,8 +72,8 @@ function BestellingMisluktContent() {
                 <div>
                   <p className="font-medium text-stone-900">Stuur een e-mail</p>
                   <p className="text-sm text-stone-600">
-                    Stuur ons een bericht via info@devuurmeester.nl en we helpen
-                    je verder.
+                    Stuur ons een bericht via contact@vuurmeester.shop en we
+                    helpen je verder.
                   </p>
                 </div>
               </li>
@@ -107,7 +107,7 @@ function BestellingMisluktContent() {
           </div>
         </div>
       </div>
-    </main>
+    </div>
   );
 }
 
@@ -115,7 +115,7 @@ export default function BestellingMisluktPage() {
   return (
     <Suspense
       fallback={
-        <main className="min-h-screen bg-stone-50 py-12">
+        <div className="min-h-screen bg-stone-50 py-12">
           <div className="container mx-auto px-4">
             <div className="animate-pulse max-w-2xl mx-auto">
               <div className="h-24 w-24 bg-stone-200 rounded-full mx-auto mb-8"></div>
@@ -123,7 +123,7 @@ export default function BestellingMisluktPage() {
               <div className="h-4 bg-stone-200 rounded w-96 mx-auto"></div>
             </div>
           </div>
-        </main>
+        </div>
       }
     >
       <BestellingMisluktContent />

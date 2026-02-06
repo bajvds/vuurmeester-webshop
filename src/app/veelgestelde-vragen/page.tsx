@@ -24,34 +24,28 @@ const faqData: FAQCategory[] = [
     items: [
       {
         question: "Wat zijn de bezorgkosten?",
-        answer: `Onze bezorgkosten zijn afhankelijk van je locatie:
-
-• **Middelbeers/Oirschot omgeving (50xx):** €5 - €15
-• **Brabant:** €15 - €25
-• **Limburg, Gelderland, Zuid-Holland:** €25 - €40
-• **Rest van Nederland:** €40 - €85
-
-Je kunt je exacte bezorgkosten berekenen door je postcode in te voeren op de productpagina of bij het afrekenen. Wij leveren door heel Nederland!`,
+        answer:
+          "De bezorgkosten zijn afhankelijk van de hoeveelheid en je locatie. Bij grotere bestellingen zijn de kosten per m\u00B3 lager. Bereken je exacte bezorgkosten op onze bezorgkosten-pagina of bij het afrekenen door je postcode in te vullen.",
+      },
+      {
+        question: "Hoe wordt het haardhout geleverd?",
+        answer:
+          "De Vuurmeester levert haardhout losgestort met een aanhanger en/of bakwagen. Wij bezorgen het op de door jou aangegeven plek, mits bereikbaar. Dit kan je oprit, tuin of bij de schuur zijn. Niet door smalle doorgangen of trappen.",
+      },
+      {
+        question: "Bezorgen jullie door heel Nederland?",
+        answer:
+          "Ja! Wij bezorgen door heel Nederland via Sande Logistics. Vanuit ons depot in Middelbeers, Brabant, leveren we betrouwbaar en snel door het hele land.",
       },
       {
         question: "Hoe snel wordt mijn bestelling bezorgd?",
         answer:
-          "Wij bezorgen doorgaans binnen 1-3 werkdagen na ontvangst van je bestelling. Bij drukte (vooral in de herfst/winter) kan dit iets langer duren. Je ontvangt altijd een bericht wanneer we onderweg zijn.",
+          "Bestellingen worden binnen 5-10 werkdagen geleverd. De exacte datum en tijd stemmen we vooraf met je af. De chauffeur belt je vlak voordat hij arriveert.",
       },
       {
-        question: "Kan ik een bezorgdatum kiezen?",
+        question: "Kan ik het haardhout ook zelf ophalen?",
         answer:
-          "Ja, dat kan! Neem contact met ons op via WhatsApp en we plannen de levering op een moment dat jou uitkomt.",
-      },
-      {
-        question: "Bezorgen jullie ook in België of Duitsland?",
-        answer:
-          "Op dit moment bezorgen wij alleen binnen Nederland. Voor leveringen dichtbij de grens kun je contact met ons opnemen voor de mogelijkheden.",
-      },
-      {
-        question: "Waar wordt het hout afgeleverd?",
-        answer:
-          "Wij leveren het hout op de door jou aangegeven plek, mits bereikbaar met onze bus. Dit kan je oprit, tuin of schuur zijn. We tillen het hout niet trappen op of door smalle doorgangen. Laat bij je bestelling even weten waar je het hout wilt hebben.",
+          "Ja, ophalen is mogelijk op afspraak. Neem vooraf contact met ons op via WhatsApp zodat we je kunnen helpen.",
       },
     ],
   },
@@ -59,38 +53,43 @@ Je kunt je exacte bezorgkosten berekenen door je postcode in te voeren op de pro
     title: "Haardhout & Kwaliteit",
     items: [
       {
-        question: "Wat is het verschil tussen ovengedroogd en halfdroog haardhout?",
-        answer: `**Ovengedroogd haardhout** (< 18% vocht):
-• Direct te gebruiken
-• Brandt optimaal en geeft veel warmte
-• Minder rook en roetvorming
-• Ideaal als je weinig opslagruimte hebt
+        question: "Wat voor soort hout bieden jullie aan?",
+        answer:
+          "Wij bieden een stevige mix van eiken-, beuken- en essenhout aan, met een vleugje populierenhout (10%). Dit zorgt voor een krachtige, langdurige verbranding. Daarnaast hebben we speciaal beukenhout voor OFYR en buitenkeukens.",
+      },
+      {
+        question: "Is het haardhout ovengedroogd of luchtgedroogd?",
+        answer: `In de zomer maken wij gebruik van natuurlijke windkracht om het hout te drogen. In de wintermaanden gebruiken we ovendroging voor een constante kwaliteit het hele jaar door.
+
+**Ovengedroogd haardhout** (< 18% vocht):
+\u2022 Direct te gebruiken, brandt optimaal
+\u2022 Minder rook en roetvorming
+\u2022 Ideaal als je weinig opslagruimte hebt
 
 **Halfdroog / vers haardhout** (20-35% vocht):
-• Moet nog 6-12 maanden drogen
-• Voordeliger in prijs
-• Ideaal als je opslagruimte hebt
-• Na het drogen dezelfde kwaliteit als ovengedroogd`,
+\u2022 Moet nog 6-12 maanden drogen
+\u2022 Voordeliger in prijs
+\u2022 Na het drogen dezelfde kwaliteit als ovengedroogd`,
       },
       {
-        question: "Hoe lang moet halfdroog hout nog drogen?",
+        question: "Wat is het vochtpercentage van het hout bij levering?",
         answer:
-          "Halfdroog hout moet nog ongeveer 6-12 maanden drogen, afhankelijk van de opslagcondities. Sla het hout gestapeld op onder een afdak met voldoende ventilatie. Het hout is klaar voor gebruik wanneer het vochtpercentage onder de 20% komt.",
+          "Het vochtpercentage staat vermeld per product. Bij ovengedroogd hout ligt dit onder de 18%, bij halfdroog hout tussen de 20-35%. Heb je vragen over een specifieke batch? Neem dan contact met ons op.",
       },
       {
-        question: "Welke houtsoorten verkopen jullie?",
+        question: "Hoe groot zijn de houtblokken?",
         answer:
-          "Wij verkopen voornamelijk hardhout (eiken, beuken, essen mix). Dit brandt langer en geeft meer warmte dan zachthout. Voor OFYR en andere buitenhaarden hebben we speciaal berkenhout.",
+          "Onze blokken zijn gezaagd op een lengte van 25 tot 30 cm. Dit formaat past in de meeste houtkachels en open haarden en zorgt voor een gelijkmatige verbranding.",
       },
       {
-        question: "Hoeveel m³ heb ik nodig voor een heel seizoen?",
+        question: "Hoeveel m\u00B3 is een losgestorte m\u00B3 gestapeld?",
         answer:
-          "Dit hangt af van hoe vaak je stookt en hoe groot je haard is. Gemiddeld verbruikt een huishouden 2-4 m³ per seizoen bij regelmatig stoken. Een vrijstaand huis met open haard of houtkachel als hoofdverwarming kan wel 6-8 m³ nodig hebben.",
+          "Een losgestorte m\u00B3 is circa 0,67 m\u00B3 gestapeld. Oftewel: als je 10 m\u00B3 losgestort bestelt, heb je ongeveer 6,7 m\u00B3 als je het netjes opstapelt.",
       },
       {
-        question: "Wat is het verschil tussen een kuub en een stère?",
+        question: "Hoeveel m\u00B3 heb ik nodig voor een heel seizoen?",
         answer:
-          "Een kuub (m³) is een gestapelde kuub hout. Een stère is ook een m³, maar dan losgestort. Losgestort hout neemt meer ruimte in door de lucht ertussen. Wij leveren gestapelde kubieke meters.",
+          "Dit hangt af van hoe vaak je stookt en hoe groot je haard is. Gemiddeld verbruikt een huishouden 2-4 m\u00B3 per seizoen bij regelmatig stoken. Een vrijstaand huis met houtkachel als hoofdverwarming kan wel 6-8 m\u00B3 nodig hebben.",
       },
     ],
   },
@@ -103,9 +102,19 @@ Je kunt je exacte bezorgkosten berekenen door je postcode in te voeren op de pro
           "Je kunt eenvoudig bestellen via onze webshop. Kies je product, voeg het toe aan je winkelwagen en volg de stappen om af te rekenen. Je kunt ook bestellen via WhatsApp.",
       },
       {
+        question: "Moet ik vooraf betalen?",
+        answer:
+          "Nee, vooraf betalen is niet verplicht. Je kunt betalen bij levering of via iDEAL bij het afrekenen.",
+      },
+      {
+        question: "Kan ik pinnen bij levering?",
+        answer:
+          "Ja, je kunt bij levering pinnen. Dit maakt het afrekenen makkelijk en snel.",
+      },
+      {
         question: "Welke betaalmethoden accepteren jullie?",
         answer:
-          "Wij accepteren iDEAL, creditcard en bankoverschrijving. Betaling gebeurt bij het afrekenen.",
+          "Wij accepteren iDEAL, pinnen bij levering en contante betaling.",
       },
       {
         question: "Kan ik mijn bestelling wijzigen of annuleren?",
@@ -130,7 +139,7 @@ Je kunt je exacte bezorgkosten berekenen door je postcode in te voeren op de pro
       {
         question: "Hoeveel zit er in een big bag?",
         answer:
-          "Onze big bags bevatten standaard 1 m³ gestapeld haardhout. Dit is ongeveer 400-500 kg, afhankelijk van de houtsoort en het vochtgehalte.",
+          "Onze big bags bevatten standaard 1 m\u00B3 gestapeld haardhout. Dit is ongeveer 400-500 kg, afhankelijk van de houtsoort en het vochtgehalte.",
       },
       {
         question: "Kan ik het hout ook los geleverd krijgen?",
@@ -170,9 +179,31 @@ function FAQAccordion({ item }: { item: FAQItem }) {
   );
 }
 
+function getFAQStructuredData() {
+  const allItems = faqData.flatMap((cat) => cat.items);
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: allItems.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.answer.replace(/\*\*/g, "").replace(/•/g, "-"),
+      },
+    })),
+  };
+}
+
 export default function FAQPage() {
   return (
-    <main className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(getFAQStructuredData()),
+        }}
+      />
       {/* Header */}
       <div className="bg-stone-50 border-b">
         <div className="container mx-auto px-4 py-3">
@@ -235,6 +266,6 @@ export default function FAQPage() {
           </div>
         </div>
       </div>
-    </main>
+    </div>
   );
 }

@@ -126,3 +126,17 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Move WhatsApp button up when sticky add-to-cart bar is visible */
+@media (max-width: 1023px) {
+  body.has-sticky-bar .whatsapp-float {
+    bottom: 5rem;
+  }
+  body.has-sticky-bar {
+    padding-bottom: 4.5rem;
+  }
+}
+
+.whatsapp-float {
+  transition: bottom 0.2s ease;
+}

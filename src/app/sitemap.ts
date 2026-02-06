@@ -4,35 +4,47 @@ import { woocommerce } from "@/lib/woocommerce/client";
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://www.vuurmeester-haardhout.nl";
 
-  // Static pages
+  // Static pages - use fixed dates so sitemap is stable between builds
   const staticPages: MetadataRoute.Sitemap = [
     {
       url: baseUrl,
-      lastModified: new Date(),
+      lastModified: "2026-02-01",
       changeFrequency: "daily",
       priority: 1,
     },
     {
       url: `${baseUrl}/bezorgkosten`,
-      lastModified: new Date(),
+      lastModified: "2026-01-15",
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
       url: `${baseUrl}/veelgestelde-vragen`,
-      lastModified: new Date(),
+      lastModified: "2026-01-15",
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
       url: `${baseUrl}/over-ons`,
-      lastModified: new Date(),
+      lastModified: "2026-01-01",
       changeFrequency: "monthly",
       priority: 0.7,
     },
     {
       url: `${baseUrl}/algemene-voorwaarden`,
-      lastModified: new Date(),
+      lastModified: "2025-12-01",
+      changeFrequency: "yearly",
+      priority: 0.3,
+    },
+    {
+      url: `${baseUrl}/leveren-afhalen`,
+      lastModified: "2026-02-06",
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/privacybeleid`,
+      lastModified: "2026-02-06",
       changeFrequency: "yearly",
       priority: 0.3,
     },
@@ -44,7 +56,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const products = await woocommerce.getProducts({ per_page: 50 });
     productPages = products.map((product) => ({
       url: `${baseUrl}/product/${product.slug}`,
-      lastModified: new Date(),
+      lastModified: "2026-02-01",
       changeFrequency: "weekly" as const,
       priority: 0.9,
     }));

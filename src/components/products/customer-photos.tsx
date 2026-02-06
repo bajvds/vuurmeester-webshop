@@ -57,12 +57,13 @@ function PhotoLightbox({
       {/* Main image */}
       <div className="max-w-4xl max-h-[80vh] relative">
         <div className="relative w-full h-[70vh] flex items-center justify-center">
-          {/* Placeholder - in productie zou dit een echte afbeelding zijn */}
-          <div className="bg-stone-800 rounded-xl p-12 text-center">
-            <div className="text-6xl mb-4">🪵</div>
-            <p className="text-white/60 text-sm mb-2">Klantfoto placeholder</p>
-            <p className="text-white font-medium">{photo.alt}</p>
-          </div>
+          <Image
+            src={photo.src}
+            alt={photo.alt}
+            width={1200}
+            height={900}
+            className="max-w-full max-h-[70vh] object-contain rounded-xl"
+          />
         </div>
 
         {/* Caption */}
@@ -110,33 +111,32 @@ function PhotoLightbox({
 // Photo thumbnail card
 function PhotoCard({
   photo,
-  onClick
+  onClick,
+  onError
 }: {
   photo: CustomerPhoto;
   onClick: () => void;
+  onError: () => void;
 }) {
   const [imageError, setImageError] = useState(false);
+
+  if (imageError) return null;
 
   return (
     <button
       onClick={onClick}
       className="group relative aspect-square rounded-xl overflow-hidden bg-stone-100 hover:ring-2 hover:ring-orange-500 transition-all"
     >
-      {!imageError ? (
-        <Image
-          src={photo.src}
-          alt={photo.alt}
-          fill
-          className="object-cover group-hover:scale-105 transition-transform duration-300"
-          onError={() => setImageError(true)}
-        />
-      ) : (
-        // Placeholder when image doesn't exist
-        <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-orange-100 to-amber-100">
-          <div className="text-3xl mb-1">🪵</div>
-          <span className="text-xs text-stone-500">Klantfoto</span>
-        </div>
-      )}
+      <Image
+        src={photo.src}
+        alt={photo.alt}
+        fill
+        className="object-cover group-hover:scale-105 transition-transform duration-300"
+        onError={() => {
+          setImageError(true);
+          onError();
+        }}
+      />
 
       {/* Hover overlay with caption */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
@@ -160,23 +160,25 @@ function PhotoCard({
 export function CustomerPhotos({ productSlug, productName }: CustomerPhotosProps) {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
+  const [erroredIndices, setErroredIndices] = useState<Set<number>>(new Set());
 
   // Gebruik productnaam voor nauwkeurigere categorie-detectie
-  const photos = getPhotosByProductName(productName, 6);
+  const allPhotos = getPhotosByProductName(productName, 12);
+  const visiblePhotos = allPhotos.filter((_, i) => !erroredIndices.has(i));
 
-  if (photos.length === 0) {
+  if (visiblePhotos.length === 0) {
     return null;
   }
 
   const handlePrev = () => {
     setCurrentPhotoIndex((prev) =>
-      prev === 0 ? photos.length - 1 : prev - 1
+      prev === 0 ? visiblePhotos.length - 1 : prev - 1
     );
   };
 
   const handleNext = () => {
     setCurrentPhotoIndex((prev) =>
-      prev === photos.length - 1 ? 0 : prev + 1
+      prev === visiblePhotos.length - 1 ? 0 : prev + 1
     );
   };
 
@@ -189,25 +191,27 @@ export function CustomerPhotos({ productSlug, productName }: CustomerPhotosProps
             <Camera className="h-5 w-5 text-orange-600" />
           </div>
           <div>
-            <h3 className="font-semibold text-stone-900">Klantfoto's</h3>
+            <h3 className="font-semibold text-stone-900">Klantfoto&apos;s</h3>
             <p className="text-sm text-stone-500">
               Bekijk hoe anderen dit product gebruiken
             </p>
           </div>
         </div>
         <span className="text-sm text-stone-400">
-          {photos.length} foto's
+          {visiblePhotos.length} foto&apos;s
         </span>
       </div>
 
       {/* Photo grid */}
       <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3">
-        {photos.map((photo, index) => (
+        {allPhotos.map((photo, index) => (
           <PhotoCard
             key={index}
             photo={photo}
+            onError={() => setErroredIndices(prev => new Set(prev).add(index))}
             onClick={() => {
-              setCurrentPhotoIndex(index);
+              const visibleIndex = visiblePhotos.indexOf(photo);
+              setCurrentPhotoIndex(visibleIndex >= 0 ? visibleIndex : 0);
               setLightboxOpen(true);
             }}
           />
@@ -231,7 +235,7 @@ export function CustomerPhotos({ productSlug, productName }: CustomerPhotosProps
       {/* Lightbox */}
       {lightboxOpen && (
         <PhotoLightbox
-          photos={photos}
+          photos={visiblePhotos}
           currentIndex={currentPhotoIndex}
           onClose={() => setLightboxOpen(false)}
           onPrev={handlePrev}

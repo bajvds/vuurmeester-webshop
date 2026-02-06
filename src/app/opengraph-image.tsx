@@ -80,7 +80,7 @@ export default async function Image() {
             fontSize: 20,
           }}
         >
-          vuurmeester.shop
+          www.vuurmeester-haardhout.nl
         </div>
       </div>
     ),

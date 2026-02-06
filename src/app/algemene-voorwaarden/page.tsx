@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function AlgemeneVoorwaardenPage() {
   return (
-    <main className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white">
       {/* Header */}
       <div className="bg-stone-50 border-b">
         <div className="container mx-auto px-4 py-3">
@@ -116,6 +116,6 @@ export default function AlgemeneVoorwaardenPage() {
           </p>
         </div>
       </div>
-    </main>
+    </div>
   );
 }

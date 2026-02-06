@@ -29,7 +29,7 @@ import {
 } from "@/lib/validation/checkout";
 
 interface CheckoutFormProps {
-  shippingCost: number;
+  shippingCost: number | null;
   onSuccess: (redirectUrl: string) => void;
 }
 
@@ -70,8 +70,6 @@ export function CheckoutForm({ shippingCost, onSuccess }: CheckoutFormProps) {
 
   // Handle validation errors
   function onInvalid(errors: Record<string, unknown>) {
-    console.log("Form validation errors:", JSON.stringify(errors, null, 2));
-
     // Build specific error message
     const errorMessages: string[] = [];
     const fieldErrors = errors as Record<string, { message?: string }>;
@@ -97,7 +95,6 @@ export function CheckoutForm({ shippingCost, onSuccess }: CheckoutFormProps) {
   }
 
   async function onSubmit(data: CheckoutFormData) {
-    console.log("Form submitted with data:", data);
     setIsSubmitting(true);
     setError(null);
 
@@ -500,6 +497,14 @@ export function CheckoutForm({ shippingCost, onSuccess }: CheckoutFormProps) {
                     >
                       algemene voorwaarden
                     </Link>{" "}
+                    en het{" "}
+                    <Link
+                      href="/privacybeleid"
+                      target="_blank"
+                      className="text-orange-600 hover:underline"
+                    >
+                      privacybeleid
+                    </Link>{" "}
                     *
                   </FormLabel>
                   <FormMessage />
@@ -510,7 +515,7 @@ export function CheckoutForm({ shippingCost, onSuccess }: CheckoutFormProps) {
 
           <Button
             type="submit"
-            disabled={isSubmitting}
+            disabled={isSubmitting || shippingCost === null}
             className="w-full bg-orange-500 hover:bg-orange-600 text-white py-6 text-lg"
           >
             {isSubmitting ? (
@@ -518,6 +523,8 @@ export function CheckoutForm({ shippingCost, onSuccess }: CheckoutFormProps) {
                 <Loader2 className="mr-2 h-5 w-5 animate-spin" />
                 Bestelling plaatsen...
               </>
+            ) : shippingCost === null ? (
+              "Vul je postcode in voor bezorgkosten"
             ) : (
               "Bestelling plaatsen"
             )}

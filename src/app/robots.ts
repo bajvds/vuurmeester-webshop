@@ -16,8 +16,8 @@ export default function robots(): MetadataRoute.Robots {
   return {
     rules: {
       userAgent: "*",
-      allow: "/",
-      disallow: ["/afrekenen", "/api/"],
+      allow: ["/", "/api/feeds/"],
+      disallow: ["/afrekenen", "/bestelling", "/api/"],
     },
     sitemap: "https://www.vuurmeester-haardhout.nl/sitemap.xml",
   };

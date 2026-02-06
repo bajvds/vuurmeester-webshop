@@ -7,7 +7,33 @@ import { AddToCartButton } from "./add-to-cart-button";
 import { ProductCard } from "@/components/products/product-card";
 import { ProductReviews, ProductRatingBadge } from "@/components/products/product-reviews";
 import { CustomerPhotos } from "@/components/products/customer-photos";
-import { Truck, Phone, ShieldCheck, ArrowLeft, Star } from "lucide-react";
+import { Truck, Phone, ShieldCheck, ArrowLeft } from "lucide-react";
+
+// Convert br-separated short descriptions to a styled checklist
+function formatShortDescription(html: string): string {
+  const stripped = html
+    .replace(/<\/p>\s*<p>/gi, "<br>")
+    .replace(/<\/?p>/gi, "")
+    .trim();
+  const lines = stripped
+    .split(/<br\s*\/?>/gi)
+    .map((l) => l.trim())
+    .filter(Boolean);
+
+  if (lines.length > 1) {
+    return (
+      '<ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:6px">' +
+      lines
+        .map(
+          (l) =>
+            `<li style="display:flex;align-items:baseline;gap:8px"><span style="color:#f97316;font-weight:600;flex-shrink:0">&#10003;</span><span>${l}</span></li>`
+        )
+        .join("") +
+      "</ul>"
+    );
+  }
+  return html;
+}
 
 interface ProductPageProps {
   params: Promise<{ slug: string }>;
@@ -64,8 +90,35 @@ export default async function ProductPage({ params }: ProductPageProps) {
     // Ignore errors for related products
   }
 
+  // Product JSON-LD structured data
+  const productJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name,
+    description: product.short_description?.replace(/<[^>]*>/g, "") || "",
+    image: product.images[0]?.src,
+    brand: { "@type": "Brand", name: "De Vuurmeester" },
+    offers: {
+      "@type": "Offer",
+      price: (parseInt(product.prices.price) / 100).toFixed(2),
+      priceCurrency: "EUR",
+      availability: "https://schema.org/InStock",
+      seller: { "@type": "Organization", name: "De Vuurmeester" },
+    },
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.9",
+      reviewCount: "62",
+      bestRating: "5",
+    },
+  };
+
   return (
-    <main className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
+      />
       {/* Breadcrumb */}
       <div className="bg-stone-50 border-b">
         <div className="container mx-auto px-4 py-3">
@@ -80,12 +133,12 @@ export default async function ProductPage({ params }: ProductPageProps) {
       </div>
 
       {/* Product */}
-      <div className="container mx-auto px-4 py-8 lg:py-12">
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
+      <div className="container mx-auto px-4 py-4 lg:py-12">
+        <div className="grid lg:grid-cols-2 gap-6 lg:gap-12">
           {/* Image Gallery */}
-          <div className="space-y-4">
+          <div className="space-y-3 lg:space-y-4">
             {/* Main Image */}
-            <div className="relative aspect-square rounded-xl overflow-hidden bg-stone-100">
+            <div className="relative aspect-[4/3] lg:aspect-square rounded-xl overflow-hidden bg-stone-100">
               {product.images[0] ? (
                 <Image
                   src={product.images[0].src}
@@ -114,7 +167,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 {product.images.map((image, index) => (
                   <div
                     key={image.id}
-                    className="relative w-20 h-20 flex-shrink-0 rounded-lg overflow-hidden bg-stone-100 border-2 border-transparent hover:border-orange-500 transition-colors cursor-pointer"
+                    className="relative w-[72px] h-[72px] flex-shrink-0 rounded-lg overflow-hidden bg-stone-100 border-2 border-transparent hover:border-orange-500 transition-colors cursor-pointer"
                   >
                     <Image
                       src={image.thumbnail || image.src}
@@ -130,14 +183,14 @@ export default async function ProductPage({ params }: ProductPageProps) {
           </div>
 
           {/* Product Info */}
-          <div className="space-y-6">
+          <div className="space-y-4 lg:space-y-6">
             <div>
               <h1 className="text-2xl lg:text-3xl font-bold text-stone-900 mb-2">
                 {name}
               </h1>
 
               {/* Rating Badge */}
-              <div className="flex items-center gap-3 mb-4">
+              <div className="flex items-center gap-3 mb-3">
                 <ProductRatingBadge productId={product.id} productName={product.name} />
                 <a href="#reviews" className="text-sm text-orange-600 hover:underline">
                   Bekijk reviews
@@ -145,7 +198,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
               </div>
 
               {/* Price */}
-              <div className="flex items-baseline gap-3 mb-6">
+              <div className="flex items-baseline gap-3 mb-4">
                 <span className="text-3xl font-bold text-orange-600">
                   {price}
                 </span>
@@ -159,50 +212,80 @@ export default async function ProductPage({ params }: ProductPageProps) {
               {/* Description */}
               {product.short_description && (
                 <div
-                  className="prose prose-stone prose-sm max-w-none mb-6"
-                  dangerouslySetInnerHTML={{ __html: product.short_description }}
+                  className="text-sm text-stone-600 mb-4 [&_ul]:list-none [&_ul]:pl-0 [&_ul]:space-y-1.5 [&_li]:flex [&_li]:items-baseline [&_li]:gap-2 [&_li]:before:content-['✓'] [&_li]:before:text-orange-500 [&_li]:before:font-bold"
+                  dangerouslySetInnerHTML={{
+                    __html: formatShortDescription(product.short_description),
+                  }}
                 />
               )}
 
               {/* Add to Cart */}
-              <AddToCartButton product={product} />
+              <AddToCartButton
+                product={product}
+                price={price}
+                regularPrice={regularPrice}
+                isOnSale={isOnSale}
+              />
             </div>
 
-            {/* USPs */}
-            <div className="border-t pt-6 space-y-4">
-              <div className="flex items-start gap-3">
-                <Truck className="h-5 w-5 text-orange-500 flex-shrink-0 mt-0.5" />
-                <div>
-                  <p className="font-medium text-stone-900">
-                    Snelle bezorging door heel Nederland
+            {/* USPs — compact on mobile, full on desktop */}
+            <div className="border-t pt-4 lg:pt-6">
+              {/* Mobile: compact horizontal strip */}
+              <div className="grid grid-cols-3 gap-2 lg:hidden">
+                <div className="flex flex-col items-center text-center gap-1.5 py-2">
+                  <Truck className="h-5 w-5 text-orange-500" />
+                  <p className="text-xs font-medium text-stone-700 leading-tight">
+                    Snelle bezorging
                   </p>
-                  <p className="text-sm text-stone-600">
-                    Bezorgkosten vanaf €15,- afhankelijk van locatie
+                </div>
+                <div className="flex flex-col items-center text-center gap-1.5 py-2">
+                  <Phone className="h-5 w-5 text-orange-500" />
+                  <p className="text-xs font-medium text-stone-700 leading-tight">
+                    Persoonlijk contact
+                  </p>
+                </div>
+                <div className="flex flex-col items-center text-center gap-1.5 py-2">
+                  <ShieldCheck className="h-5 w-5 text-orange-500" />
+                  <p className="text-xs font-medium text-stone-700 leading-tight">
+                    Laagste prijs
                   </p>
                 </div>
               </div>
 
-              <div className="flex items-start gap-3">
-                <Phone className="h-5 w-5 text-orange-500 flex-shrink-0 mt-0.5" />
-                <div>
-                  <p className="font-medium text-stone-900">
-                    Persoonlijk contact via WhatsApp
-                  </p>
-                  <p className="text-sm text-stone-600">
-                    Vragen? App ons gerust!
-                  </p>
+              {/* Desktop: full USP items */}
+              <div className="hidden lg:flex lg:flex-col lg:gap-4">
+                <div className="flex items-start gap-3">
+                  <Truck className="h-5 w-5 text-orange-500 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="font-medium text-stone-900">
+                      Snelle bezorging door heel Nederland
+                    </p>
+                    <p className="text-sm text-stone-600">
+                      Bezorgkosten vanaf &euro;15,- afhankelijk van locatie
+                    </p>
+                  </div>
                 </div>
-              </div>
-
-              <div className="flex items-start gap-3">
-                <ShieldCheck className="h-5 w-5 text-orange-500 flex-shrink-0 mt-0.5" />
-                <div>
-                  <p className="font-medium text-stone-900">
-                    Goedkoopste garantie
-                  </p>
-                  <p className="text-sm text-stone-600">
-                    Vind je het ergens goedkoper? Wij matchen de prijs!
-                  </p>
+                <div className="flex items-start gap-3">
+                  <Phone className="h-5 w-5 text-orange-500 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="font-medium text-stone-900">
+                      Persoonlijk contact via WhatsApp
+                    </p>
+                    <p className="text-sm text-stone-600">
+                      Vragen? App ons gerust!
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <ShieldCheck className="h-5 w-5 text-orange-500 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="font-medium text-stone-900">
+                      Goedkoopste garantie
+                    </p>
+                    <p className="text-sm text-stone-600">
+                      Vind je het ergens goedkoper? Wij matchen de prijs!
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -246,6 +329,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
           </div>
         </section>
       )}
-    </main>
+    </div>
   );
 }

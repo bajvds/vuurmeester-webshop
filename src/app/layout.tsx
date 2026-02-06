@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Script from "next/script";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import "./globals.css";
 import { Header } from "@/components/layout/header";
@@ -42,7 +43,7 @@ export const metadata: Metadata = {
       "Premium haardhout voor de scherpste prijs. Geleverd door heel Nederland.",
     images: [
       {
-        url: "/og-image.jpg",
+        url: "/opengraph-image",
         width: 1200,
         height: 630,
         alt: "De Vuurmeester - Premium Haardhout",
@@ -67,15 +68,60 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="nl">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "LocalBusiness",
+              name: "De Vuurmeester",
+              description:
+                "Premium haardhout voor de scherpste prijs. Ovengedroogd en halfdroog haardhout, geleverd door heel Nederland.",
+              url: "https://www.vuurmeester-haardhout.nl",
+              telephone: "+31682091984",
+              email: "contact@vuurmeester.shop",
+              address: {
+                "@type": "PostalAddress",
+                addressLocality: "Oirschot",
+                addressRegion: "Noord-Brabant",
+                addressCountry: "NL",
+              },
+              areaServed: {
+                "@type": "Country",
+                name: "Netherlands",
+              },
+              aggregateRating: {
+                "@type": "AggregateRating",
+                ratingValue: "4.9",
+                reviewCount: "62",
+                bestRating: "5",
+              },
+              priceRange: "€€",
+            }),
+          }}
+        />
+      </head>
       <body className={`${inter.variable} font-sans antialiased bg-white`}>
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:p-4 focus:bg-orange-500 focus:text-white"
+        >
+          Ga naar hoofdinhoud
+        </a>
         <Header />
-        {children}
+        <main id="main-content">{children}</main>
         <Footer />
         <CartDrawer />
         <WhatsAppButton />
       </body>
       {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
         <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
+      )}
+      {process.env.NEXT_PUBLIC_GOOGLE_ADS_ID && (
+        <Script id="google-ads-config" strategy="afterInteractive">
+          {`gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ADS_ID}');`}
+        </Script>
       )}
     </html>
   );

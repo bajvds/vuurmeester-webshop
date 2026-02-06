@@ -12,6 +12,7 @@ import {
   createMolliePayment,
   formatMollieAmount,
 } from "@/lib/mollie/client";
+import { calculateShipping } from "@/lib/shipping";
 
 // Cart item from frontend
 interface CartItem {
@@ -93,13 +94,23 @@ export async function POST(
       );
     }
 
-    // Validate shipping cost
-    if (typeof body.shippingCost !== "number" || body.shippingCost < 0) {
+    // Server-side shipping recalculation for security
+    // Use the delivery postcode (shipping if different, otherwise billing)
+    const deliveryPostcode = customer.shippingDifferent && customer.shipping
+      ? customer.shipping.postcode
+      : customer.billing.postcode;
+    const totalQuantity = body.items.reduce((sum, item) => sum + item.quantity, 0);
+    const serverShippingCost = calculateShipping(deliveryPostcode, totalQuantity);
+
+    if (serverShippingCost === null) {
       return NextResponse.json(
-        { success: false, error: "Ongeldige verzendkosten" },
+        { success: false, error: "Ongeldige postcode voor bezorging" },
         { status: 400 }
       );
     }
+
+    // Use server-calculated shipping cost (ignore client-submitted value)
+    const shippingCost = serverShippingCost;
 
     // Build billing address (Legacy API uses billing_address)
     const billingAddress: WooCommerceAddress = {
@@ -165,7 +176,7 @@ export async function POST(
         {
           method_id: "flat_rate",
           method_title: "Bezorging",
-          total: body.shippingCost.toFixed(2),
+          total: shippingCost.toFixed(2),
         },
       ],
       note: customer.orderNotes || "",
@@ -177,10 +188,6 @@ export async function POST(
     // We use the stable production URL because VERCEL_URL changes per deployment
     const PRODUCTION_URL = "https://webshop-kappa-one.vercel.app";
     const appUrl = process.env.NEXT_PUBLIC_APP_URL || PRODUCTION_URL;
-
-    // Debug logging for webhook URL troubleshooting
-    console.log("Checkout - NEXT_PUBLIC_APP_URL:", process.env.NEXT_PUBLIC_APP_URL);
-    console.log("Checkout - Using appUrl:", appUrl);
 
     if (customer.paymentMethod === "ideal") {
       // For iDEAL, create payment directly in Mollie
@@ -195,9 +202,6 @@ export async function POST(
       const webhookUrl = (isLocalhost || isEmptyUrl)
         ? undefined
         : `${appUrl}/api/webhooks/mollie`;
-
-      console.log("Checkout - isLocalhost:", isLocalhost, "isEmptyUrl:", isEmptyUrl);
-      console.log("Checkout - webhookUrl being sent to Mollie:", webhookUrl);
 
       // Build success URL with conversion tracking data
       const successParams = new URLSearchParams({
@@ -221,8 +225,6 @@ export async function POST(
           order_key: order.order_key,
         },
       });
-
-      console.log("Checkout - Mollie payment created:", molliePayment.id);
 
       // Return Mollie checkout URL (direct to Mollie, not WooCommerce)
       const paymentUrl = molliePayment._links.checkout?.href;

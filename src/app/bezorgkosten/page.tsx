@@ -28,7 +28,7 @@ const regions = [
 export default function BezorgkostenPage() {
   const [postcode, setPostcode] = useState("");
   const [cubicMeters, setCubicMeters] = useState(1);
-  const [result, setResult] = useState<{ price: number; isFixed: boolean } | null>(null);
+  const [result, setResult] = useState<number | null>(null);
 
   useEffect(() => {
     if (postcode.length >= 4) {
@@ -39,7 +39,7 @@ export default function BezorgkostenPage() {
   }, [postcode, cubicMeters]);
 
   return (
-    <main className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white">
       {/* Header */}
       <div className="bg-stone-50 border-b">
         <div className="container mx-auto px-4 py-3">
@@ -125,18 +125,18 @@ export default function BezorgkostenPage() {
           </div>
 
           {/* Result */}
-          {result ? (
+          {result !== null ? (
             <div className="bg-green-50 border border-green-200 rounded-xl p-6 text-center">
               <Check className="h-8 w-8 text-green-500 mx-auto mb-2" />
               <p className="text-sm text-green-700 mb-1">
                 Geschatte bezorgkosten voor {cubicMeters} m³:
               </p>
               <p className="text-4xl font-bold text-green-700">
-                €{result.price},-
+                €{result},-
               </p>
-              {result.isFixed && (
+              {result === 20 && (
                 <p className="text-sm text-green-600 mt-2">
-                  🎉 Je valt binnen ons vaste tarief gebied!
+                  Je valt binnen ons vaste tarief gebied!
                 </p>
               )}
             </div>
@@ -279,6 +279,6 @@ export default function BezorgkostenPage() {
           </div>
         </div>
       </div>
-    </main>
+    </div>
   );
 }

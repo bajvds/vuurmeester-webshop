@@ -1,7 +1,8 @@
-import { Truck, Shield, Phone, Clock } from 'lucide-react';
+import { Truck, Shield, Phone, Clock, MessageCircle } from 'lucide-react';
 import { getHaardhoutProducts, getAanmaakProducts, cleanProductName, formatPrice } from '@/lib/woocommerce/client';
 import { ProductCard } from '@/components/products/product-card';
 import { ShippingCalculator } from '@/components/shipping-calculator';
+import Image from 'next/image';
 
 export default async function Home() {
   // Fetch products server-side
@@ -11,13 +12,17 @@ export default async function Home() {
   ]);
 
   return (
-    <main>
+    <>
       {/* Hero Section */}
       <section className="relative text-white">
         {/* Background Image */}
-        <div
-          className="absolute inset-0 bg-cover bg-top bg-no-repeat"
-          style={{ backgroundImage: "url('/images/hero-header.jpg')" }}
+        <Image
+          src="/images/hero-header.jpg"
+          alt="Haardhout opgestapeld"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-top"
         />
         {/* Dark Overlay for text readability */}
         <div className="absolute inset-0 bg-black/50" />
@@ -35,7 +40,7 @@ export default async function Home() {
               </p>
               <div className="flex items-center gap-2 text-yellow-400 mb-8">
                 <span>★★★★★</span>
-                <span className="text-stone-300">65+ tevreden klanten</span>
+                <span className="text-stone-300">+10.000 tevreden klanten</span>
               </div>
             </div>
 
@@ -173,7 +178,7 @@ export default async function Home() {
               </p>
             </div>
             <div>
-              <div className="text-4xl font-bold text-orange-400 mb-2">🚚</div>
+              <Truck className="h-10 w-10 text-orange-400 mx-auto mb-2" />
               <h3 className="font-semibold mb-2">Heel Nederland</h3>
               <p className="text-stone-400 text-sm">
                 We leveren door het hele land. Vanuit Brabant, met lage
@@ -181,7 +186,7 @@ export default async function Home() {
               </p>
             </div>
             <div>
-              <div className="text-4xl font-bold text-orange-400 mb-2">📱</div>
+              <MessageCircle className="h-10 w-10 text-orange-400 mx-auto mb-2" />
               <h3 className="font-semibold mb-2">Persoonlijk contact</h3>
               <p className="text-stone-400 text-sm">
                 Geen callcenter, maar direct contact via WhatsApp.
@@ -191,6 +196,6 @@ export default async function Home() {
           </div>
         </div>
       </section>
-    </main>
+    </>
   );
 }

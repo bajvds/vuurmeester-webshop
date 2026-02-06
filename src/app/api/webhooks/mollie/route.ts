@@ -18,16 +18,13 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     const formData = await request.formData();
     const paymentId = formData.get("id") as string;
 
-    if (!paymentId) {
-      console.error("Mollie webhook: No payment ID received");
-      return NextResponse.json({ error: "Missing payment ID" }, { status: 400 });
+    if (!paymentId || !/^tr_[A-Za-z0-9]+$/.test(paymentId)) {
+      console.error("Mollie webhook: Invalid or missing payment ID");
+      return NextResponse.json({ error: "Invalid payment ID" }, { status: 400 });
     }
-
-    console.log(`Mollie webhook received for payment: ${paymentId}`);
 
     // Fetch the payment details from Mollie
     const payment = await getMolliePayment(paymentId);
-    console.log(`Payment status: ${payment.status}`, payment.metadata);
 
     // Get the WooCommerce order ID from metadata
     const orderId = parseInt(payment.metadata.order_id);
@@ -38,14 +35,9 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
     // Update WooCommerce order based on payment status
     if (isPaymentSuccessful(payment.status)) {
-      console.log(`Payment ${paymentId} successful, updating order ${orderId} to processing`);
       await updateWooCommerceOrderStatus(orderId, "processing");
     } else if (isPaymentFailed(payment.status)) {
-      console.log(`Payment ${paymentId} failed, updating order ${orderId} to failed`);
       await updateWooCommerceOrderStatus(orderId, "failed");
-    } else {
-      // Status is still pending/open, no action needed
-      console.log(`Payment ${paymentId} status: ${payment.status}, no action needed`);
     }
 
     // Always return 200 to acknowledge receipt

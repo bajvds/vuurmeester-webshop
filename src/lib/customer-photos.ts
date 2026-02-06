@@ -32,6 +32,43 @@ export type ProductPhotoCategory =
   | 'algemeen';           // Fallback/algemene foto's
 
 // ============================================
+// KLANTFOTO'S GENERATOR
+// ============================================
+const klantPhotoAlts = [
+  'Haardhout opgeslagen onder tafel met plantenpotten',
+  'Vers geleverd haardhout op de oprit',
+  'Grote hoeveelheid haardhout bij de schuur',
+  'Close-up van haardhoutblokken',
+  'Haardhout netjes gestapeld in houtopslag',
+  'Haardhout opgeslagen onder houten afdak in de tuin',
+  'Haardhout gestapeld onder afdak bij huis',
+  'Haardhout netjes opgestapeld onder overkapping',
+  'Haardhout gestapeld in houtrek',
+  'Haardhout opgeslagen in schuur met gaas',
+  'Haardhout opgeslagen bij huis',
+  'Haardhout in opslag met mooi uitzicht',
+  'Haardhout gestapeld in opslagruimte',
+  'Panoramisch uitzicht op haardhout opslag',
+  'Haardhout keurig gestapeld in rek',
+  'Grote haardhoutopslag onder overkapping',
+  'Haardhout in metalen opslagrek',
+  'Haardhout opgeslagen in houtberging',
+  'Haardhout levering bij klant thuis',
+  'Haardhout gestapeld in de tuin',
+];
+
+function generateKlantPhotos(): CustomerPhoto[] {
+  const photos: CustomerPhoto[] = [];
+  for (let i = 1; i <= 70; i++) {
+    photos.push({
+      src: `/reviews/_algemeen/klant-${String(i).padStart(2, '0')}.jpg`,
+      alt: klantPhotoAlts[(i - 1) % klantPhotoAlts.length],
+    });
+  }
+  return photos;
+}
+
+// ============================================
 // FOTO'S PER CATEGORIE
 // ============================================
 export const photosByCategory: Record<ProductPhotoCategory, CustomerPhoto[]> = {
@@ -190,6 +227,8 @@ export const photosByCategory: Record<ProductPhotoCategory, CustomerPhoto[]> = {
       caption: 'Heel tevreden, vriendelijke communicatie en afspraken nagekomen.',
       reviewerName: 'O. van der Sluis'
     },
+    // Klantfoto's collectie
+    ...generateKlantPhotos(),
   ],
 };
 

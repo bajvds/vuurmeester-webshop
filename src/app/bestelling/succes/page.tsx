@@ -59,12 +59,23 @@ function BestellingSuccesContent() {
           },
         ],
       });
-      console.log("GA4 purchase event tracked:", { orderId, value });
+
+      // Google Ads conversion tracking (direct, naast GA4 import)
+      const adsId = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID;
+      const conversionLabel = process.env.NEXT_PUBLIC_GOOGLE_ADS_CONVERSION_LABEL;
+      if (adsId && conversionLabel) {
+        window.gtag("event", "conversion", {
+          send_to: `${adsId}/${conversionLabel}`,
+          value: value,
+          currency: "EUR",
+          transaction_id: orderId,
+        });
+      }
     }
   }, [orderId, orderTotal, itemCount]);
 
   return (
-    <main className="min-h-screen bg-stone-50 py-12">
+    <div className="min-h-screen bg-stone-50 py-12">
       <div className="container mx-auto px-4">
         <div className="max-w-2xl mx-auto text-center">
           {/* Success Icon */}
@@ -146,18 +157,18 @@ function BestellingSuccesContent() {
             </h3>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
-                href="mailto:info@devuurmeester.nl"
+                href="mailto:contact@vuurmeester.shop"
                 className="inline-flex items-center justify-center gap-2 text-stone-600 hover:text-orange-600 transition-colors"
               >
                 <Mail className="h-4 w-4" />
-                info@devuurmeester.nl
+                contact@vuurmeester.shop
               </a>
               <a
-                href="tel:+31612345678"
+                href="tel:+31682091984"
                 className="inline-flex items-center justify-center gap-2 text-stone-600 hover:text-orange-600 transition-colors"
               >
                 <Phone className="h-4 w-4" />
-                06 - 12345678
+                06 82 09 19 84
               </a>
             </div>
           </div>
@@ -171,7 +182,7 @@ function BestellingSuccesContent() {
           </Button>
         </div>
       </div>
-    </main>
+    </div>
   );
 }
 
@@ -179,7 +190,7 @@ export default function BestellingSuccesPage() {
   return (
     <Suspense
       fallback={
-        <main className="min-h-screen bg-stone-50 py-12">
+        <div className="min-h-screen bg-stone-50 py-12">
           <div className="container mx-auto px-4">
             <div className="animate-pulse max-w-2xl mx-auto">
               <div className="h-24 w-24 bg-stone-200 rounded-full mx-auto mb-8"></div>
@@ -187,7 +198,7 @@ export default function BestellingSuccesPage() {
               <div className="h-4 bg-stone-200 rounded w-96 mx-auto"></div>
             </div>
           </div>
-        </main>
+        </div>
       }
     >
       <BestellingSuccesContent />

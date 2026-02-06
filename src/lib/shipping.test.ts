@@ -28,7 +28,7 @@ describe("calculateShipping", () => {
   describe("fixed rate postcodes", () => {
     it("returns €20 for fixed rate postcodes", () => {
       const result = calculateShipping("5091AB", 1);
-      expect(result).toEqual({ price: 20, isFixed: true });
+      expect(result).toBe(20);
     });
 
     it("returns €20 for fixed rate postcodes regardless of volume", () => {
@@ -36,15 +36,15 @@ describe("calculateShipping", () => {
       const result5m3 = calculateShipping("5091AB", 5);
       const result10m3 = calculateShipping("5091AB", 10);
 
-      expect(result1m3?.price).toBe(20);
-      expect(result5m3?.price).toBe(20);
-      expect(result10m3?.price).toBe(20);
+      expect(result1m3).toBe(20);
+      expect(result5m3).toBe(20);
+      expect(result10m3).toBe(20);
     });
 
     it("all fixed rate postcodes return €20", () => {
       FIXED_RATE_POSTCODES.forEach((postcode) => {
         const result = calculateShipping(postcode + "AB", 1);
-        expect(result).toEqual({ price: 20, isFixed: true });
+        expect(result).toBe(20);
       });
     });
   });
@@ -52,23 +52,22 @@ describe("calculateShipping", () => {
   describe("regular postcode pricing", () => {
     it("returns correct base price for Brabant depot area (50xx)", () => {
       const result = calculateShipping("5012AB", 1);
-      expect(result?.price).toBe(39);
-      expect(result?.isFixed).toBe(false);
+      expect(result).toBe(39);
     });
 
     it("returns correct base price for Amsterdam (10xx)", () => {
       const result = calculateShipping("1012AB", 1);
-      expect(result?.price).toBe(69);
+      expect(result).toBe(69);
     });
 
     it("returns correct base price for Groningen (90xx)", () => {
       const result = calculateShipping("9012AB", 1);
-      expect(result?.price).toBe(89);
+      expect(result).toBe(89);
     });
 
     it("returns correct base price for Flevoland expensive area (45xx)", () => {
       const result = calculateShipping("4512AB", 1);
-      expect(result?.price).toBe(120);
+      expect(result).toBe(120);
     });
   });
 
@@ -79,8 +78,8 @@ describe("calculateShipping", () => {
       const result2m3 = calculateShipping("1012AB", 2);
       const result3m3 = calculateShipping("1012AB", 3);
 
-      expect(result2m3!.price).toBeGreaterThan(result1m3!.price);
-      expect(result3m3!.price).toBeGreaterThan(result2m3!.price);
+      expect(result2m3!).toBeGreaterThan(result1m3!);
+      expect(result3m3!).toBeGreaterThan(result2m3!);
     });
 
     it("price stays same for postcodes with 0% surcharge", () => {
@@ -88,15 +87,15 @@ describe("calculateShipping", () => {
       const result1m3 = calculateShipping("5012AB", 1);
       const result5m3 = calculateShipping("5012AB", 5);
 
-      expect(result1m3?.price).toBe(39);
-      expect(result5m3?.price).toBe(39);
+      expect(result1m3).toBe(39);
+      expect(result5m3).toBe(39);
     });
 
     it("applies diminishing surcharge (each m³ costs less extra)", () => {
       // Using Amsterdam (10xx) which has surcharge 0.2
-      const result1m3 = calculateShipping("1012AB", 1)!.price;
-      const result2m3 = calculateShipping("1012AB", 2)!.price;
-      const result3m3 = calculateShipping("1012AB", 3)!.price;
+      const result1m3 = calculateShipping("1012AB", 1)!;
+      const result2m3 = calculateShipping("1012AB", 2)!;
+      const result3m3 = calculateShipping("1012AB", 3)!;
 
       const surcharge1to2 = result2m3 - result1m3;
       const surcharge2to3 = result3m3 - result2m3;
@@ -110,7 +109,7 @@ describe("calculateShipping", () => {
       // extraCharge = 69 * 0.2 = 13.8
       // i=2: extraCharge *= 0.90 = 12.42, total = 69 + 12.42 = 81.42
       const result = calculateShipping("1012AB", 2);
-      expect(result?.price).toBe(81.42);
+      expect(result).toBe(81.42);
     });
 
     it("calculates 3m³ correctly for Amsterdam (10xx)", () => {
@@ -119,7 +118,7 @@ describe("calculateShipping", () => {
       // i=2: extraCharge = 12.42, total = 81.42
       // i=3: extraCharge = 11.178, total = 92.598 ≈ 92.6
       const result = calculateShipping("1012AB", 3);
-      expect(result?.price).toBeCloseTo(92.6, 1);
+      expect(result).toBeCloseTo(92.6, 1);
     });
   });
 
@@ -130,8 +129,7 @@ describe("calculateShipping", () => {
         // (e.g., "5512" is fixed rate, but "5500" is not)
         const result = calculateShipping(prefix + "00AB", 1);
         expect(result).not.toBeNull();
-        expect(result?.price).toBeGreaterThan(0);
-        expect(result?.isFixed).toBe(false);
+        expect(result).toBeGreaterThan(0);
       });
     });
   });
@@ -142,19 +140,19 @@ describe("calculateShipping", () => {
       // The UI should clean this, but test the raw function
       const resultWithSpaces = calculateShipping("5091 AB", 1);
       // This should still work because we check first 4 chars
-      expect(resultWithSpaces).toEqual({ price: 20, isFixed: true });
+      expect(resultWithSpaces).toBe(20);
     });
 
     it("handles lowercase postcodes", () => {
       const result = calculateShipping("5091ab", 1);
-      expect(result).toEqual({ price: 20, isFixed: true });
+      expect(result).toBe(20);
     });
 
     it("handles very large volumes", () => {
       // Using Amsterdam (10xx) which has surcharge 0.2
       const result = calculateShipping("1012AB", 20);
       expect(result).not.toBeNull();
-      expect(result?.price).toBeGreaterThan(69); // More than base price
+      expect(result).toBeGreaterThan(69); // More than base price
     });
   });
 });

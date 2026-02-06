@@ -117,20 +117,15 @@ export const SHIPPING_RATES: Record<string, { base: number; surcharge: number }>
   "99": { base: 89.00, surcharge: 0.3 },
 };
 
-export interface ShippingResult {
-  price: number;
-  isFixed: boolean;
-}
-
 /**
  * Calculate shipping cost based on postcode and volume
- * Exact copy of WooCommerce PHP calculation logic
+ * Exact copy of WooCommerce PHP calculate_bumbal_shipping logic
  *
  * @param postcode - Dutch postcode (at least 4 characters)
  * @param cubicMeters - Volume in cubic meters
- * @returns Shipping result with price and fixed rate flag, or null if postcode not supported
+ * @returns Shipping cost in euros, or null if postcode not supported
  */
-export function calculateShipping(postcode: string, cubicMeters: number): ShippingResult | null {
+export function calculateShipping(postcode: string, cubicMeters: number): number | null {
   if (!postcode || postcode.length < 4) return null;
   if (cubicMeters < 1) return null;
 
@@ -139,7 +134,7 @@ export function calculateShipping(postcode: string, cubicMeters: number): Shippi
 
   // Check fixed rate postcodes first (€20 flat fee)
   if (FIXED_RATE_POSTCODES.includes(prefix4)) {
-    return { price: 20, isFixed: true };
+    return 20;
   }
 
   // Check regular rates
@@ -161,9 +156,6 @@ export function calculateShipping(postcode: string, cubicMeters: number): Shippi
     }
   }
 
-  // Round to 2 decimal places like PHP's toFixed(2)
-  return {
-    price: Math.round(transportCost * 100) / 100,
-    isFixed: false
-  };
+  // Round to 2 decimal places like PHP
+  return Math.round(transportCost * 100) / 100;
 }

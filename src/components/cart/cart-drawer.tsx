@@ -26,7 +26,6 @@ export function CartDrawer() {
     if (isOpen && !aanmaakhoutjes) {
       getAanmaakProducts()
         .then((products) => {
-          console.log('Cart drawer - Aanmaak products:', products.map(p => ({ slug: p.slug, name: p.name })));
           const product = products.find((p) => {
             const slug = p.slug.toLowerCase();
             const name = p.name.toLowerCase();
@@ -35,7 +34,6 @@ export function CartDrawer() {
                    name.includes('aanmaakhoutje') ||
                    name.includes('aanmaak houtje');
           });
-          console.log('Cart drawer - Found:', product?.name);
           if (product) setAanmaakhoutjes(product);
         })
         .catch(console.error);
@@ -81,6 +79,7 @@ export function CartDrawer() {
                           src={item.product.images[0].src}
                           alt={item.product.images[0].alt || item.product.name}
                           fill
+                          sizes="64px"
                           className="object-cover"
                         />
                       ) : (
@@ -154,6 +153,7 @@ export function CartDrawer() {
                             src={aanmaakhoutjes.images[0].src}
                             alt="Aanmaakhoutjes"
                             fill
+                            sizes="48px"
                             className="object-cover"
                           />
                         ) : (
@@ -183,7 +183,7 @@ export function CartDrawer() {
             </div>
 
             {/* Footer */}
-            <div className="border-t pt-4 space-y-4">
+            <div className="border-t pt-4 px-6 pb-4 space-y-4">
               {/* Subtotal */}
               <div className="flex justify-between items-center">
                 <span className="text-stone-600">Subtotaal</span>

@@ -82,6 +82,7 @@ export function WhatsAppButton() {
               <button
                 onClick={() => setIsOpen(false)}
                 className="p-1 hover:bg-white/20 rounded-full transition-colors"
+                aria-label="Sluit WhatsApp menu"
               >
                 <X className="h-5 w-5" />
               </button>
@@ -143,7 +144,7 @@ export function WhatsAppButton() {
       {/* Floating Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`fixed bottom-6 right-4 sm:right-6 z-50 flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-3 rounded-full shadow-lg hover:shadow-xl transition-all hover:scale-105 ${
+        className={`whatsapp-float fixed bottom-6 right-4 sm:right-6 z-50 flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-3 rounded-full shadow-lg hover:shadow-xl transition-all hover:scale-105 ${
           isOpen ? "scale-0 opacity-0" : "scale-100 opacity-100"
         }`}
         aria-label="Chat via WhatsApp"
