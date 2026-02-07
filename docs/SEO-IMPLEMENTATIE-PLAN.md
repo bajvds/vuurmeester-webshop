@@ -1,15 +1,89 @@
 # SEO Implementatie Plan - De Vuurmeester Webshop
 
-Dit document bevat het complete werkplan voor 5 parallelle agents. Elke agent heeft een eigen sectie met alle context, specificaties en code-patronen die nodig zijn om zelfstandig te werken.
-
-**Webshop root**: `/Users/bramvandesande/Vuurmeester/webshop`
+**Status**: VOLLEDIG AFGEROND (7 februari 2026)
+**Gedeployd**: Vercel (automatisch via git push naar main)
 **Live domain**: `https://www.vuurmeester-haardhout.nl`
-**Tech stack**: Next.js 16 (App Router), Tailwind CSS, shadcn/ui, WooCommerce Store API
-**Styling**: Oranje (#f97316) als accent, stone kleuren als basis, Inter font
 
 ---
 
-## Voortgang
+## Resultaat
+
+| Metric | Waarde |
+|--------|--------|
+| Totaal nieuwe pagina's | 53 |
+| Stadspagina's | 40 (3 tier 1, 14 tier 2, 23 tier 3) |
+| Provinciepagina's | 7 |
+| Overzichtspagina bezorging | 1 |
+| Synoniempagina's | 5 (brandhout, kachelhout, stookhout, openhaardhout, ovengedroogd-haardhout) |
+| URL's in sitemap | 72 |
+| JSON-LD schemas | LocalBusiness, WebSite, Product, BreadcrumbList, FAQPage |
+| Build tijd | ~2.4s voor 72 pagina's |
+
+## Handmatige opvolging
+
+- [ ] Google Search Console: sitemap opnieuw indienen (`/sitemap.xml`)
+- [ ] Na 2-4 weken: Search Console checken op indexatie van nieuwe URL's
+- [ ] Na 4-8 weken: Rankings monitoren per stad in Search Console (Performance → Pages)
+- [ ] GA4: Pagina-prestaties van `/haardhout-bezorgen/*` monitoren
+- [ ] Eventueel: meer steden toevoegen aan `src/lib/locations/cities.ts`
+
+## Bestandsoverzicht
+
+### Nieuwe bestanden
+
+| Bestand | Beschrijving |
+|---------|-------------|
+| `src/lib/locations/types.ts` | TypeScript interfaces: CityData, ProvinceData, FAQItem |
+| `src/lib/locations/cities.ts` | 40 steden met unieke intro's, FAQ's, meta data, nearby cities |
+| `src/lib/locations/provinces.ts` | 7 provincies met intro's, shipping ranges, meta data |
+| `src/app/haardhout-bezorgen/page.tsx` | Overzichtspagina: alle provincies + steden met bezorgkosten |
+| `src/app/haardhout-bezorgen/[slug]/page.tsx` | Dynamische stad/provincie pagina met SSG |
+| `src/app/bezorgkosten/bezorgkosten-client.tsx` | Client component (afgesplitst van page.tsx voor metadata) |
+| `src/app/brandhout/page.tsx` | Synoniempagina brandhout |
+| `src/app/kachelhout/page.tsx` | Synoniempagina kachelhout |
+| `src/app/stookhout/page.tsx` | Synoniempagina stookhout |
+| `src/app/openhaardhout/page.tsx` | Synoniempagina openhaardhout |
+| `src/app/ovengedroogd-haardhout/page.tsx` | Synoniempagina ovengedroogd haardhout |
+
+### Gewijzigde bestanden
+
+| Bestand | Wijziging |
+|---------|-----------|
+| `src/app/layout.tsx` | WebSite JSON-LD schema toegevoegd |
+| `src/app/product/[slug]/page.tsx` | BreadcrumbList JSON-LD + url velden op Product/Offer |
+| `src/app/bezorgkosten/page.tsx` | Server wrapper voor metadata (client code naar apart bestand) |
+| `src/app/sitemap.ts` | Synoniempagina's, locatiepagina's, provinciepagina's toegevoegd |
+| `src/components/layout/footer.tsx` | 5e kolom "Bezorging" met top-6 steden + overzichtslink |
+| `src/app/leveren-afhalen/page.tsx` | Link naar bezorgregio's toegevoegd |
+| `src/app/veelgestelde-vragen/page.tsx` | Bezorgregio's blok toegevoegd |
+| `src/app/over-ons/page.tsx` | OpenGraph images toegevoegd |
+| `src/app/privacybeleid/page.tsx` | OpenGraph images toegevoegd |
+| `src/app/algemene-voorwaarden/page.tsx` | OpenGraph images toegevoegd |
+| `next.config.ts` | X-Robots-Tag noindex op /afrekenen en /bestelling/* |
+
+## Steden uitbreiden
+
+Om een nieuwe stad toe te voegen:
+
+1. Voeg een `CityData` object toe aan de array in `src/lib/locations/cities.ts`
+2. Voeg de slug toe aan de juiste provincie in `src/lib/locations/provinces.ts`
+3. De stad verschijnt automatisch in: sitemap, overzichtspagina, provinciepagina, en krijgt een eigen pagina
+
+Velden per stad: `slug`, `name`, `province` (slug), `postcodePrefix`, `samplePostcode`, `distanceFromDepot`, `estimatedDelivery`, `tier` (1/2/3), `introduction` (unieke SEO-tekst), `neighborhoods` (optioneel), `metaTitle`, `metaDescription`, `faqItems` (3-5 FAQ's), `nearbyCities` (slugs).
+
+## Content richtlijnen
+
+- Geen specifieke leveringsaantallen noemen (tenzij indrukwekkend hoog)
+- Gebruik: "honderden tevreden klanten", "tientallen vaste klanten", "groeiend klantenbestand"
+- Schrijf in het Nederlands, informeel maar professioneel (je/jij)
+- Vermeld altijd: "De Vuurmeester", "Middelbeers", bezorgkosten
+- Elke tekst moet uniek zijn — geen copy-paste
+
+---
+
+## Agent Details
+
+### Voortgang
 
 | Agent | Status | Notities |
 |-------|--------|----------|
