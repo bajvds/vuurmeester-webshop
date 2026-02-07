@@ -311,6 +311,7 @@ export default function AfrekenPage() {
             <CheckoutForm
               shippingCost={shippingCost}
               onSuccess={handleCheckoutSuccess}
+              onPostcodeChange={(pc) => setPostcode(pc.replace(/\s/g, ""))}
             />
           </div>
 

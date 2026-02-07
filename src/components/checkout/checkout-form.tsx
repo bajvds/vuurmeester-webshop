@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
-import { Loader2, CreditCard, Banknote, AlertCircle } from "lucide-react";
+import { Loader2, CreditCard, Banknote, AlertCircle, Truck } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -32,9 +32,10 @@ import {
 interface CheckoutFormProps {
   shippingCost: number | null;
   onSuccess: (redirectUrl: string) => void;
+  onPostcodeChange?: (postcode: string) => void;
 }
 
-export function CheckoutForm({ shippingCost, onSuccess }: CheckoutFormProps) {
+export function CheckoutForm({ shippingCost, onSuccess, onPostcodeChange }: CheckoutFormProps) {
   const { items, clearCart } = useCart();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -229,11 +230,18 @@ export function CheckoutForm({ shippingCost, onSuccess }: CheckoutFormProps) {
                         );
                         form.setValue("billing.city", suggestion.city);
                         form.trigger(["billing.postcode", "billing.city"]);
+                        onPostcodeChange?.(suggestion.postalCode.toUpperCase());
                       }}
                       placeholder="Hoofdstraat 123"
                     />
                   </FormControl>
                   <FormMessage />
+                  {shippingCost !== null && form.getValues("billing.postcode") && (
+                    <p className="flex items-center gap-1.5 text-sm text-green-700 mt-1.5">
+                      <Truck className="h-3.5 w-3.5" />
+                      &euro;{shippingCost.toFixed(2).replace(".", ",")} bezorgkosten o.b.v. postcode {form.getValues("billing.postcode")}
+                    </p>
+                  )}
                 </FormItem>
               )}
             />
