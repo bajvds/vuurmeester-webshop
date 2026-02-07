@@ -22,8 +22,8 @@ export function AddressAutocomplete({
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [activeIndex, setActiveIndex] = useState(-1);
-  const [skipNextFetch, setSkipNextFetch] = useState(false);
 
+  const skipNextFetchRef = useRef(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const debounceRef = useRef<ReturnType<typeof setTimeout>>(undefined);
@@ -54,8 +54,8 @@ export function AddressAutocomplete({
 
   // Debounced fetch on value change
   useEffect(() => {
-    if (skipNextFetch) {
-      setSkipNextFetch(false);
+    if (skipNextFetchRef.current) {
+      skipNextFetchRef.current = false;
       return;
     }
 
@@ -68,7 +68,7 @@ export function AddressAutocomplete({
     return () => {
       if (debounceRef.current) clearTimeout(debounceRef.current);
     };
-  }, [value, fetchSuggestions, skipNextFetch]);
+  }, [value, fetchSuggestions]);
 
   // Close dropdown on outside click
   useEffect(() => {
@@ -89,7 +89,7 @@ export function AddressAutocomplete({
       ? `${suggestion.street} ${suggestion.houseNumber}`
       : suggestion.street;
 
-    setSkipNextFetch(true);
+    skipNextFetchRef.current = true;
     onChange(address);
     setSuggestions([]);
     setIsOpen(false);
