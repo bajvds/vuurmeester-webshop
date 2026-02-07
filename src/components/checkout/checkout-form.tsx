@@ -21,6 +21,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 
+import { AddressAutocomplete } from "@/components/checkout/address-autocomplete";
 import { useCart } from "@/store/cart";
 import {
   checkoutSchema,
@@ -218,7 +219,19 @@ export function CheckoutForm({ shippingCost, onSuccess }: CheckoutFormProps) {
                 <FormItem className="sm:col-span-2">
                   <FormLabel>Straat en huisnummer *</FormLabel>
                   <FormControl>
-                    <Input placeholder="Hoofdstraat 123" {...field} />
+                    <AddressAutocomplete
+                      value={field.value}
+                      onChange={field.onChange}
+                      onAddressSelect={(suggestion) => {
+                        form.setValue(
+                          "billing.postcode",
+                          suggestion.postalCode.toUpperCase()
+                        );
+                        form.setValue("billing.city", suggestion.city);
+                        form.trigger(["billing.postcode", "billing.city"]);
+                      }}
+                      placeholder="Hoofdstraat 123"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
