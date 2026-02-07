@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import {
   ArrowLeft,
   Truck,
@@ -34,8 +35,17 @@ export default function LeverenAfhalenPage() {
       </div>
 
       {/* Hero */}
-      <div className="bg-gradient-to-br from-stone-900 to-stone-800 text-white py-16">
-        <div className="container mx-auto px-4 text-center">
+      <section className="relative text-white">
+        <Image
+          src="/images/hero-leveren-afhalen.jpg"
+          alt="Haardhout bezorging door De Vuurmeester"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-center"
+        />
+        <div className="absolute inset-0 bg-black/50" />
+        <div className="relative container mx-auto px-4 py-16 md:py-24 text-center">
           <Truck className="h-16 w-16 mx-auto mb-4 text-orange-400" />
           <h1 className="text-3xl lg:text-4xl font-bold mb-4">
             Leveren & Afhalen
@@ -45,7 +55,7 @@ export default function LeverenAfhalenPage() {
             Liever zelf ophalen? Dat kan ook!
           </p>
         </div>
-      </div>
+      </section>
 
       <div className="container mx-auto px-4 py-16">
         <div className="max-w-4xl mx-auto">
@@ -291,7 +301,7 @@ export default function LeverenAfhalenPage() {
 
                 <div className="mt-6 p-4 bg-yellow-50 rounded-lg border border-yellow-200">
                   <p className="text-sm text-yellow-800">
-                    <strong>Let op:</strong> Afhalen is alleen mogelijk met een aanhanger of busje.
+                    <strong>Let op:</strong> Afhalen is alleen mogelijk met een aanhanger.
                     1 m&#179; haardhout weegt zo&apos;n 400-500 kg.
                   </p>
                 </div>

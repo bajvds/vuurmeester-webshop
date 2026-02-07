@@ -156,7 +156,7 @@ class WooCommerceStoreClient {
   async getHaardhoutProducts(): Promise<Product[]> {
     const products = await this.getProducts({ per_page: 50 });
 
-    // Filter for haardhout products
+    // Filter for haardhout products, sorted by price (lowest first)
     return products.filter(p => {
       const name = p.name.toLowerCase();
       const isHaardhout = name.includes('haardhout') ||
@@ -169,7 +169,7 @@ class WooCommerceStoreClient {
                           name.includes('ofyr');
       const isNotAanmaak = !name.includes('aanmaak') && !name.includes('houtskool') && !name.includes('briket');
       return isHaardhout && isNotAanmaak;
-    });
+    }).sort((a, b) => parseInt(a.prices.price) - parseInt(b.prices.price));
   }
 
   // Helper: Get aanmaak products

@@ -9,9 +9,10 @@ const WHATSAPP_NUMBER = "31682091984";
 interface QuickOption {
   icon: React.ReactNode;
   label: string;
-  action: "link" | "whatsapp";
+  action: "link" | "whatsapp" | "answer";
   href?: string;
   message?: string;
+  answer?: string;
 }
 
 const quickOptions: QuickOption[] = [
@@ -24,14 +25,14 @@ const quickOptions: QuickOption[] = [
   {
     icon: <Clock className="h-5 w-5" />,
     label: "Hoe lang moet halfdroog hout drogen?",
-    action: "link",
-    href: "/veelgestelde-vragen#droogtijd",
+    action: "answer",
+    answer: "Nog 6 tot 8 maanden moet drogen.",
   },
   {
     icon: <Package className="h-5 w-5" />,
-    label: "Hoeveel zit er in een big bag?",
-    action: "link",
-    href: "/veelgestelde-vragen#bigbag",
+    label: "Hoeveel hout is 1m³?",
+    action: "answer",
+    answer: "1m³ losgestort is ongeveer 0,7m³ gestapeld.",
   },
   {
     icon: <HelpCircle className="h-5 w-5" />,
@@ -43,15 +44,18 @@ const quickOptions: QuickOption[] = [
 
 export function WhatsAppButton() {
   const [isOpen, setIsOpen] = useState(false);
+  const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
 
-  const handleOptionClick = (option: QuickOption) => {
+  const handleOptionClick = (option: QuickOption, index: number) => {
     if (option.action === "whatsapp" && option.message) {
       window.open(
         `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(option.message)}`,
         "_blank"
       );
+      setIsOpen(false);
+    } else if (option.action === "answer") {
+      setExpandedIndex(expandedIndex === index ? null : index);
     }
-    setIsOpen(false);
   };
 
   return (
@@ -60,7 +64,7 @@ export function WhatsAppButton() {
       {isOpen && (
         <div
           className="fixed inset-0 bg-black/20 z-40"
-          onClick={() => setIsOpen(false)}
+          onClick={() => { setIsOpen(false); setExpandedIndex(null); }}
         />
       )}
 
@@ -76,11 +80,11 @@ export function WhatsAppButton() {
                 </div>
                 <div>
                   <p className="font-semibold">De Vuurmeester</p>
-                  <p className="text-sm text-green-100">Meestal binnen 1 uur reactie</p>
+                  <p className="text-sm text-green-100">Uw partner in haardhout</p>
                 </div>
               </div>
               <button
-                onClick={() => setIsOpen(false)}
+                onClick={() => { setIsOpen(false); setExpandedIndex(null); }}
                 className="p-1 hover:bg-white/20 rounded-full transition-colors"
                 aria-label="Sluit WhatsApp menu"
               >
@@ -107,10 +111,26 @@ export function WhatsAppButton() {
                     <span className="flex-1 text-stone-700">{option.label}</span>
                     <ChevronRight className="h-4 w-4 text-stone-400 group-hover:text-orange-500 transition-colors" />
                   </Link>
+                ) : option.action === "answer" ? (
+                  <div key={index}>
+                    <button
+                      onClick={() => handleOptionClick(option, index)}
+                      className="flex items-center gap-3 p-3 rounded-lg hover:bg-stone-50 transition-colors group w-full text-left"
+                    >
+                      <div className="text-orange-500">{option.icon}</div>
+                      <span className="flex-1 text-stone-700">{option.label}</span>
+                      <ChevronRight className={`h-4 w-4 text-stone-400 group-hover:text-orange-500 transition-transform ${expandedIndex === index ? "rotate-90" : ""}`} />
+                    </button>
+                    {expandedIndex === index && (
+                      <div className="ml-11 mr-3 mb-2 p-3 bg-orange-50 rounded-lg text-sm text-stone-700">
+                        {option.answer}
+                      </div>
+                    )}
+                  </div>
                 ) : (
                   <button
                     key={index}
-                    onClick={() => handleOptionClick(option)}
+                    onClick={() => handleOptionClick(option, index)}
                     className="flex items-center gap-3 p-3 rounded-lg hover:bg-green-50 transition-colors group w-full text-left"
                   >
                     <div className="text-green-500">{option.icon}</div>

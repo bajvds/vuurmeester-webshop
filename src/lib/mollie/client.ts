@@ -5,7 +5,7 @@
  * This bypasses WooCommerce payment pages for a seamless checkout experience.
  */
 
-const MOLLIE_API_KEY = process.env.MOLLIE_API_KEY;
+const MOLLIE_API_KEY = process.env.MOLLIE_API_KEY?.trim();
 const MOLLIE_API_URL = "https://api.mollie.com/v2";
 
 // Payment status from Mollie

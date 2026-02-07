@@ -8,9 +8,9 @@
  * Never import this in client components as it exposes API credentials.
  */
 
-const WOOCOMMERCE_URL = process.env.NEXT_PUBLIC_WOOCOMMERCE_URL;
-const CONSUMER_KEY = process.env.WOOCOMMERCE_CONSUMER_KEY;
-const CONSUMER_SECRET = process.env.WOOCOMMERCE_CONSUMER_SECRET;
+const WOOCOMMERCE_URL = process.env.NEXT_PUBLIC_WOOCOMMERCE_URL?.trim();
+const CONSUMER_KEY = process.env.WOOCOMMERCE_CONSUMER_KEY?.trim();
+const CONSUMER_SECRET = process.env.WOOCOMMERCE_CONSUMER_SECRET?.trim();
 
 // Types for order creation (Legacy API format)
 export interface WooCommerceAddress {

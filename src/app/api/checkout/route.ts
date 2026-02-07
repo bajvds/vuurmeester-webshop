@@ -186,8 +186,8 @@ export async function POST(
     // Priority: 1) NEXT_PUBLIC_APP_URL (explicit config)
     //           2) Stable production URL (hardcoded fallback for Mollie webhooks)
     // We use the stable production URL because VERCEL_URL changes per deployment
-    const PRODUCTION_URL = "https://webshop-kappa-one.vercel.app";
-    const appUrl = process.env.NEXT_PUBLIC_APP_URL || PRODUCTION_URL;
+    const PRODUCTION_URL = "https://www.vuurmeester-haardhout.nl";
+    const appUrl = (process.env.NEXT_PUBLIC_APP_URL || PRODUCTION_URL).trim();
 
     if (customer.paymentMethod === "ideal") {
       // For iDEAL, create payment directly in Mollie

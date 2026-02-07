@@ -1,9 +1,9 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import Image from "next/image";
 import Link from "next/link";
 import { woocommerce, formatPrice, cleanProductName, Product } from "@/lib/woocommerce/client";
 import { AddToCartButton } from "./add-to-cart-button";
+import { ProductImageGallery } from "./product-image-gallery";
 import { ProductCard } from "@/components/products/product-card";
 import { ProductReviews, ProductRatingBadge } from "@/components/products/product-reviews";
 import { CustomerPhotos } from "@/components/products/customer-photos";
@@ -78,6 +78,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
   const price = formatPrice(product.prices.price);
   const regularPrice = formatPrice(product.prices.regular_price);
   const isOnSale = product.on_sale;
+  const lowerName = product.name.toLowerCase();
+  const isHaardhout = ['ovengedroogd', 'oven gedroogd', 'halfdroog', 'half droog', 'vers', 'beuk', 'ofyr', 'kozijn', 'kleine blok'].some(k => lowerName.includes(k));
 
   // Get related products (same category)
   let relatedProducts: Product[] = [];
@@ -136,51 +138,12 @@ export default async function ProductPage({ params }: ProductPageProps) {
       <div className="container mx-auto px-4 py-4 lg:py-12">
         <div className="grid lg:grid-cols-2 gap-6 lg:gap-12">
           {/* Image Gallery */}
-          <div className="space-y-3 lg:space-y-4">
-            {/* Main Image */}
-            <div className="relative aspect-[4/3] lg:aspect-square rounded-xl overflow-hidden bg-stone-100">
-              {product.images[0] ? (
-                <Image
-                  src={product.images[0].src}
-                  alt={product.images[0].alt || name}
-                  fill
-                  className="object-cover"
-                  priority
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                />
-              ) : (
-                <div className="h-full w-full flex items-center justify-center">
-                  <span className="text-6xl">🪵</span>
-                </div>
-              )}
-
-              {isOnSale && (
-                <span className="absolute left-4 top-4 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-medium">
-                  Aanbieding
-                </span>
-              )}
-            </div>
-
-            {/* Thumbnail Gallery */}
-            {product.images.length > 1 && (
-              <div className="flex gap-3 overflow-x-auto pb-2">
-                {product.images.map((image, index) => (
-                  <div
-                    key={image.id}
-                    className="relative w-[72px] h-[72px] flex-shrink-0 rounded-lg overflow-hidden bg-stone-100 border-2 border-transparent hover:border-orange-500 transition-colors cursor-pointer"
-                  >
-                    <Image
-                      src={image.thumbnail || image.src}
-                      alt={image.alt || `${name} - Afbeelding ${index + 1}`}
-                      fill
-                      className="object-cover"
-                      sizes="80px"
-                    />
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
+          <ProductImageGallery
+            images={product.images}
+            name={name}
+            isOnSale={isOnSale}
+            isHaardhout={isHaardhout}
+          />
 
           {/* Product Info */}
           <div className="space-y-4 lg:space-y-6">
@@ -261,7 +224,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                       Snelle bezorging door heel Nederland
                     </p>
                     <p className="text-sm text-stone-600">
-                      Bezorgkosten vanaf &euro;15,- afhankelijk van locatie
+                      Bezorgkosten afhankelijk van locatie
                     </p>
                   </div>
                 </div>
@@ -323,7 +286,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
             </h2>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {relatedProducts.map((relProduct) => (
-                <ProductCard key={relProduct.id} product={relProduct} />
+                <ProductCard key={relProduct.id} product={relProduct} showDeliveryBadge />
               ))}
             </div>
           </div>

@@ -54,7 +54,7 @@ export function Header() {
             alt="De Vuurmeester"
             width={180}
             height={50}
-            className="h-10 w-auto"
+            className="h-14 w-auto"
             priority
           />
         </Link>

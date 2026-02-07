@@ -1,8 +1,9 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ShoppingCart, Flame, Droplets, TreeDeciduous, Package } from 'lucide-react';
+import { ShoppingCart, Flame, Droplets, TreeDeciduous, Package, Truck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -55,10 +56,12 @@ const woodTypeBadge: Record<NonNullable<WoodType>, { label: string; className: s
 
 interface ProductCardProps {
   product: Product;
+  showDeliveryBadge?: boolean;
 }
 
-export function ProductCard({ product }: ProductCardProps) {
+export function ProductCard({ product, showDeliveryBadge = false }: ProductCardProps) {
   const { addItem, openCart } = useCart();
+  const [showDelivery, setShowDelivery] = useState(false);
 
   const name = cleanProductName(product.name);
   const price = formatPrice(product.prices.price);
@@ -67,6 +70,30 @@ export function ProductCard({ product }: ProductCardProps) {
   const image = product.images[0];
   const woodType = detectWoodType(product.name);
   const badge = woodType ? woodTypeBadge[woodType] : null;
+  const hasDeliveryOverlay = woodType !== null;
+  const isNetzakken = product.name.toLowerCase().includes('netzak');
+
+  // Mobile: auto-rotate between product photo and delivery photo every 5s
+  useEffect(() => {
+    if (!hasDeliveryOverlay) return;
+    const mql = window.matchMedia('(min-width: 768px)');
+    if (mql.matches) return;
+
+    let intervalId: ReturnType<typeof setInterval>;
+    // Stagger start so cards don't all flip at once
+    const delay = Math.random() * 2000;
+    const timeoutId = setTimeout(() => {
+      setShowDelivery(true);
+      intervalId = setInterval(() => {
+        setShowDelivery((prev) => !prev);
+      }, 5000);
+    }, delay);
+
+    return () => {
+      clearTimeout(timeoutId);
+      if (intervalId) clearInterval(intervalId);
+    };
+  }, [hasDeliveryOverlay]);
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -96,6 +123,32 @@ export function ProductCard({ product }: ProductCardProps) {
             </div>
           )}
 
+          {/* Delivery photo overlay - desktop: hover, mobile: auto-rotate */}
+          {hasDeliveryOverlay && (
+            <Image
+              src="/images/levering-storten.jpg"
+              alt="Haardhout wordt los gestort bij levering"
+              fill
+              className={`object-cover transition-opacity duration-700 ${
+                showDelivery ? 'opacity-100' : 'opacity-0'
+              } md:opacity-0 md:group-hover:opacity-100`}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            />
+          )}
+
+          {/* "Los gestort" label - visible when delivery photo shows */}
+          {hasDeliveryOverlay && (
+            <div
+              className={`absolute bottom-2 left-2 transition-opacity duration-700 ${
+                showDelivery ? 'opacity-100' : 'opacity-0'
+              } md:opacity-0 md:group-hover:opacity-100`}
+            >
+              <span className="bg-black/60 text-white text-xs font-medium px-2 py-1 rounded-full">
+                Los gestort aan huis
+              </span>
+            </div>
+          )}
+
           {/* Badges */}
           <div className="absolute left-2 top-2 flex flex-col gap-1">
             {isOnSale && (
@@ -107,6 +160,19 @@ export function ProductCard({ product }: ProductCardProps) {
               <Badge variant="outline" className={`${badge.className} border text-xs font-medium`}>
                 <badge.icon className="mr-1 h-3 w-3" />
                 {badge.label}
+              </Badge>
+            )}
+            {showDeliveryBadge && hasDeliveryOverlay && (
+              <Badge variant="outline" className={`border text-xs font-medium ${
+                isNetzakken
+                  ? 'bg-teal-100 text-teal-800 border-teal-200'
+                  : 'bg-orange-100 text-orange-800 border-orange-200'
+              }`}>
+                {isNetzakken ? (
+                  <><Package className="mr-1 h-3 w-3" />Netzakken</>
+                ) : (
+                  <><Truck className="mr-1 h-3 w-3" />Losgestorte m³</>
+                )}
               </Badge>
             )}
           </div>

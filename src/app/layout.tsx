@@ -43,9 +43,9 @@ export const metadata: Metadata = {
       "Premium haardhout voor de scherpste prijs. Geleverd door heel Nederland.",
     images: [
       {
-        url: "/opengraph-image",
-        width: 1200,
-        height: 630,
+        url: "/images/hero-header.jpg",
+        width: 6000,
+        height: 2500,
         alt: "De Vuurmeester - Premium Haardhout",
       },
     ],
