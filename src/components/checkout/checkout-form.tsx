@@ -9,7 +9,7 @@ import { Loader2, CreditCard, Banknote, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Textarea } from "@/components/ui/textarea";
+
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import {
@@ -51,22 +51,10 @@ export function CheckoutForm({ shippingCost, onSuccess }: CheckoutFormProps) {
         postcode: "",
         city: "",
       },
-      shippingDifferent: false,
-      shipping: {
-        firstName: "",
-        lastName: "",
-        address1: "",
-        address2: "",
-        postcode: "",
-        city: "",
-      },
       paymentMethod: "ideal",
-      orderNotes: "",
       acceptTerms: false,
     },
   });
-
-  const shippingDifferent = form.watch("shippingDifferent");
 
   // Handle validation errors
   function onInvalid(errors: Record<string, unknown>) {
@@ -284,118 +272,6 @@ export function CheckoutForm({ shippingCost, onSuccess }: CheckoutFormProps) {
           </div>
         </div>
 
-        {/* Different Shipping Address */}
-        <div className="bg-white rounded-xl p-6 shadow-sm">
-          <FormField
-            control={form.control}
-            name="shippingDifferent"
-            render={({ field }) => (
-              <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                <FormControl>
-                  <Checkbox
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                </FormControl>
-                <div className="space-y-1 leading-none">
-                  <FormLabel className="cursor-pointer">
-                    Verzenden naar een ander adres
-                  </FormLabel>
-                </div>
-              </FormItem>
-            )}
-          />
-
-          {shippingDifferent && (
-            <div className="mt-6 grid sm:grid-cols-2 gap-4">
-              <FormField
-                control={form.control}
-                name="shipping.firstName"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Voornaam *</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Jan" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="shipping.lastName"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Achternaam *</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Jansen" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="shipping.address1"
-                render={({ field }) => (
-                  <FormItem className="sm:col-span-2">
-                    <FormLabel>Straat en huisnummer *</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Hoofdstraat 123" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="shipping.address2"
-                render={({ field }) => (
-                  <FormItem className="sm:col-span-2">
-                    <FormLabel>Adres toevoeging</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Appartement, suite, etc." {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="shipping.postcode"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Postcode *</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="1234 AB"
-                        {...field}
-                        onChange={(e) => {
-                          field.onChange(e.target.value.toUpperCase());
-                        }}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="shipping.city"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Plaats *</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Amsterdam" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-          )}
-        </div>
-
         {/* Payment Method */}
         <div className="bg-white rounded-xl p-6 shadow-sm">
           <h2 className="text-lg font-semibold text-stone-900 mb-4">
@@ -443,30 +319,6 @@ export function CheckoutForm({ shippingCost, onSuccess }: CheckoutFormProps) {
                       </Label>
                     </div>
                   </RadioGroup>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
-
-        {/* Order Notes */}
-        <div className="bg-white rounded-xl p-6 shadow-sm">
-          <h2 className="text-lg font-semibold text-stone-900 mb-4">
-            Opmerkingen
-          </h2>
-          <FormField
-            control={form.control}
-            name="orderNotes"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Opmerkingen over je bestelling (optioneel)</FormLabel>
-                <FormControl>
-                  <Textarea
-                    placeholder="Speciale instructies voor bezorging, toegangscode, etc."
-                    className="resize-none"
-                    {...field}
-                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

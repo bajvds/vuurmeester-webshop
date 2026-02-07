@@ -33,17 +33,7 @@ interface CheckoutRequestBody {
       postcode: string;
       city: string;
     };
-    shippingDifferent: boolean;
-    shipping?: {
-      firstName: string;
-      lastName: string;
-      address1: string;
-      address2?: string;
-      postcode: string;
-      city: string;
-    };
     paymentMethod: "ideal" | "cod";
-    orderNotes?: string;
     acceptTerms: boolean;
   };
   items: CartItem[];
@@ -95,10 +85,7 @@ export async function POST(
     }
 
     // Server-side shipping recalculation for security
-    // Use the delivery postcode (shipping if different, otherwise billing)
-    const deliveryPostcode = customer.shippingDifferent && customer.shipping
-      ? customer.shipping.postcode
-      : customer.billing.postcode;
+    const deliveryPostcode = customer.billing.postcode;
     const totalQuantity = body.items.reduce((sum, item) => sum + item.quantity, 0);
     const serverShippingCost = calculateShipping(deliveryPostcode, totalQuantity);
 
@@ -125,27 +112,16 @@ export async function POST(
       phone: customer.phone,
     };
 
-    // Build shipping address (same as billing unless different)
-    const shippingAddress: WooCommerceAddress =
-      customer.shippingDifferent && customer.shipping
-        ? {
-            first_name: customer.shipping.firstName,
-            last_name: customer.shipping.lastName,
-            address_1: customer.shipping.address1,
-            address_2: customer.shipping.address2 || "",
-            city: customer.shipping.city,
-            postcode: cleanPostcode(customer.shipping.postcode),
-            country: "NL",
-          }
-        : {
-            first_name: billingAddress.first_name,
-            last_name: billingAddress.last_name,
-            address_1: billingAddress.address_1,
-            address_2: billingAddress.address_2,
-            city: billingAddress.city,
-            postcode: billingAddress.postcode,
-            country: "NL",
-          };
+    // Shipping address is same as billing
+    const shippingAddress: WooCommerceAddress = {
+      first_name: billingAddress.first_name,
+      last_name: billingAddress.last_name,
+      address_1: billingAddress.address_1,
+      address_2: billingAddress.address_2,
+      city: billingAddress.city,
+      postcode: billingAddress.postcode,
+      country: "NL",
+    };
 
     // Determine payment method for WooCommerce
     const paymentMethod =
@@ -179,7 +155,7 @@ export async function POST(
           total: shippingCost.toFixed(2),
         },
       ],
-      note: customer.orderNotes || "",
+      note: "",
     });
 
     // Build response based on payment method
