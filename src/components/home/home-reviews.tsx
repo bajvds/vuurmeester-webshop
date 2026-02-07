@@ -1,15 +1,30 @@
 import { Star, ExternalLink } from "lucide-react";
-import { allReviews } from "@/lib/reviews-data";
 
 const GOOGLE_REVIEWS_URL =
   "https://www.google.com/maps/place/De+Vuurmeester+Haardhout/@51.4732438,5.2516684,17z/data=!4m8!3m7!1s0x48a1fd8b37f42391:0x22e65a58f448263e!8m2!3d51.4732438!4d5.2516684!9m1!1b1!16s%2Fg%2F11w2h22nql";
 
-// Selecteer 4 sterke reviews voor de homepage (5 sterren, diverse locaties)
-const featuredReviews = [
-  allReviews.find((r) => r.id === "od-1")!, // Jan de Vries, Amsterdam
-  allReviews.find((r) => r.id === "gen-2")!, // Monique de Boer, Dordrecht
-  allReviews.find((r) => r.id === "hd-1")!, // Willem de Groot, Tilburg
-  allReviews.find((r) => r.id === "gen-3")!, // Tom Visser, Ede
+// Echte Google Reviews
+const googleReviews = [
+  {
+    name: "Martin Brands",
+    text: "Voor goed haardhout moet je bij de Vuurmeester zijn. Goedkoopste van Nederland. Ik als schoorsteenveger raad dit bedrijf aan.",
+    rating: 5,
+  },
+  {
+    name: "Bas Doren, Van",
+    text: "Superfijne service, mooi stookhout en (vlak) voor de deur gestort. Vakwerk Vuurmeester!",
+    rating: 5,
+  },
+  {
+    name: "Renske Koens",
+    text: "Fijn en goed. Snelle communicatie, levering en handelen. Product is exact wat je ervan mag verwachten maar dan met top service!",
+    rating: 5,
+  },
+  {
+    name: "Simon de Kerpel",
+    text: "Heel goede hout voor een nette prijs. Gekocht in juni en nu aan het gebruiken in de kachel. Brand heel mooie.",
+    rating: 5,
+  },
 ];
 
 function StarRating({ rating }: { rating: number }) {
@@ -82,9 +97,9 @@ export function HomeReviews() {
 
         {/* Review kaartjes */}
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 max-w-5xl mx-auto mb-8">
-          {featuredReviews.map((review) => (
+          {googleReviews.map((review) => (
             <a
-              key={review.id}
+              key={review.name}
               href={GOOGLE_REVIEWS_URL}
               target="_blank"
               rel="noopener noreferrer"
@@ -92,24 +107,17 @@ export function HomeReviews() {
             >
               <StarRating rating={review.rating} />
 
-              <p className="text-stone-700 text-sm mt-3 mb-4 leading-relaxed line-clamp-3">
+              <p className="text-stone-700 text-sm mt-3 mb-4 leading-relaxed line-clamp-4">
                 &ldquo;{review.text}&rdquo;
               </p>
 
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 rounded-full bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center text-white text-xs font-semibold">
-                  {review.name
-                    .split(" ")
-                    .map((n) => n[0])
-                    .join("")
-                    .slice(0, 2)}
+                  {review.name[0]}
                 </div>
-                <div>
-                  <p className="text-sm font-medium text-stone-900">
-                    {review.name}
-                  </p>
-                  <p className="text-xs text-stone-500">{review.location}</p>
-                </div>
+                <p className="text-sm font-medium text-stone-900">
+                  {review.name}
+                </p>
               </div>
             </a>
           ))}
