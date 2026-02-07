@@ -12,7 +12,7 @@ const cities: CityData[] = [
     estimatedDelivery: "3-5 werkdagen",
     tier: 1,
     introduction:
-      "Tilburg is een van onze drukst bezorgde steden — met meer dan 111 bestellingen zijn we vaste gast in deze levendige Brabantse stad. Vanuit ons depot in Middelbeers is het slechts 30 kilometer rijden, waardoor we Tilburg snel en voordelig kunnen bedienen. Bezorgkosten starten al vanaf €39 per kuub, zonder toeslag. Of je nu in de Reeshof woont, in het Centrum, in Noord, of in de dorpen Berkel-Enschot en Udenhout — we komen overal. Onze klanten in Tilburg kiezen het vaakst voor ovengedroogd hardhout, ideaal om direct te stoken. Maar ook ons halfdroge haardhout is populair bij wie vooruit wil inkopen. We leveren los gestort op je oprit of in de tuin, en bellen altijd even van tevoren. Bestel vandaag nog online en geniet binnen enkele werkdagen van knapperend haardvuur in je Tilburgse woning.",
+      "Tilburg is een van onze drukst bezorgde steden — met honderden tevreden klanten zijn we vaste gast in deze levendige Brabantse stad. Vanuit ons depot in Middelbeers is het slechts 30 kilometer rijden, waardoor we Tilburg snel en voordelig kunnen bedienen. Bezorgkosten starten al vanaf €39 per kuub, zonder toeslag. Of je nu in de Reeshof woont, in het Centrum, in Noord, of in de dorpen Berkel-Enschot en Udenhout — we komen overal. Onze klanten in Tilburg kiezen het vaakst voor ovengedroogd hardhout, ideaal om direct te stoken. Maar ook ons halfdroge haardhout is populair bij wie vooruit wil inkopen. We leveren los gestort op je oprit of in de tuin, en bellen altijd even van tevoren. Bestel vandaag nog online en geniet binnen enkele werkdagen van knapperend haardvuur in je Tilburgse woning.",
     neighborhoods: ["Reeshof", "Centrum", "Noord", "Berkel-Enschot", "Udenhout"],
     metaTitle: "Haardhout bezorgen in Tilburg | Vanaf €39",
     metaDescription:
@@ -56,7 +56,7 @@ const cities: CityData[] = [
     estimatedDelivery: "2-4 werkdagen",
     tier: 1,
     introduction:
-      "Eindhoven is onze nummer twee qua bestellingen, met meer dan 107 leveringen in de lichtstad. Op slechts 25 kilometer van ons depot in Middelbeers is Eindhoven razendsnel bereikbaar, waardoor we vaak al binnen 2 tot 4 werkdagen bezorgen. De bezorgkosten zijn slechts €39 per kuub, zonder extra toeslag — je betaalt dus nooit meer per kuub bij een grotere bestelling. Van Woensel tot Strijp, van Tongelre tot Gestel en Stratum: in alle Eindhovense wijken zijn we een bekende verschijning. De technologiehoofdstad van Nederland heeft verrassend veel open haarden en houtkachels, en onze klanten hier weten precies wat ze willen: droog, kwalitatief hardhout dat meteen brandt. Bestel eenvoudig online en wij zorgen dat je binnen enkele dagen kunt genieten van warmte en sfeer in je Eindhovense woning.",
+      "Eindhoven is een van onze drukst bezorgde steden — met honderden tevreden klanten in de lichtstad. Op slechts 25 kilometer van ons depot in Middelbeers is Eindhoven razendsnel bereikbaar, waardoor we vaak al binnen 2 tot 4 werkdagen bezorgen. De bezorgkosten zijn slechts €39 per kuub, zonder extra toeslag — je betaalt dus nooit meer per kuub bij een grotere bestelling. Van Woensel tot Strijp, van Tongelre tot Gestel en Stratum: in alle Eindhovense wijken zijn we een bekende verschijning. De technologiehoofdstad van Nederland heeft verrassend veel open haarden en houtkachels, en onze klanten hier weten precies wat ze willen: droog, kwalitatief hardhout dat meteen brandt. Bestel eenvoudig online en wij zorgen dat je binnen enkele dagen kunt genieten van warmte en sfeer in je Eindhovense woning.",
     neighborhoods: ["Woensel", "Strijp", "Tongelre", "Gestel", "Stratum"],
     metaTitle: "Haardhout bezorgen in Eindhoven | Vanaf €39",
     metaDescription:
@@ -100,7 +100,7 @@ const cities: CityData[] = [
     estimatedDelivery: "3-5 werkdagen",
     tier: 1,
     introduction:
-      "Breda is met 48 bestellingen een van onze belangrijkste steden in West-Brabant. De afstand vanaf ons depot in Middelbeers bedraagt zo'n 50 kilometer, maar dankzij de goede verbinding via de A58 plannen we regelmatig ritten naar Breda en omgeving. De bezorgkosten starten vanaf €45 per kuub, met slechts een kleine toeslag bij grotere bestellingen. We bezorgen in het Centrum, Princenhage, Bavel, Ulvenhout en de Haagse Beemden — kortom in heel Breda. Veel Bredanaars met een karakteristieke stadswoning of ruime tuin in de buitenwijken hebben een open haard of moderne houtkachel en kiezen voor ons ovengedroogd hardhout. Maar ook halfdroog haardhout is gewild bij klanten die alvast willen inslaan voor het volgende stookseizoen. Bestel vandaag online en we staan binnen enkele werkdagen bij je aan de deur.",
+      "Breda is een van onze belangrijkste steden in West-Brabant, met tientallen vaste klanten die elk seizoen opnieuw bestellen. De afstand vanaf ons depot in Middelbeers bedraagt zo'n 50 kilometer, maar dankzij de goede verbinding via de A58 plannen we regelmatig ritten naar Breda en omgeving. De bezorgkosten starten vanaf €45 per kuub, met slechts een kleine toeslag bij grotere bestellingen. We bezorgen in het Centrum, Princenhage, Bavel, Ulvenhout en de Haagse Beemden — kortom in heel Breda. Veel Bredanaars met een karakteristieke stadswoning of ruime tuin in de buitenwijken hebben een open haard of moderne houtkachel en kiezen voor ons ovengedroogd hardhout. Maar ook halfdroog haardhout is gewild bij klanten die alvast willen inslaan voor het volgende stookseizoen. Bestel vandaag online en we staan binnen enkele werkdagen bij je aan de deur.",
     neighborhoods: ["Centrum", "Princenhage", "Bavel", "Ulvenhout", "Haagse Beemden"],
     metaTitle: "Haardhout bezorgen in Breda | Vanaf €45",
     metaDescription:
@@ -145,7 +145,7 @@ const cities: CityData[] = [
     estimatedDelivery: "2-4 werkdagen",
     tier: 2,
     introduction:
-      "Veldhoven, direct ten zuiden van Eindhoven, is met 35 leveringen een van onze trouwste gemeenten. Op slechts 20 kilometer van ons depot in Middelbeers bezorgen we hier al voor €39 per kuub, zonder extra toeslag bij meerdere kubieke meters. De groene woonwijken van Veldhoven met hun ruime kavels en moderne woningen zijn ideaal voor een houtkachel of open haard. Onze klanten in Veldhoven kiezen vaak voor ovengedroogd hardhout dat direct stookklaar is. We leveren los gestort op je oprit en bellen altijd even vooraf. Bestel online en geniet snel van warmte in je Veldhovense woning.",
+      "Veldhoven, direct ten zuiden van Eindhoven, is een van onze trouwste gemeenten met een groot aantal vaste klanten. Op slechts 20 kilometer van ons depot in Middelbeers bezorgen we hier al voor €39 per kuub, zonder extra toeslag bij meerdere kubieke meters. De groene woonwijken van Veldhoven met hun ruime kavels en moderne woningen zijn ideaal voor een houtkachel of open haard. Onze klanten in Veldhoven kiezen vaak voor ovengedroogd hardhout dat direct stookklaar is. We leveren los gestort op je oprit en bellen altijd even vooraf. Bestel online en geniet snel van warmte in je Veldhovense woning.",
     metaTitle: "Haardhout bezorgen in Veldhoven | Vanaf €39/m³",
     metaDescription:
       "Haardhout bezorgen in Veldhoven? De Vuurmeester levert premium haardhout binnen 2-4 werkdagen. Bezorging vanaf €39/m³. Bestel nu!",
@@ -178,7 +178,7 @@ const cities: CityData[] = [
     estimatedDelivery: "2-4 werkdagen",
     tier: 2,
     introduction:
-      "Nuenen, het schildersdorp van Van Gogh, is met 31 leveringen een vertrouwde bestemming voor De Vuurmeester. Op 20 kilometer van ons depot in Middelbeers bezorgen we hier voor slechts €39 per kuub — zonder toeslag bij grotere bestellingen. De karakteristieke Nuenense woningen met hun sfeervolle interieurs vragen om een goed haardvuur. Of je nu kiest voor ovengedroogd hardhout dat direct brandt, of halfdroog hout om alvast in te slaan — wij brengen het bij je thuis. Bestel online en wij zorgen voor een snelle levering in Nuenen.",
+      "Nuenen, het schildersdorp van Van Gogh, is een vertrouwde bestemming voor De Vuurmeester met tientallen vaste klanten. Op 20 kilometer van ons depot in Middelbeers bezorgen we hier voor slechts €39 per kuub — zonder toeslag bij grotere bestellingen. De karakteristieke Nuenense woningen met hun sfeervolle interieurs vragen om een goed haardvuur. Of je nu kiest voor ovengedroogd hardhout dat direct brandt, of halfdroog hout om alvast in te slaan — wij brengen het bij je thuis. Bestel online en wij zorgen voor een snelle levering in Nuenen.",
     metaTitle: "Haardhout bezorgen in Nuenen | Vanaf €39/m³",
     metaDescription:
       "Haardhout bezorgen in Nuenen? De Vuurmeester levert premium haardhout voor €39/m³. Binnen 2-4 werkdagen bezorgd. Bestel online!",
@@ -211,7 +211,7 @@ const cities: CityData[] = [
     estimatedDelivery: "2-3 werkdagen",
     tier: 2,
     introduction:
-      "Oirschot is onze thuisgemeente — ons depot in Middelbeers valt onder de gemeente Oirschot. Met 27 leveringen aan lokale klanten zijn we letterlijk de haardhoutleverancier om de hoek. Op slechts 5 kilometer afstand profiteer je van ons allerlaagste bezorgtarief: €20 vast, ongeacht het aantal kuub. Dat maakt Oirschot de voordeligste bestemming in heel Nederland voor onze klanten. De monumentale panden en sfeervolle boerderijen rondom het Marktplein van Oirschot zijn als gemaakt voor een knapperend haardvuur. Bestel online en we staan binnen 2 tot 3 werkdagen bij je voor de deur.",
+      "Oirschot is onze thuisgemeente — ons depot in Middelbeers valt onder de gemeente Oirschot. Met tientallen tevreden lokale klanten zijn we letterlijk de haardhoutleverancier om de hoek. Op slechts 5 kilometer afstand profiteer je van ons allerlaagste bezorgtarief: €20 vast, ongeacht het aantal kuub. Dat maakt Oirschot de voordeligste bestemming in heel Nederland voor onze klanten. De monumentale panden en sfeervolle boerderijen rondom het Marktplein van Oirschot zijn als gemaakt voor een knapperend haardvuur. Bestel online en we staan binnen 2 tot 3 werkdagen bij je voor de deur.",
     metaTitle: "Haardhout bezorgen in Oirschot | Slechts €20 vast tarief",
     metaDescription:
       "Haardhout bezorgen in Oirschot? De Vuurmeester bezorgt vanuit Middelbeers voor slechts €20 vast tarief. Binnen 2-3 werkdagen geleverd!",
@@ -244,7 +244,7 @@ const cities: CityData[] = [
     estimatedDelivery: "5-7 werkdagen",
     tier: 2,
     introduction:
-      "Apeldoorn aan de rand van de Veluwe is verrassend populair bij De Vuurmeester. Met 26 leveringen is dit een van onze best presterende steden buiten Brabant. Ondanks de 120 kilometer afstand vanaf ons depot in Middelbeers plannen we regelmatig ritten naar Apeldoorn en omgeving. De bezorgkosten bedragen €64 per kuub. Veel Apeldoornse klanten hebben vrijstaande woningen met open haarden of moderne houtkachels — perfect voor ons ovengedroogd hardhout. De combinatie van Veluwse natuur en een knapperend haardvuur is onverslaanbaar. Bestel online en wij zorgen dat je haardhout netjes wordt afgeleverd.",
+      "Apeldoorn aan de rand van de Veluwe is een van onze populairste bestemmingen buiten Brabant, met een trouw klantenbestand dat elk seizoen groeit. Vanuit ons depot in Middelbeers plannen we regelmatig ritten naar Apeldoorn en omgeving. De bezorgkosten bedragen €64 per kuub. Veel Apeldoornse klanten hebben vrijstaande woningen met open haarden of moderne houtkachels — perfect voor ons ovengedroogd hardhout. De combinatie van Veluwse natuur en een knapperend haardvuur is onverslaanbaar. Bestel online en wij zorgen dat je haardhout netjes wordt afgeleverd.",
     metaTitle: "Haardhout bezorgen in Apeldoorn | Bezorging €64/m³",
     metaDescription:
       "Haardhout bezorgen in Apeldoorn? De Vuurmeester levert premium haardhout aan de Veluwe. Bezorging €64/m³, binnen 5-7 werkdagen.",
@@ -277,7 +277,7 @@ const cities: CityData[] = [
     estimatedDelivery: "2-4 werkdagen",
     tier: 2,
     introduction:
-      "Waalre, het groene villadorp ten zuiden van Eindhoven, is een echte haardhoutgemeente. Met 25 leveringen weten de inwoners van Waalre precies waar ze terecht kunnen voor kwalitatief hardhout. Op slechts 18 kilometer van ons depot in Middelbeers bezorgen we hier al voor €39 per kuub. De ruime kavels en vrijstaande woningen in Waalre-Dorp en Aalst hebben vaak prachtige open haarden of sierlijke houtkachels. Wij leveren ovengedroogd en halfdroog hardhout los gestort op je oprit, zodat jij alleen nog maar hoeft te genieten. Bestel gemakkelijk online en ontvang je haardhout binnen enkele werkdagen.",
+      "Waalre, het groene villadorp ten zuiden van Eindhoven, is een echte haardhoutgemeente. Veel inwoners van Waalre weten precies waar ze terecht kunnen voor kwalitatief hardhout. Op slechts 18 kilometer van ons depot in Middelbeers bezorgen we hier al voor €39 per kuub. De ruime kavels en vrijstaande woningen in Waalre-Dorp en Aalst hebben vaak prachtige open haarden of sierlijke houtkachels. Wij leveren ovengedroogd en halfdroog hardhout los gestort op je oprit, zodat jij alleen nog maar hoeft te genieten. Bestel gemakkelijk online en ontvang je haardhout binnen enkele werkdagen.",
     metaTitle: "Haardhout bezorgen in Waalre | Vanaf €39/m³",
     metaDescription:
       "Haardhout bezorgen in Waalre? De Vuurmeester levert premium haardhout binnen 2-4 werkdagen. Bezorging vanaf €39/m³. Bestel nu!",
@@ -310,7 +310,7 @@ const cities: CityData[] = [
     estimatedDelivery: "2-3 werkdagen",
     tier: 2,
     introduction:
-      "Best is een van de dichtsbijgelegen gemeenten vanuit ons depot en dat merk je aan het tarief. Met 23 leveringen aan blije klanten en een afstand van slechts 15 kilometer bezorgen we hier voor het allerlaagste vast tarief van €20, ongeacht hoeveel kuub je bestelt. Best ligt precies tussen Eindhoven en Oirschot in, waardoor het perfect op onze dagelijkse routes past. De mix van nieuwbouwwijken en oudere dorpskernen zorgt voor veel huishoudens met houtkachels en open haarden. Van halfdroog hardhout om alvast in te slaan tot direct stookbaar ovengedroogd hout — wij brengen het bij je thuis in Best.",
+      "Best is een van de dichtsbijgelegen gemeenten vanuit ons depot en dat merk je aan het tarief. Met tientallen tevreden klanten en een afstand van slechts 15 kilometer bezorgen we hier voor het allerlaagste vast tarief van €20, ongeacht hoeveel kuub je bestelt. Best ligt precies tussen Eindhoven en Oirschot in, waardoor het perfect op onze dagelijkse routes past. De mix van nieuwbouwwijken en oudere dorpskernen zorgt voor veel huishoudens met houtkachels en open haarden. Van halfdroog hardhout om alvast in te slaan tot direct stookbaar ovengedroogd hout — wij brengen het bij je thuis in Best.",
     metaTitle: "Haardhout bezorgen in Best | Slechts €20 vast tarief",
     metaDescription:
       "Haardhout bezorgen in Best? De Vuurmeester levert voor slechts €20 vast tarief. Op 15 km van ons depot, binnen 2-3 werkdagen geleverd!",
@@ -343,7 +343,7 @@ const cities: CityData[] = [
     estimatedDelivery: "2-3 werkdagen",
     tier: 2,
     introduction:
-      "Hilvarenbeek is een echte buurgemeente van ons depot en dat maakt het een van onze voordeligste bestemmingen. Met 23 leveringen en een afstand van slechts 10 kilometer betaal je hier het vaste tarief van €20, hoeveel kuub je ook bestelt. Het Brabantse dorp staat bekend om zijn landelijke karakter en prachtige natuur rondom de Beekse Bergen. De vele boerderijen, landhuizen en karakteristieke dorpswoningen hebben vaak grote open haarden die smeken om goed hardhout. Wij leveren het graag — ovengedroogd of halfdroog, vers van ons depot. Bestel online en wij staan razendsnel bij je voor de deur.",
+      "Hilvarenbeek is een echte buurgemeente van ons depot en dat maakt het een van onze voordeligste bestemmingen. Met tientallen vaste klanten en een afstand van slechts 10 kilometer betaal je hier het vaste tarief van €20, hoeveel kuub je ook bestelt. Het Brabantse dorp staat bekend om zijn landelijke karakter en prachtige natuur rondom de Beekse Bergen. De vele boerderijen, landhuizen en karakteristieke dorpswoningen hebben vaak grote open haarden die smeken om goed hardhout. Wij leveren het graag — ovengedroogd of halfdroog, vers van ons depot. Bestel online en wij staan razendsnel bij je voor de deur.",
     metaTitle: "Haardhout bezorgen in Hilvarenbeek | Slechts €20 vast tarief",
     metaDescription:
       "Haardhout bezorgen in Hilvarenbeek? De Vuurmeester bezorgt voor slechts €20 vast tarief. Op 10 km van ons depot, snel geleverd!",
@@ -376,7 +376,7 @@ const cities: CityData[] = [
     estimatedDelivery: "5-7 werkdagen",
     tier: 2,
     introduction:
-      "Almere is onze populairste bestemming in Flevoland. Met 22 leveringen kiezen verrassend veel Almeerders voor haardhout van De Vuurmeester uit Brabant. Ondanks de 140 kilometer afstand bezorgen we regelmatig in Almere en combineren we ritten door de regio. De bezorgkosten bedragen €69 per kuub. De vele nieuwbouwwoningen in Almere Buiten en Almere Haven hebben moderne houtkachels en inbouwhaarden die perfect passen bij ons ovengedroogd hardhout met minder dan 20% vocht. Geen gedoe met natte blokken — direct stoken en genieten. Bestel online en wij plannen een bezorging naar Almere.",
+      "Almere is onze populairste bestemming in Flevoland. Steeds meer Almeerders ontdekken het gemak van premium haardhout van De Vuurmeester uit Brabant. Ondanks de afstand bezorgen we regelmatig in Almere en combineren we ritten door de regio. De bezorgkosten bedragen €69 per kuub. De vele nieuwbouwwoningen in Almere Buiten en Almere Haven hebben moderne houtkachels en inbouwhaarden die perfect passen bij ons ovengedroogd hardhout met minder dan 20% vocht. Geen gedoe met natte blokken — direct stoken en genieten. Bestel online en wij plannen een bezorging naar Almere.",
     metaTitle: "Haardhout bezorgen in Almere | Bezorging €69/m³",
     metaDescription:
       "Haardhout bezorgen in Almere? De Vuurmeester levert premium haardhout in heel Almere. Bezorging €69/m³, binnen 5-7 werkdagen.",
@@ -409,7 +409,7 @@ const cities: CityData[] = [
     estimatedDelivery: "5-7 werkdagen",
     tier: 2,
     introduction:
-      "Lelystad is onze verste vaste bestemming in Flevoland, maar met 21 leveringen absoluut een trouwe markt. Op 150 kilometer van ons depot in Middelbeers plannen we geregeld ritten naar Lelystad, vaak in combinatie met Almere en omgeving. De bezorgkosten bedragen €70 per kuub. Lelystad kent veel ruime woningen met houtkachels, ideaal voor onze droge houtsoorten. Het ovengedroogde hardhout is direct stookbaar en brandt schoon, precies wat je wilt in een moderne kachel. We leveren los gestort op je oprit of een andere bereikbare plek. Plan je bestelling online en wij zorgen voor de rest.",
+      "Lelystad is een vaste bestemming op onze Flevoland-route, met een groeiend klantenbestand. Op 150 kilometer van ons depot in Middelbeers plannen we geregeld ritten naar Lelystad, vaak in combinatie met Almere en omgeving. De bezorgkosten bedragen €70 per kuub. Lelystad kent veel ruime woningen met houtkachels, ideaal voor onze droge houtsoorten. Het ovengedroogde hardhout is direct stookbaar en brandt schoon, precies wat je wilt in een moderne kachel. We leveren los gestort op je oprit of een andere bereikbare plek. Plan je bestelling online en wij zorgen voor de rest.",
     metaTitle: "Haardhout bezorgen in Lelystad | Bezorging €70/m³",
     metaDescription:
       "Haardhout bezorgen in Lelystad? De Vuurmeester levert premium haardhout in Lelystad. Bezorging €70/m³, binnen 5-7 werkdagen.",
@@ -442,7 +442,7 @@ const cities: CityData[] = [
     estimatedDelivery: "3-5 werkdagen",
     tier: 2,
     introduction:
-      "Helmond, de tweede stad van Zuidoost-Brabant, is een groeiende markt voor De Vuurmeester. Met 21 leveringen ontdekken steeds meer Helmonders ons premium haardhout. Op 35 kilometer van ons depot in Middelbeers bezorgen we hier voor €44 per kuub — een scherp tarief voor de regio. Het industrieel erfgoed van Helmond wordt steeds vaker gecombineerd met sfeervolle woonruimtes waarin een houtkachel of open haard niet mag ontbreken. Van de Binnenstad tot Brandevoort, wij leveren overal in Helmond. Kies uit ovengedroogd of halfdroog hardhout en bestel gemakkelijk online.",
+      "Helmond, de tweede stad van Zuidoost-Brabant, is een vaste bestemming voor De Vuurmeester. Steeds meer Helmonders ontdekken ons premium haardhout. Op 35 kilometer van ons depot in Middelbeers bezorgen we hier voor €44 per kuub — een scherp tarief voor de regio. Het industrieel erfgoed van Helmond wordt steeds vaker gecombineerd met sfeervolle woonruimtes waarin een houtkachel of open haard niet mag ontbreken. Van de Binnenstad tot Brandevoort, wij leveren overal in Helmond. Kies uit ovengedroogd of halfdroog hardhout en bestel gemakkelijk online.",
     metaTitle: "Haardhout bezorgen in Helmond | Bezorging €44/m³",
     metaDescription:
       "Haardhout bezorgen in Helmond? De Vuurmeester levert premium haardhout voor €44/m³. Binnen 3-5 werkdagen bezorgd. Bestel online!",
@@ -475,7 +475,7 @@ const cities: CityData[] = [
     estimatedDelivery: "4-6 werkdagen",
     tier: 2,
     introduction:
-      "Arnhem, de hoofdstad van Gelderland, is een trouwe bestemming in ons bezorgnetwerk. Met 20 leveringen hebben we al veel Arnhemmers mogen voorzien van kwalitatief haardhout. Op 100 kilometer van ons depot in Middelbeers bezorgen we hier voor €64 per kuub. De heuvels en bossen rondom Arnhem zorgen voor een perfecte sfeer om te combineren met een warm haardvuur. Veel woningen in Arnhem-Noord en het villagebied hebben ruime open haarden die vragen om goed droog hardhout. Wij leveren ovengedroogd en halfdroog, altijd los gestort. Bestel eenvoudig online vanuit Arnhem.",
+      "Arnhem, de hoofdstad van Gelderland, is een vaste bestemming in ons bezorgnetwerk. We voorzien regelmatig Arnhemmers van kwalitatief haardhout. Op 100 kilometer van ons depot in Middelbeers bezorgen we hier voor €64 per kuub. De heuvels en bossen rondom Arnhem zorgen voor een perfecte sfeer om te combineren met een warm haardvuur. Veel woningen in Arnhem-Noord en het villagebied hebben ruime open haarden die vragen om goed droog hardhout. Wij leveren ovengedroogd en halfdroog, altijd los gestort. Bestel eenvoudig online vanuit Arnhem.",
     metaTitle: "Haardhout bezorgen in Arnhem | Bezorging €64/m³",
     metaDescription:
       "Haardhout bezorgen in Arnhem? De Vuurmeester levert premium haardhout in Arnhem. Bezorging €64/m³, binnen 4-6 werkdagen.",
@@ -508,7 +508,7 @@ const cities: CityData[] = [
     estimatedDelivery: "4-6 werkdagen",
     tier: 2,
     introduction:
-      "Rotterdam is onze belangrijkste bestemming in Zuid-Holland. Met 19 leveringen groeit het aantal Rotterdamse klanten gestaag. Op 95 kilometer van ons depot in Middelbeers bezorgen we hier voor €64 per kuub. De havenstad heeft een verrassend groot aantal woningen met open haarden en houtkachels, van de herenhuizen in Kralingen tot de villa's in Hillegersberg. Ons ovengedroogd hardhout brandt schoon en geeft weinig rook — belangrijk in een stedelijke omgeving. We leveren los gestort op je oprit. Bestel online en geniet binnenkort van een knapperend haardvuur in Rotterdam.",
+      "Rotterdam is onze belangrijkste bestemming in Zuid-Holland, met een snel groeiend klantenbestand. Op 95 kilometer van ons depot in Middelbeers bezorgen we hier voor €64 per kuub. De havenstad heeft een verrassend groot aantal woningen met open haarden en houtkachels, van de herenhuizen in Kralingen tot de villa's in Hillegersberg. Ons ovengedroogd hardhout brandt schoon en geeft weinig rook — belangrijk in een stedelijke omgeving. We leveren los gestort op je oprit. Bestel online en geniet binnenkort van een knapperend haardvuur in Rotterdam.",
     metaTitle: "Haardhout bezorgen in Rotterdam | Bezorging €64/m³",
     metaDescription:
       "Haardhout bezorgen in Rotterdam? De Vuurmeester levert premium haardhout in Rotterdam. Bezorging €64/m³, binnen 4-6 werkdagen.",
@@ -541,7 +541,7 @@ const cities: CityData[] = [
     estimatedDelivery: "5-7 werkdagen",
     tier: 2,
     introduction:
-      "Den Haag, de hofstad, is een groeiende markt voor De Vuurmeester. Met 10 leveringen zien we hier steeds meer interesse in kwalitatief haardhout uit Brabant. Op 110 kilometer van ons depot in Middelbeers bezorgen we hier voor €64 per kuub. De statige herenhuizen in het Statenkwartier, Benoordenhout en Vogelwijk hebben vaak imposante open haarden die perfect tot hun recht komen met goed droog hardhout. Wij leveren ovengedroogd en halfdroog hardhout, los gestort en met een telefoontje vooraf. Bestel vanuit Den Haag en wij regelen de bezorging.",
+      "Den Haag, de hofstad, is een populaire bestemming voor De Vuurmeester. We zien hier steeds meer interesse in kwalitatief haardhout uit Brabant. Op 110 kilometer van ons depot in Middelbeers bezorgen we hier voor €64 per kuub. De statige herenhuizen in het Statenkwartier, Benoordenhout en Vogelwijk hebben vaak imposante open haarden die perfect tot hun recht komen met goed droog hardhout. Wij leveren ovengedroogd en halfdroog hardhout, los gestort en met een telefoontje vooraf. Bestel vanuit Den Haag en wij regelen de bezorging.",
     metaTitle: "Haardhout bezorgen in Den Haag | Bezorging €64/m³",
     metaDescription:
       "Haardhout bezorgen in Den Haag? De Vuurmeester levert premium haardhout in Den Haag. Bezorging €64/m³, binnen 5-7 werkdagen.",
@@ -574,7 +574,7 @@ const cities: CityData[] = [
     estimatedDelivery: "2-4 werkdagen",
     tier: 2,
     introduction:
-      "Den Bosch, de Brabantse hoofdstad, is een vaste prik op onze bezorgroutes. Met 16 leveringen groeit het klantenbestand in 's-Hertogenbosch gestaag. Op 30 kilometer van ons depot in Middelbeers bezorgen we hier voor €40 per kuub — een bijzonder scherp tarief. De historische binnenstad met haar monumentale panden en de residentiële buitenwijken kennen veel woningen met sfeervolle open haarden. Ons ovengedroogd hardhout is de perfecte brandstof voor een Bossche avond bij de haard. Bestel online vanuit Den Bosch en wij zorgen dat het haardhout snel bij je is.",
+      "Den Bosch, de Brabantse hoofdstad, is een vaste prik op onze bezorgroutes met tientallen tevreden klanten in 's-Hertogenbosch. Op 30 kilometer van ons depot in Middelbeers bezorgen we hier voor €40 per kuub — een bijzonder scherp tarief. De historische binnenstad met haar monumentale panden en de residentiële buitenwijken kennen veel woningen met sfeervolle open haarden. Ons ovengedroogd hardhout is de perfecte brandstof voor een Bossche avond bij de haard. Bestel online vanuit Den Bosch en wij zorgen dat het haardhout snel bij je is.",
     metaTitle: "Haardhout bezorgen in Den Bosch | Bezorging €40/m³",
     metaDescription:
       "Haardhout bezorgen in Den Bosch? De Vuurmeester levert premium haardhout voor €40/m³. Binnen 2-4 werkdagen bezorgd. Bestel online!",
