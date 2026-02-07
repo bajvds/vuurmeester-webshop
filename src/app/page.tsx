@@ -1,7 +1,9 @@
 import { Truck, Shield, Phone, Clock, MessageCircle } from 'lucide-react';
 import { getHaardhoutProducts, getAanmaakProducts, cleanProductName, formatPrice } from '@/lib/woocommerce/client';
 import { ProductCard } from '@/components/products/product-card';
+import { SortableProductGrid } from '@/components/products/sortable-product-grid';
 import { ShippingCalculator } from '@/components/shipping-calculator';
+import { HomeReviews } from '@/components/home/home-reviews';
 import Image from 'next/image';
 
 export default async function Home() {
@@ -91,11 +93,7 @@ export default async function Home() {
             </p>
           </div>
 
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {haardhoutProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
+          <SortableProductGrid products={haardhoutProducts} />
         </div>
       </section>
 
@@ -138,6 +136,9 @@ export default async function Home() {
           </div>
         </div>
       </section>
+
+      {/* Google Reviews */}
+      <HomeReviews />
 
       {/* Aanmaakproducten Section */}
       <section id="aanmaak" className="py-16 scroll-mt-16">

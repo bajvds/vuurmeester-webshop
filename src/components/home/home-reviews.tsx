@@ -1,0 +1,133 @@
+import { Star, ExternalLink } from "lucide-react";
+import { allReviews } from "@/lib/reviews-data";
+
+const GOOGLE_REVIEWS_URL =
+  "https://www.google.com/maps/place/De+Vuurmeester+Haardhout/@51.4732438,5.2516684,17z/data=!4m8!3m7!1s0x48a1fd8b37f42391:0x22e65a58f448263e!8m2!3d51.4732438!4d5.2516684!9m1!1b1!16s%2Fg%2F11w2h22nql";
+
+// Selecteer 4 sterke reviews voor de homepage (5 sterren, diverse locaties)
+const featuredReviews = [
+  allReviews.find((r) => r.id === "od-1")!, // Jan de Vries, Amsterdam
+  allReviews.find((r) => r.id === "gen-2")!, // Monique de Boer, Dordrecht
+  allReviews.find((r) => r.id === "hd-1")!, // Willem de Groot, Tilburg
+  allReviews.find((r) => r.id === "gen-3")!, // Tom Visser, Ede
+];
+
+function StarRating({ rating }: { rating: number }) {
+  return (
+    <div className="flex gap-0.5">
+      {[1, 2, 3, 4, 5].map((star) => (
+        <Star
+          key={star}
+          className={`h-4 w-4 ${
+            star <= rating
+              ? "text-yellow-400 fill-yellow-400"
+              : "text-stone-200"
+          }`}
+        />
+      ))}
+    </div>
+  );
+}
+
+export function HomeReviews() {
+  return (
+    <section className="py-16 bg-white">
+      <div className="container mx-auto px-4">
+        {/* Header met Google branding */}
+        <div className="text-center mb-10">
+          <a
+            href={GOOGLE_REVIEWS_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-3 mb-4 group"
+          >
+            <svg viewBox="0 0 24 24" className="h-7 w-7" aria-hidden="true">
+              <path
+                d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"
+                fill="#4285F4"
+              />
+              <path
+                d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                fill="#34A853"
+              />
+              <path
+                d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+                fill="#FBBC05"
+              />
+              <path
+                d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+                fill="#EA4335"
+              />
+            </svg>
+            <div className="flex items-center gap-2">
+              <span className="text-2xl font-bold text-stone-900">4,9</span>
+              <div className="flex gap-0.5">
+                {[1, 2, 3, 4, 5].map((s) => (
+                  <Star
+                    key={s}
+                    className="h-5 w-5 text-yellow-400 fill-yellow-400"
+                  />
+                ))}
+              </div>
+            </div>
+            <span className="text-stone-500 group-hover:text-blue-600 transition-colors">
+              62 Google Reviews
+            </span>
+          </a>
+
+          <h2 className="text-3xl font-bold text-stone-900 mb-2">
+            Wat onze klanten zeggen
+          </h2>
+        </div>
+
+        {/* Review kaartjes */}
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 max-w-5xl mx-auto mb-8">
+          {featuredReviews.map((review) => (
+            <a
+              key={review.id}
+              href={GOOGLE_REVIEWS_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block bg-stone-50 rounded-xl p-5 hover:shadow-md transition-shadow border border-stone-100 hover:border-orange-200"
+            >
+              <StarRating rating={review.rating} />
+
+              <p className="text-stone-700 text-sm mt-3 mb-4 leading-relaxed line-clamp-3">
+                &ldquo;{review.text}&rdquo;
+              </p>
+
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center text-white text-xs font-semibold">
+                  {review.name
+                    .split(" ")
+                    .map((n) => n[0])
+                    .join("")
+                    .slice(0, 2)}
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-stone-900">
+                    {review.name}
+                  </p>
+                  <p className="text-xs text-stone-500">{review.location}</p>
+                </div>
+              </div>
+            </a>
+          ))}
+        </div>
+
+        {/* CTA naar Google */}
+        <div className="text-center">
+          <a
+            href={GOOGLE_REVIEWS_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium transition-colors"
+          >
+            Bekijk alle reviews op Google
+            <ExternalLink className="h-4 w-4" />
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
