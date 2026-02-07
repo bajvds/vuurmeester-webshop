@@ -13,9 +13,9 @@ export function Footer() {
               <Image
                 src="/images/Logo_De_Vuurmeester_wit_oranje_300.png"
                 alt="De Vuurmeester"
-                width={160}
-                height={45}
-                className="h-10 w-auto"
+                width={300}
+                height={85}
+                className="h-20 w-auto"
               />
             </div>
             <p className="text-sm text-stone-400 mb-4">
