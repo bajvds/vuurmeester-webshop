@@ -6,6 +6,16 @@ export const metadata: Metadata = {
   title: "Privacybeleid",
   description:
     "Privacybeleid van De Vuurmeester Haardhout. Hoe wij omgaan met je persoonsgegevens.",
+  openGraph: {
+    images: [
+      {
+        url: "/images/hero-header.jpg",
+        width: 6000,
+        height: 2500,
+        alt: "De Vuurmeester - Privacybeleid",
+      },
+    ],
+  },
 };
 
 export default function PrivacybeleidPage() {

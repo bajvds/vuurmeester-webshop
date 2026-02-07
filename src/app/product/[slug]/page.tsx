@@ -97,11 +97,13 @@ export default async function ProductPage({ params }: ProductPageProps) {
     "@context": "https://schema.org",
     "@type": "Product",
     name,
+    url: `https://www.vuurmeester-haardhout.nl/product/${slug}`,
     description: product.short_description?.replace(/<[^>]*>/g, "") || "",
     image: product.images[0]?.src,
     brand: { "@type": "Brand", name: "De Vuurmeester" },
     offers: {
       "@type": "Offer",
+      url: `https://www.vuurmeester-haardhout.nl/product/${slug}`,
       price: (parseInt(product.prices.price) / 100).toFixed(2),
       priceCurrency: "EUR",
       availability: "https://schema.org/InStock",
@@ -115,11 +117,34 @@ export default async function ProductPage({ params }: ProductPageProps) {
     },
   };
 
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: "https://www.vuurmeester-haardhout.nl",
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: name,
+        item: `https://www.vuurmeester-haardhout.nl/product/${slug}`,
+      },
+    ],
+  };
+
   return (
     <div className="min-h-screen bg-white">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
       {/* Breadcrumb */}
       <div className="bg-stone-50 border-b">

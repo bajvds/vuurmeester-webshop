@@ -8,6 +8,16 @@ export const metadata: Metadata = {
   title: "Over ons",
   description:
     "Leer De Vuurmeester kennen. Premium haardhout uit Middelbeers, Brabant. Persoonlijk contact en de beste prijs gegarandeerd.",
+  openGraph: {
+    images: [
+      {
+        url: "/images/hero-header.jpg",
+        width: 6000,
+        height: 2500,
+        alt: "De Vuurmeester - Over ons",
+      },
+    ],
+  },
 };
 
 export default function OverOnsPage() {

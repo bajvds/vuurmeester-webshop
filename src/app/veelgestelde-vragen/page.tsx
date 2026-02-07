@@ -6,6 +6,16 @@ export const metadata: Metadata = {
   title: "Veelgestelde vragen",
   description:
     "Antwoorden op de meest gestelde vragen over haardhout, bezorging, droogtijd en meer.",
+  openGraph: {
+    images: [
+      {
+        url: "/images/hero-header.jpg",
+        width: 6000,
+        height: 2500,
+        alt: "De Vuurmeester - Veelgestelde vragen",
+      },
+    ],
+  },
 };
 
 interface FAQItem {
@@ -242,6 +252,22 @@ export default function FAQPage() {
                 </div>
               </section>
             ))}
+          </div>
+
+          {/* Bezorgregio's link */}
+          <div className="mt-12 bg-orange-50 border border-orange-200 rounded-xl p-6">
+            <h3 className="font-semibold text-stone-900 mb-2">
+              Bezorgkosten per stad bekijken?
+            </h3>
+            <p className="text-sm text-stone-600 mb-3">
+              Bekijk de bezorgkosten en levertijden voor jouw stad of regio.
+            </p>
+            <Link
+              href="/haardhout-bezorgen"
+              className="inline-flex items-center text-sm text-orange-600 hover:underline font-medium"
+            >
+              Bekijk alle bezorgregio&apos;s →
+            </Link>
           </div>
 
           {/* Contact CTA */}

@@ -1,5 +1,7 @@
 import { MetadataRoute } from "next";
 import { woocommerce } from "@/lib/woocommerce/client";
+import { getAllCitySlugs } from "@/lib/locations/cities";
+import { getAllProvinceSlugs } from "@/lib/locations/provinces";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://www.vuurmeester-haardhout.nl";
@@ -50,6 +52,48 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
+  // Synonym pages
+  const synonymPages: MetadataRoute.Sitemap = [
+    "brandhout",
+    "kachelhout",
+    "stookhout",
+    "openhaardhout",
+    "ovengedroogd-haardhout",
+  ].map((slug) => ({
+    url: `${baseUrl}/${slug}`,
+    lastModified: "2026-02-07",
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
+
+  // Location overview page
+  const locationOverview: MetadataRoute.Sitemap = [
+    {
+      url: `${baseUrl}/haardhout-bezorgen`,
+      lastModified: "2026-02-07",
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    },
+  ];
+
+  // City pages
+  const cityPages: MetadataRoute.Sitemap = getAllCitySlugs().map((slug) => ({
+    url: `${baseUrl}/haardhout-bezorgen/${slug}`,
+    lastModified: "2026-02-07",
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
+
+  // Province pages
+  const provincePages: MetadataRoute.Sitemap = getAllProvinceSlugs().map(
+    (slug) => ({
+      url: `${baseUrl}/haardhout-bezorgen/${slug}`,
+      lastModified: "2026-02-07",
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+    })
+  );
+
   // Dynamic product pages
   let productPages: MetadataRoute.Sitemap = [];
   try {
@@ -64,5 +108,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // If API fails, just return static pages
   }
 
-  return [...staticPages, ...productPages];
+  return [
+    ...staticPages,
+    ...synonymPages,
+    ...locationOverview,
+    ...provincePages,
+    ...cityPages,
+    ...productPages,
+  ];
 }

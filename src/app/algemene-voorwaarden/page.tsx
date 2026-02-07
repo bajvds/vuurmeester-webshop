@@ -5,6 +5,16 @@ import { ArrowLeft } from "lucide-react";
 export const metadata: Metadata = {
   title: "Algemene Voorwaarden",
   description: "Algemene voorwaarden van De Vuurmeester voor de verkoop en levering van haardhout.",
+  openGraph: {
+    images: [
+      {
+        url: "/images/hero-header.jpg",
+        width: 6000,
+        height: 2500,
+        alt: "De Vuurmeester - Algemene Voorwaarden",
+      },
+    ],
+  },
 };
 
 export default function AlgemeneVoorwaardenPage() {

@@ -21,6 +21,18 @@ const nextConfig: NextConfig = {
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
         ],
       },
+      {
+        source: "/afrekenen",
+        headers: [
+          { key: "X-Robots-Tag", value: "noindex, follow" },
+        ],
+      },
+      {
+        source: "/bestelling/:path*",
+        headers: [
+          { key: "X-Robots-Tag", value: "noindex, follow" },
+        ],
+      },
     ];
   },
 };

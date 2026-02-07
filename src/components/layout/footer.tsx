@@ -6,7 +6,7 @@ export function Footer() {
   return (
     <footer className="bg-stone-900 text-stone-300">
       <div className="container mx-auto px-4 py-12">
-        <div className="grid gap-8 md:grid-cols-4">
+        <div className="grid gap-8 md:grid-cols-5">
           {/* Brand */}
           <div className="md:col-span-1">
             <div className="mb-4">
@@ -82,6 +82,48 @@ export function Footer() {
               <li>
                 <Link href="/privacybeleid" className="hover:text-orange-400 transition-colors">
                   Privacybeleid
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Bezorging */}
+          <div>
+            <h3 className="font-semibold text-white mb-4">Bezorging</h3>
+            <ul className="space-y-2 text-sm">
+              <li>
+                <Link href="/haardhout-bezorgen/eindhoven" className="hover:text-orange-400 transition-colors">
+                  Haardhout Eindhoven
+                </Link>
+              </li>
+              <li>
+                <Link href="/haardhout-bezorgen/tilburg" className="hover:text-orange-400 transition-colors">
+                  Haardhout Tilburg
+                </Link>
+              </li>
+              <li>
+                <Link href="/haardhout-bezorgen/breda" className="hover:text-orange-400 transition-colors">
+                  Haardhout Breda
+                </Link>
+              </li>
+              <li>
+                <Link href="/haardhout-bezorgen/den-bosch" className="hover:text-orange-400 transition-colors">
+                  Haardhout Den Bosch
+                </Link>
+              </li>
+              <li>
+                <Link href="/haardhout-bezorgen/arnhem" className="hover:text-orange-400 transition-colors">
+                  Haardhout Arnhem
+                </Link>
+              </li>
+              <li>
+                <Link href="/haardhout-bezorgen/rotterdam" className="hover:text-orange-400 transition-colors">
+                  Haardhout Rotterdam
+                </Link>
+              </li>
+              <li>
+                <Link href="/haardhout-bezorgen" className="hover:text-orange-400 transition-colors font-medium">
+                  Alle bezorgregio&apos;s →
                 </Link>
               </li>
             </ul>

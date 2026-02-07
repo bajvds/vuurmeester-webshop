@@ -180,12 +180,18 @@ export default function LeverenAfhalenPage() {
                     </li>
                   </ul>
                 </div>
-                <div className="flex items-center">
+                <div className="flex flex-col gap-3 items-start">
                   <Button asChild className="bg-orange-500 hover:bg-orange-600">
                     <Link href="/bezorgkosten">
                       Bereken je bezorgkosten
                     </Link>
                   </Button>
+                  <Link
+                    href="/haardhout-bezorgen"
+                    className="text-sm text-orange-600 hover:underline font-medium"
+                  >
+                    Bekijk alle bezorgregio&apos;s →
+                  </Link>
                 </div>
               </div>
             </div>
