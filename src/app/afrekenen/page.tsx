@@ -8,7 +8,6 @@ import { useCart } from "@/store/cart";
 import {
   formatPrice,
   cleanProductName,
-  getAanmaakProducts,
   Product,
 } from "@/lib/woocommerce/client";
 import { calculateShipping } from "@/lib/shipping";
@@ -69,8 +68,11 @@ export default function AfrekenPage() {
 
   useEffect(() => {
     setMounted(true);
-    // Load aanmaak products for cross-sell
-    getAanmaakProducts().then(setAanmaakProducts).catch(console.error);
+    // Load aanmaak products for cross-sell (via server-side proxy to avoid CORS)
+    fetch("/api/products/aanmaak")
+      .then((res) => res.json())
+      .then((data) => setAanmaakProducts(data.products || []))
+      .catch(console.error);
   }, []);
 
   useEffect(() => {

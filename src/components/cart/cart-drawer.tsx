@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useCart } from "@/store/cart";
-import { formatPrice, getAanmaakProducts, Product } from "@/lib/woocommerce/client";
+import { formatPrice, Product } from "@/lib/woocommerce/client";
 import { Plus, Minus, ShoppingBag, Trash2, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -24,9 +24,10 @@ export function CartDrawer() {
   // Fetch aanmaakhoutjes product for upsell
   useEffect(() => {
     if (isOpen && !aanmaakhoutjes) {
-      getAanmaakProducts()
-        .then((products) => {
-          const product = products.find((p) => {
+      fetch("/api/products/aanmaak")
+        .then((res) => res.json())
+        .then((data) => {
+          const product = (data.products || []).find((p: Product) => {
             const slug = p.slug.toLowerCase();
             const name = p.name.toLowerCase();
             return slug.includes('aanmaakhoutje') ||
