@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import {
   createWooCommerceOrder,
+  updateWooCommerceOrderStatus,
   type WooCommerceAddress,
 } from "@/lib/woocommerce/rest-client";
 import {
@@ -135,13 +136,14 @@ export async function POST(
         : paymentMethodLabels.cod;
 
     // Create order in WooCommerce via Legacy REST API
-    // For COD: set status to "processing" so customer gets confirmation email
-    // For iDEAL: set status to "pending" until payment is received
+    // Always create as "pending" first, then update to "processing" for COD.
+    // WooCommerce only sends confirmation emails on status TRANSITIONS
+    // (pending → processing), not when an order is created directly as "processing".
     const order = await createWooCommerceOrder({
       payment_method: paymentMethod,
       payment_method_title: paymentMethodTitle,
       set_paid: false,
-      status: customer.paymentMethod === "cod" ? "processing" : "pending",
+      status: "pending",
       billing_address: billingAddress,
       shipping_address: shippingAddress,
       line_items: body.items.map((item) => ({
@@ -157,6 +159,11 @@ export async function POST(
       ],
       note: "",
     });
+
+    // For COD: immediately update to "processing" to trigger confirmation email
+    if (customer.paymentMethod === "cod") {
+      await updateWooCommerceOrderStatus(order.id, "processing");
+    }
 
     // Build response based on payment method
     // Priority: 1) NEXT_PUBLIC_APP_URL (explicit config)
