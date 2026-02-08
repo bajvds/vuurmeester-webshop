@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -8,9 +8,11 @@ import { useCart } from "@/store/cart";
 import {
   formatPrice,
   cleanProductName,
+  getPriceAsNumber,
   Product,
 } from "@/lib/woocommerce/client";
 import { calculateShipping } from "@/lib/shipping";
+import { trackBeginCheckout, trackAddShippingInfo, trackShippingCalculator } from "@/lib/analytics";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { CheckoutForm } from "@/components/checkout/checkout-form";
@@ -65,6 +67,8 @@ export default function AfrekenPage() {
   const [shippingCost, setShippingCost] = useState<number | null>(null);
   const [mounted, setMounted] = useState(false);
   const [aanmaakProducts, setAanmaakProducts] = useState<Product[]>([]);
+  const checkoutTracked = useRef(false);
+  const lastTrackedPostcode = useRef("");
 
   useEffect(() => {
     setMounted(true);
@@ -75,11 +79,35 @@ export default function AfrekenPage() {
       .catch(console.error);
   }, []);
 
+  // Track begin_checkout once when page loads with items
+  useEffect(() => {
+    if (mounted && items.length > 0 && !checkoutTracked.current) {
+      checkoutTracked.current = true;
+      trackBeginCheckout(
+        items.map((item) => ({
+          id: item.product.id,
+          name: cleanProductName(item.product.name),
+          price: getPriceAsNumber(item.product.prices.price),
+          quantity: item.quantity,
+        }))
+      );
+    }
+  }, [mounted, items]);
+
   useEffect(() => {
     if (postcode.length >= 4) {
       const volume = estimateCartVolume(items);
       const result = calculateShipping(postcode, volume);
       setShippingCost(result);
+      // Track shipping calculation once per postcode prefix
+      const prefix = postcode.substring(0, 4);
+      if (prefix !== lastTrackedPostcode.current) {
+        lastTrackedPostcode.current = prefix;
+        trackShippingCalculator({ postcode, cubicMeters: volume, shippingCost: result, source: "checkout" });
+        if (result !== null) {
+          trackAddShippingInfo({ shippingCost: result, postcode });
+        }
+      }
     } else {
       setShippingCost(null);
     }

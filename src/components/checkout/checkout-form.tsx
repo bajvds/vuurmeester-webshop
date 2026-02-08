@@ -28,6 +28,7 @@ import {
   type CheckoutFormData,
   paymentMethodLabels,
 } from "@/lib/validation/checkout";
+import { trackAddPaymentInfo } from "@/lib/analytics";
 
 interface CheckoutFormProps {
   shippingCost: number | null;
@@ -305,7 +306,10 @@ export function CheckoutForm({ shippingCost, onSuccess, onPostcodeChange }: Chec
               <FormItem>
                 <FormControl>
                   <RadioGroup
-                    onValueChange={field.onChange}
+                    onValueChange={(value) => {
+                      field.onChange(value);
+                      trackAddPaymentInfo(value);
+                    }}
                     defaultValue={field.value}
                     className="grid gap-3"
                   >

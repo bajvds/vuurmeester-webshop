@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { Product, getPriceAsNumber } from '@/lib/woocommerce/client';
+import { Product, getPriceAsNumber, cleanProductName } from '@/lib/woocommerce/client';
+import { trackAddToCart, trackRemoveFromCart } from '@/lib/analytics';
 
 export interface CartItem {
   product: Product;
@@ -32,6 +33,12 @@ export const useCart = create<CartState>()(
       isOpen: false,
 
       addItem: (product, quantity = 1) => {
+        trackAddToCart({
+          id: product.id,
+          name: cleanProductName(product.name),
+          price: getPriceAsNumber(product.prices.price),
+          quantity,
+        });
         set((state) => {
           const existingItem = state.items.find(
             (item) => item.product.id === product.id
@@ -54,6 +61,15 @@ export const useCart = create<CartState>()(
       },
 
       removeItem: (productId) => {
+        const item = get().items.find((i) => i.product.id === productId);
+        if (item) {
+          trackRemoveFromCart({
+            id: item.product.id,
+            name: cleanProductName(item.product.name),
+            price: getPriceAsNumber(item.product.prices.price),
+            quantity: item.quantity,
+          });
+        }
         set((state) => ({
           items: state.items.filter((item) => item.product.id !== productId),
         }));

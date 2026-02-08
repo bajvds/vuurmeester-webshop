@@ -1,8 +1,9 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { woocommerce, formatPrice, cleanProductName, Product } from "@/lib/woocommerce/client";
+import { woocommerce, formatPrice, cleanProductName, getPriceAsNumber, Product } from "@/lib/woocommerce/client";
 import { AddToCartButton } from "./add-to-cart-button";
+import { ProductViewTracker } from "./product-view-tracker";
 import { ProductImageGallery } from "./product-image-gallery";
 import { ProductCard } from "@/components/products/product-card";
 import { ProductReviews, ProductRatingBadge } from "@/components/products/product-reviews";
@@ -138,6 +139,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
   return (
     <div className="min-h-screen bg-white">
+      <ProductViewTracker id={product.id} name={name} price={getPriceAsNumber(product.prices.price)} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}

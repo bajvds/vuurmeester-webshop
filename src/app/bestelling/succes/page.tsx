@@ -16,17 +16,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/store/cart";
 
-// Extend window type for gtag
-declare global {
-  interface Window {
-    gtag?: (
-      command: string,
-      action: string,
-      params?: Record<string, unknown>
-    ) => void;
-  }
-}
-
 type PaymentStatus = "loading" | "success" | "failed" | "pending";
 
 function BestellingSuccesContent() {

@@ -1,11 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { ArrowLeft, Truck, MapPin, MessageCircle, Calculator, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { calculateShipping, FIXED_RATE_POSTCODES } from "@/lib/shipping";
+import { trackShippingCalculator } from "@/lib/analytics";
 
 // Prices based on actual WooCommerce rates (for 1 m³)
 const regions = [
@@ -29,10 +30,18 @@ export default function BezorgkostenClient() {
   const [postcode, setPostcode] = useState("");
   const [cubicMeters, setCubicMeters] = useState(1);
   const [result, setResult] = useState<number | null>(null);
+  const lastTrackedPostcode = useRef("");
 
   useEffect(() => {
     if (postcode.length >= 4) {
-      setResult(calculateShipping(postcode, cubicMeters));
+      const cost = calculateShipping(postcode, cubicMeters);
+      setResult(cost);
+      // Track once per postcode prefix (avoid spamming on every keystroke)
+      const prefix = postcode.substring(0, 4);
+      if (prefix !== lastTrackedPostcode.current) {
+        lastTrackedPostcode.current = prefix;
+        trackShippingCalculator({ postcode, cubicMeters, shippingCost: cost, source: "calculator_page" });
+      }
     } else {
       setResult(null);
     }

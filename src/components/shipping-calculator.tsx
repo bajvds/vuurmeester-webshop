@@ -5,6 +5,7 @@ import { Truck, Calculator } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { calculateShipping } from '@/lib/shipping';
+import { trackShippingCalculator } from '@/lib/analytics';
 
 export function ShippingCalculator() {
   const [postcode, setPostcode] = useState('');
@@ -27,10 +28,12 @@ export function ShippingCalculator() {
 
     if (cost === null) {
       setError('Postcode niet gevonden. Neem contact met ons op voor een offerte.');
+      trackShippingCalculator({ postcode: postcodeClean, cubicMeters: quantity, shippingCost: null, source: "widget" });
       return;
     }
 
     setResult(cost);
+    trackShippingCalculator({ postcode: postcodeClean, cubicMeters: quantity, shippingCost: cost, source: "widget" });
   };
 
   return (
