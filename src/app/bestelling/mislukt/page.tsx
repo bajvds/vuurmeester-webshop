@@ -72,7 +72,7 @@ function BestellingMisluktContent() {
                 <div>
                   <p className="font-medium text-stone-900">Stuur een e-mail</p>
                   <p className="text-sm text-stone-600">
-                    Stuur ons een bericht via contact@vuurmeester.shop en we
+                    Stuur ons een bericht via contact@vuurmeester-haardhout.nl en we
                     helpen je verder.
                   </p>
                 </div>

@@ -227,7 +227,7 @@ function BestellingSuccesContent() {
                       Stuur een e-mail
                     </p>
                     <p className="text-sm text-stone-600">
-                      Stuur ons een bericht via contact@vuurmeester.shop en we
+                      Stuur ons een bericht via contact@vuurmeester-haardhout.nl en we
                       helpen je verder.
                     </p>
                   </div>
@@ -301,11 +301,11 @@ function BestellingSuccesContent() {
               </h3>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <a
-                  href="mailto:contact@vuurmeester.shop"
+                  href="mailto:contact@vuurmeester-haardhout.nl"
                   className="inline-flex items-center justify-center gap-2 text-stone-600 hover:text-orange-600 transition-colors"
                 >
                   <Mail className="h-4 w-4" />
-                  contact@vuurmeester.shop
+                  contact@vuurmeester-haardhout.nl
                 </a>
                 <a
                   href="tel:+31682091984"
@@ -413,11 +413,11 @@ function BestellingSuccesContent() {
             </h3>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
-                href="mailto:contact@vuurmeester.shop"
+                href="mailto:contact@vuurmeester-haardhout.nl"
                 className="inline-flex items-center justify-center gap-2 text-stone-600 hover:text-orange-600 transition-colors"
               >
                 <Mail className="h-4 w-4" />
-                contact@vuurmeester.shop
+                contact@vuurmeester-haardhout.nl
               </a>
               <a
                 href="tel:+31682091984"

@@ -56,7 +56,7 @@ export default function PrivacybeleidPage() {
               <strong>Telefoon:</strong> 06 82 09 19 84
             </li>
             <li>
-              <strong>E-mail:</strong> contact@vuurmeester.shop
+              <strong>E-mail:</strong> contact@vuurmeester-haardhout.nl
             </li>
             <li>
               <strong>KvK-nummer:</strong> 95919082
@@ -154,8 +154,8 @@ export default function PrivacybeleidPage() {
           </ul>
           <p>
             Je kunt een verzoek indienen via{" "}
-            <a href="mailto:contact@vuurmeester.shop">
-              contact@vuurmeester.shop
+            <a href="mailto:contact@vuurmeester-haardhout.nl">
+              contact@vuurmeester-haardhout.nl
             </a>{" "}
             of via WhatsApp op 06 82 09 19 84.
           </p>
@@ -183,8 +183,8 @@ export default function PrivacybeleidPage() {
             <li>WhatsApp: 06 82 09 19 84</li>
             <li>
               E-mail:{" "}
-              <a href="mailto:contact@vuurmeester.shop">
-                contact@vuurmeester.shop
+              <a href="mailto:contact@vuurmeester-haardhout.nl">
+                contact@vuurmeester-haardhout.nl
               </a>
             </li>
           </ul>

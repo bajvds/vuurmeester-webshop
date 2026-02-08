@@ -253,7 +253,7 @@ export default function LeverenAfhalenPage() {
                       <p className="font-medium text-stone-900">Contact</p>
                       <p className="text-stone-600">06 82 09 19 84</p>
                       <p className="text-stone-600">
-                        contact@vuurmeester.shop
+                        contact@vuurmeester-haardhout.nl
                       </p>
                     </div>
                   </div>

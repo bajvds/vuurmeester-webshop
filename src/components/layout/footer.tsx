@@ -150,8 +150,8 @@ export function Footer() {
               </li>
               <li className="flex items-center gap-2">
                 <Mail className="h-4 w-4 text-orange-400" />
-                <a href="mailto:contact@vuurmeester.shop" className="hover:text-orange-400 transition-colors">
-                  contact@vuurmeester.shop
+                <a href="mailto:contact@vuurmeester-haardhout.nl" className="hover:text-orange-400 transition-colors">
+                  contact@vuurmeester-haardhout.nl
                 </a>
               </li>
               <li className="flex items-start gap-2">

@@ -116,7 +116,7 @@ export default function AlgemeneVoorwaardenPage() {
           <p>Voor vragen over deze voorwaarden kunt u contact opnemen via:</p>
           <ul>
             <li>WhatsApp: 06 82 09 19 84</li>
-            <li>E-mail: contact@vuurmeester.shop</li>
+            <li>E-mail: contact@vuurmeester-haardhout.nl</li>
           </ul>
 
           <hr />

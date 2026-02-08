@@ -80,7 +80,7 @@ export default function RootLayout({
                 "Premium haardhout voor de scherpste prijs. Ovengedroogd en halfdroog haardhout, geleverd door heel Nederland.",
               url: "https://www.vuurmeester-haardhout.nl",
               telephone: "+31682091984",
-              email: "contact@vuurmeester.shop",
+              email: "contact@vuurmeester-haardhout.nl",
               address: {
                 "@type": "PostalAddress",
                 addressLocality: "Oirschot",
