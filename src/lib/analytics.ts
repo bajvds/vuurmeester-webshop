@@ -1,9 +1,15 @@
 /**
- * GA4 Analytics helper
+ * Analytics helper — GA4 + Meta Pixel
  *
- * Centralizes all gtag event calls so tracking is consistent
+ * Centralizes all tracking event calls so tracking is consistent
  * and easy to maintain. All prices should be in euros (not cents).
  */
+
+import {
+  trackMetaViewContent,
+  trackMetaAddToCart,
+  trackMetaInitiateCheckout,
+} from "@/lib/meta-pixel";
 
 declare global {
   interface Window {
@@ -39,6 +45,7 @@ export function trackViewItem(item: {
       },
     ],
   });
+  trackMetaViewContent(item);
 }
 
 export function trackAddToCart(item: {
@@ -59,6 +66,7 @@ export function trackAddToCart(item: {
       },
     ],
   });
+  trackMetaAddToCart(item);
 }
 
 export function trackRemoveFromCart(item: {
@@ -88,6 +96,7 @@ export function trackBeginCheckout(items: {
   quantity: number;
 }[]) {
   const value = items.reduce((sum, i) => sum + i.price * i.quantity, 0);
+  const numItems = items.reduce((sum, i) => sum + i.quantity, 0);
   gtag("begin_checkout", {
     currency: "EUR",
     value,
@@ -97,6 +106,11 @@ export function trackBeginCheckout(items: {
       price: i.price,
       quantity: i.quantity,
     })),
+  });
+  trackMetaInitiateCheckout({
+    value,
+    numItems,
+    contentIds: items.map((i) => String(i.id)),
   });
 }
 

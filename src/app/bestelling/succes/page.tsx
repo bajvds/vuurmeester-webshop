@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/store/cart";
+import { trackMetaPurchase } from "@/lib/meta-pixel";
 
 type PaymentStatus = "loading" | "success" | "failed" | "pending";
 
@@ -24,6 +25,7 @@ function BestellingSuccesContent() {
   const orderId = searchParams.get("order_id");
   const orderTotal = searchParams.get("total");
   const itemCount = searchParams.get("items");
+  const metaEventId = searchParams.get("eid");
   const { clearCart } = useCart();
   const conversionTracked = useRef(false);
   const [paymentStatus, setPaymentStatus] = useState<PaymentStatus>("loading");
@@ -128,7 +130,15 @@ function BestellingSuccesContent() {
         });
       }
     }
-  }, [paymentStatus, orderId, orderTotal, itemCount]);
+
+    // Meta Pixel Purchase event (with eventID for CAPI deduplication)
+    trackMetaPurchase({
+      orderId: orderId,
+      value: value,
+      numItems: parseInt(itemCount || "1"),
+      eventId: metaEventId || undefined,
+    });
+  }, [paymentStatus, orderId, orderTotal, itemCount, metaEventId]);
 
   // Loading state
   if (paymentStatus === "loading") {

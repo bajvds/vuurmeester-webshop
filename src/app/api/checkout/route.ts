@@ -14,6 +14,7 @@ import {
   formatMollieAmount,
 } from "@/lib/mollie/client";
 import { calculateShipping } from "@/lib/shipping";
+import { sendCapiEvent } from "@/lib/meta-capi";
 
 // Cart item from frontend
 interface CartItem {
@@ -172,6 +173,9 @@ export async function POST(
     const PRODUCTION_URL = "https://www.vuurmeester-haardhout.nl";
     const appUrl = (process.env.NEXT_PUBLIC_APP_URL || PRODUCTION_URL).trim();
 
+    // Generate event ID for Meta pixel <-> CAPI deduplication
+    const metaEventId = crypto.randomUUID();
+
     if (customer.paymentMethod === "ideal") {
       // For iDEAL, create payment directly in Mollie
       // This bypasses WooCommerce payment page for seamless checkout
@@ -192,7 +196,32 @@ export async function POST(
         order_id: String(order.id),
         total: order.total,
         items: String(body.items.length),
+        eid: metaEventId,
       });
+
+      // Fire CAPI Purchase event (fire-and-forget, browser pixel deduplicates on success page)
+      const orderValue = parseFloat(order.total);
+      sendCapiEvent({
+        eventName: "Purchase",
+        eventId: metaEventId,
+        userData: {
+          email: customer.email,
+          phone: customer.phone,
+          firstName: customer.billing.firstName,
+          lastName: customer.billing.lastName,
+          postcode: customer.billing.postcode,
+          city: customer.billing.city,
+        },
+        customData: {
+          value: orderValue,
+          currency: "EUR",
+          contentIds: body.items.map((i) => String(i.productId)),
+          contentType: "product",
+          numItems: body.items.reduce((sum, i) => sum + i.quantity, 0),
+          orderId: String(order.id),
+        },
+        sourceUrl: `${appUrl}/bestelling/succes`,
+      }).catch(() => {}); // Never block checkout
 
       const molliePayment = await createMolliePayment({
         amount: {
@@ -230,7 +259,33 @@ export async function POST(
         order_id: String(order.id),
         total: order.total,
         items: String(body.items.length),
+        eid: metaEventId,
       });
+
+      // Fire CAPI Purchase event for COD (payment is confirmed immediately)
+      const orderValue = parseFloat(order.total);
+      sendCapiEvent({
+        eventName: "Purchase",
+        eventId: metaEventId,
+        userData: {
+          email: customer.email,
+          phone: customer.phone,
+          firstName: customer.billing.firstName,
+          lastName: customer.billing.lastName,
+          postcode: customer.billing.postcode,
+          city: customer.billing.city,
+        },
+        customData: {
+          value: orderValue,
+          currency: "EUR",
+          contentIds: body.items.map((i) => String(i.productId)),
+          contentType: "product",
+          numItems: body.items.reduce((sum, i) => sum + i.quantity, 0),
+          orderId: String(order.id),
+        },
+        sourceUrl: `${appUrl}/bestelling/succes`,
+      }).catch(() => {}); // Fire-and-forget, never block checkout
+
       return NextResponse.json({
         success: true,
         orderId: order.id,
