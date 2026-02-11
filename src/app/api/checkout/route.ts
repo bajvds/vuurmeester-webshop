@@ -155,7 +155,10 @@ export async function POST(
         {
           method_id: "flat_rate",
           method_title: "Bezorging",
-          total: shippingCost.toFixed(2),
+          // Shipping rates in shipping.ts are incl. 21% BTW (what the customer sees).
+          // WooCommerce adds 21% BTW on top of shipping_lines.total,
+          // so we send the ex-BTW amount to avoid double taxation.
+          total: (shippingCost / 1.21).toFixed(2),
         },
       ],
       note: "",
