@@ -90,7 +90,8 @@ export async function createWooCommerceOrder(
 ): Promise<WooCommerceOrder> {
   const url = buildApiUrl("/orders");
 
-  // Legacy API wraps order data in an "order" object
+  // Legacy API v3 wraps order data in an "order" object
+  // Payment info must be in "payment_details" (not top-level payment_method)
   const response = await fetch(url, {
     method: "POST",
     headers: {
@@ -98,9 +99,11 @@ export async function createWooCommerceOrder(
     },
     body: JSON.stringify({
       order: {
-        payment_method: order.payment_method,
-        payment_method_title: order.payment_method_title,
-        set_paid: order.set_paid ?? false,
+        payment_details: {
+          method_id: order.payment_method,
+          method_title: order.payment_method_title,
+          paid: order.set_paid ?? false,
+        },
         status: order.status || "pending",
         billing_address: order.billing_address,
         shipping_address: order.shipping_address,
