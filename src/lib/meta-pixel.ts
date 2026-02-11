@@ -65,6 +65,7 @@ export function trackMetaPurchase(params: {
   orderId: string;
   value: number;
   numItems: number;
+  contentIds?: string[];
   eventId?: string;
 }) {
   fbq(
@@ -75,6 +76,8 @@ export function trackMetaPurchase(params: {
       currency: "EUR",
       num_items: params.numItems,
       content_type: "product",
+      content_ids: params.contentIds || [params.orderId],
+      order_id: params.orderId,
     },
     { eventID: params.eventId }
   );

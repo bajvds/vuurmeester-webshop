@@ -26,6 +26,7 @@ function BestellingSuccesContent() {
   const orderTotal = searchParams.get("total");
   const itemCount = searchParams.get("items");
   const metaEventId = searchParams.get("eid");
+  const productIds = searchParams.get("pids");
   const { clearCart } = useCart();
   const conversionTracked = useRef(false);
   const [paymentStatus, setPaymentStatus] = useState<PaymentStatus>("loading");
@@ -136,9 +137,10 @@ function BestellingSuccesContent() {
       orderId: orderId,
       value: value,
       numItems: parseInt(itemCount || "1"),
+      contentIds: productIds ? productIds.split(",") : undefined,
       eventId: metaEventId || undefined,
     });
-  }, [paymentStatus, orderId, orderTotal, itemCount, metaEventId]);
+  }, [paymentStatus, orderId, orderTotal, itemCount, productIds, metaEventId]);
 
   // Loading state
   if (paymentStatus === "loading") {

@@ -191,12 +191,14 @@ export async function POST(
         : `${appUrl}/api/webhooks/mollie`;
 
       // Build success URL with conversion tracking data
+      const productIds = body.items.map((i) => String(i.productId)).join(",");
       const successParams = new URLSearchParams({
         order_key: order.order_key,
         order_id: String(order.id),
         total: order.total,
         items: String(body.items.length),
         eid: metaEventId,
+        pids: productIds,
       });
 
       // Fire CAPI Purchase event (fire-and-forget, browser pixel deduplicates on success page)
@@ -221,7 +223,7 @@ export async function POST(
           orderId: String(order.id),
         },
         sourceUrl: `${appUrl}/bestelling/succes`,
-      }).catch(() => {}); // Never block checkout
+      }).catch((err) => console.error("Meta CAPI failed (iDEAL):", err));
 
       const molliePayment = await createMolliePayment({
         amount: {
@@ -254,12 +256,14 @@ export async function POST(
       });
     } else {
       // For COD, redirect directly to success page with conversion data
+      const productIds = body.items.map((i) => String(i.productId)).join(",");
       const successParams = new URLSearchParams({
         order_key: order.order_key,
         order_id: String(order.id),
         total: order.total,
         items: String(body.items.length),
         eid: metaEventId,
+        pids: productIds,
       });
 
       // Fire CAPI Purchase event for COD (payment is confirmed immediately)
@@ -284,7 +288,7 @@ export async function POST(
           orderId: String(order.id),
         },
         sourceUrl: `${appUrl}/bestelling/succes`,
-      }).catch(() => {}); // Fire-and-forget, never block checkout
+      }).catch((err) => console.error("Meta CAPI failed (COD):", err));
 
       return NextResponse.json({
         success: true,
