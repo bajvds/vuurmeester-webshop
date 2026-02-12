@@ -6,6 +6,9 @@ export const metadata: Metadata = {
   title: "Veelgestelde vragen",
   description:
     "Antwoorden op de meest gestelde vragen over haardhout, bezorging, droogtijd en meer.",
+  alternates: {
+    canonical: "https://www.vuurmeester-haardhout.nl/veelgestelde-vragen",
+  },
   openGraph: {
     images: [
       {

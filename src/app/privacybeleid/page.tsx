@@ -6,6 +6,9 @@ export const metadata: Metadata = {
   title: "Privacybeleid",
   description:
     "Privacybeleid van De Vuurmeester Haardhout. Hoe wij omgaan met je persoonsgegevens.",
+  alternates: {
+    canonical: "https://www.vuurmeester-haardhout.nl/privacybeleid",
+  },
   openGraph: {
     images: [
       {

@@ -1,3 +1,4 @@
+import { Metadata } from 'next';
 import { Truck, Shield, Phone, Clock, MessageCircle } from 'lucide-react';
 import { getHaardhoutProducts, getAanmaakProducts, cleanProductName, formatPrice } from '@/lib/woocommerce/client';
 import { ProductCard } from '@/components/products/product-card';
@@ -5,6 +6,12 @@ import { SortableProductGrid } from '@/components/products/sortable-product-grid
 import { ShippingCalculator } from '@/components/shipping-calculator';
 import { HomeReviews } from '@/components/home/home-reviews';
 import Image from 'next/image';
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: 'https://www.vuurmeester-haardhout.nl',
+  },
+};
 
 export default async function Home() {
   // Fetch products server-side

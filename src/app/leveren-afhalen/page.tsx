@@ -16,6 +16,9 @@ export const metadata: Metadata = {
   title: "Leveren & Afhalen",
   description:
     "Informatie over bezorging en afhalen van haardhout bij De Vuurmeester in Middelbeers, Noord-Brabant.",
+  alternates: {
+    canonical: "https://www.vuurmeester-haardhout.nl/leveren-afhalen",
+  },
 };
 
 export default function LeverenAfhalenPage() {

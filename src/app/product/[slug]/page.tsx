@@ -52,6 +52,9 @@ export async function generateMetadata({
     return {
       title: name,
       description: product.short_description.replace(/<[^>]*>/g, "").slice(0, 155),
+      alternates: {
+        canonical: `https://www.vuurmeester-haardhout.nl/product/${slug}`,
+      },
       openGraph: {
         title: `${name} | De Vuurmeester`,
         description: product.short_description.replace(/<[^>]*>/g, ""),
@@ -107,8 +110,39 @@ export default async function ProductPage({ params }: ProductPageProps) {
       url: `https://www.vuurmeester-haardhout.nl/product/${slug}`,
       price: (parseInt(product.prices.price) / 100).toFixed(2),
       priceCurrency: "EUR",
+      priceValidUntil: `${new Date().getFullYear()}-12-31`,
       availability: "https://schema.org/InStock",
       seller: { "@type": "Organization", name: "De Vuurmeester" },
+      hasMerchantReturnPolicy: {
+        "@type": "MerchantReturnPolicy",
+        applicableCountry: "NL",
+        returnPolicyCategory: "https://schema.org/MerchantReturnFiniteReturnWindow",
+        merchantReturnDays: 14,
+        returnMethod: "https://schema.org/ReturnByMail",
+        returnFees: "https://schema.org/ReturnShippingFees",
+      },
+      shippingDetails: {
+        "@type": "OfferShippingDetails",
+        shippingDestination: {
+          "@type": "DefinedRegion",
+          addressCountry: "NL",
+        },
+        deliveryTime: {
+          "@type": "ShippingDeliveryTime",
+          handlingTime: {
+            "@type": "QuantitativeValue",
+            minValue: 1,
+            maxValue: 5,
+            unitCode: "DAY",
+          },
+          transitTime: {
+            "@type": "QuantitativeValue",
+            minValue: 0,
+            maxValue: 1,
+            unitCode: "DAY",
+          },
+        },
+      },
     },
     aggregateRating: {
       "@type": "AggregateRating",

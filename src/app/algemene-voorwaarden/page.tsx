@@ -5,6 +5,9 @@ import { ArrowLeft } from "lucide-react";
 export const metadata: Metadata = {
   title: "Algemene Voorwaarden",
   description: "Algemene voorwaarden van De Vuurmeester voor de verkoop en levering van haardhout.",
+  alternates: {
+    canonical: "https://www.vuurmeester-haardhout.nl/algemene-voorwaarden",
+  },
   openGraph: {
     images: [
       {
