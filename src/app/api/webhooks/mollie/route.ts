@@ -76,7 +76,7 @@ async function triggerAbandonedCartWorkflow(
 
   // Fetch full order details for the email
   const order = await getWooCommerceOrder(orderId);
-  const fullOrder = order as Record<string, unknown>;
+  const fullOrder = order as unknown as Record<string, unknown>;
   const billing = fullOrder.billing_address as Record<string, string> | undefined;
   const lineItems = fullOrder.line_items as Array<Record<string, unknown>> | undefined;
 

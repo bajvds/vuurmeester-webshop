@@ -39,7 +39,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 
     // Extract the fields we need for the retry page
     // The WooCommerce Legacy API returns more fields than our TypeScript type
-    const fullOrder = order as Record<string, unknown>;
+    const fullOrder = order as unknown as Record<string, unknown>;
     const billing = fullOrder.billing_address as Record<string, string> | undefined;
     const lineItems = fullOrder.line_items as Array<Record<string, unknown>> | undefined;
 
