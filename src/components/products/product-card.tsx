@@ -70,10 +70,16 @@ export function ProductCard({ product, showDeliveryBadge = false }: ProductCardP
   const price = formatPrice(product.prices.price);
   const regularPrice = formatPrice(product.prices.regular_price);
   const isOnSale = product.on_sale;
-  const image = product.images[0];
+  const isOpOp = product.name.toLowerCase().includes('op=op');
+
+  // OP=OP: filter bigbag, prefer c129fa91 as card image
+  const image = isOpOp
+    ? (product.images.find(img => img.src.includes('c129fa91')) || product.images.find(img => !img.src.includes('bigbag')) || product.images[0])
+    : product.images[0];
+
   const woodType = detectWoodType(product.name);
   const badge = woodType ? woodTypeBadge[woodType] : null;
-  const hasDeliveryOverlay = woodType !== null;
+  const hasDeliveryOverlay = !isOpOp && woodType !== null;
   const isNetzakken = product.name.toLowerCase().includes('netzak');
 
   // Mobile: auto-rotate between product photo and delivery photo every 5s
