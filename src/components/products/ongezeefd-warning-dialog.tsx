@@ -28,7 +28,7 @@ export function OngezeefWarningDialog({ open, onConfirm, onCancel }: OngezeefWar
           <DialogTitle className="text-center">Let op: ongezeefd hout</DialogTitle>
           <DialogDescription className="text-center text-stone-600">
             Dit is een OP=OP product. Het hout is <strong className="text-stone-900">niet gezeefd</strong>,
-            waardoor er schors, houtsplinters en ander afval tussen kan zitten.
+            waardoor er kleine blokjes (2 a 3cm), houtsplinters en ander afval tussen kan zitten.
             De prijs is hierop aangepast.
           </DialogDescription>
         </DialogHeader>
