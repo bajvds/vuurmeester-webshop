@@ -160,10 +160,10 @@ class WooCommerceStoreClient {
     return products.filter(p => {
       const name = p.name.toLowerCase();
       const isHaardhout = name.includes('haardhout') ||
-                          name.includes('ovengedroogd') ||
+                          name.includes('ovendroog') ||
                           name.includes('halfdroog') ||
                           name.includes('berkenhout') ||
-                          name.includes('beukenhout') ||
+                          name.includes('beuk') ||
                           name.includes('kozijnhout') ||
                           name.includes('kozijn') ||
                           name.includes('ofyr');

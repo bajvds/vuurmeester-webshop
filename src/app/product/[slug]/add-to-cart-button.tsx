@@ -5,6 +5,7 @@ import { ShoppingCart, Plus, Minus, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/store/cart";
 import { Product, cleanProductName } from "@/lib/woocommerce/client";
+import { OngezeefWarningDialog, isOngezeefProduct } from "@/components/products/ongezeefd-warning-dialog";
 
 interface AddToCartButtonProps {
   product: Product;
@@ -22,8 +23,10 @@ export function AddToCartButton({
   const [quantity, setQuantity] = useState(1);
   const [added, setAdded] = useState(false);
   const [showStickyBar, setShowStickyBar] = useState(false);
+  const [showWarning, setShowWarning] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const { addItem, openCart } = useCart();
+  const needsWarning = isOngezeefProduct(product.name);
 
   // Intersection Observer — show sticky bar when button scrolls out of view
   useEffect(() => {
@@ -49,7 +52,7 @@ export function AddToCartButton({
     };
   }, [showStickyBar]);
 
-  const handleAddToCart = () => {
+  const doAddToCart = () => {
     addItem(
       {
         ...product,
@@ -63,6 +66,19 @@ export function AddToCartButton({
     setTimeout(() => {
       setAdded(false);
     }, 2000);
+  };
+
+  const handleAddToCart = () => {
+    if (needsWarning) {
+      setShowWarning(true);
+      return;
+    }
+    doAddToCart();
+  };
+
+  const handleConfirmAdd = () => {
+    setShowWarning(false);
+    doAddToCart();
   };
 
   const decrementQuantity = () => {
@@ -167,6 +183,15 @@ export function AddToCartButton({
             </Button>
           </div>
         </div>
+      )}
+
+      {/* Ongezeefd warning dialog */}
+      {needsWarning && (
+        <OngezeefWarningDialog
+          open={showWarning}
+          onConfirm={handleConfirmAdd}
+          onCancel={() => setShowWarning(false)}
+        />
       )}
     </>
   );

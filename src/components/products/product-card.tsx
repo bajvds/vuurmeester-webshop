@@ -9,6 +9,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Product, formatPrice, cleanProductName } from '@/lib/woocommerce/client';
 import { useCart } from '@/store/cart';
+import { OngezeefWarningDialog, isOngezeefProduct } from '@/components/products/ongezeefd-warning-dialog';
 
 // Wood type detection based on product name
 type WoodType = 'droog' | 'vers' | 'beuk' | 'kozijn' | null;
@@ -62,6 +63,8 @@ interface ProductCardProps {
 export function ProductCard({ product, showDeliveryBadge = false }: ProductCardProps) {
   const { addItem, openCart } = useCart();
   const [showDelivery, setShowDelivery] = useState(false);
+  const [showWarning, setShowWarning] = useState(false);
+  const needsWarning = isOngezeefProduct(product.name);
 
   const name = cleanProductName(product.name);
   const price = formatPrice(product.prices.price);
@@ -97,6 +100,19 @@ export function ProductCard({ product, showDeliveryBadge = false }: ProductCardP
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
+    if (needsWarning) {
+      setShowWarning(true);
+      return;
+    }
+    addItem({
+      ...product,
+      name: cleanProductName(product.name),
+    });
+    openCart();
+  };
+
+  const handleConfirmAdd = () => {
+    setShowWarning(false);
     addItem({
       ...product,
       name: cleanProductName(product.name),
@@ -216,6 +232,15 @@ export function ProductCard({ product, showDeliveryBadge = false }: ProductCardP
           </Button>
         </CardContent>
       </Card>
+
+      {/* Ongezeefd warning dialog */}
+      {needsWarning && (
+        <OngezeefWarningDialog
+          open={showWarning}
+          onConfirm={handleConfirmAdd}
+          onCancel={() => setShowWarning(false)}
+        />
+      )}
     </Link>
   );
 }
