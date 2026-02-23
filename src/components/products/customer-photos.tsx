@@ -8,6 +8,7 @@ import { getPhotosByProductName, CustomerPhoto } from '@/lib/customer-photos';
 interface CustomerPhotosProps {
   productSlug: string;
   productName: string;
+  overridePhotos?: CustomerPhoto[];
 }
 
 // Lightbox voor foto's
@@ -157,13 +158,13 @@ function PhotoCard({
   );
 }
 
-export function CustomerPhotos({ productSlug, productName }: CustomerPhotosProps) {
+export function CustomerPhotos({ productSlug, productName, overridePhotos }: CustomerPhotosProps) {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
   const [erroredIndices, setErroredIndices] = useState<Set<number>>(new Set());
 
-  // Gebruik productnaam voor nauwkeurigere categorie-detectie
-  const allPhotos = getPhotosByProductName(productName, 12);
+  // Gebruik override foto's (bijv. WooCommerce productfoto's voor OP=OP) of categorie-detectie
+  const allPhotos = overridePhotos ?? getPhotosByProductName(productName, 12);
   const visiblePhotos = allPhotos.filter((_, i) => !erroredIndices.has(i));
 
   if (visiblePhotos.length === 0) {

@@ -83,7 +83,19 @@ export default async function ProductPage({ params }: ProductPageProps) {
   const regularPrice = formatPrice(product.prices.regular_price);
   const isOnSale = product.on_sale;
   const lowerName = product.name.toLowerCase();
-  const isHaardhout = ['ovengedroogd', 'oven gedroogd', 'halfdroog', 'half droog', 'vers', 'beuk', 'ofyr', 'kozijn', 'kleine blok'].some(k => lowerName.includes(k));
+  const isOpOp = lowerName.includes('op=op');
+  const isHaardhout = !isOpOp && ['ovengedroogd', 'oven gedroogd', 'halfdroog', 'half droog', 'vers', 'beuk', 'ofyr', 'kozijn', 'kleine blok'].some(k => lowerName.includes(k));
+
+  // OP=OP products: filter bigbag, put preferred image first
+  let displayImages = product.images;
+  if (isOpOp) {
+    displayImages = product.images.filter(img => !img.src.includes('bigbag'));
+    const preferredIdx = displayImages.findIndex(img => img.src.includes('c129fa91'));
+    if (preferredIdx > 0) {
+      const [preferred] = displayImages.splice(preferredIdx, 1);
+      displayImages.unshift(preferred);
+    }
+  }
 
   // Get related products (same category)
   let relatedProducts: Product[] = [];
@@ -200,7 +212,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
         <div className="grid lg:grid-cols-2 gap-6 lg:gap-12">
           {/* Image Gallery */}
           <ProductImageGallery
-            images={product.images}
+            images={displayImages}
             name={name}
             isOnSale={isOnSale}
             isHaardhout={isHaardhout}
@@ -330,7 +342,14 @@ export default async function ProductPage({ params }: ProductPageProps) {
         </div>
 
         {/* Customer Photos Section */}
-        <CustomerPhotos productSlug={slug} productName={product.name} />
+        <CustomerPhotos
+          productSlug={slug}
+          productName={product.name}
+          overridePhotos={isOpOp ? displayImages.map(img => ({
+            src: img.src,
+            alt: img.alt || name,
+          })) : undefined}
+        />
 
         {/* Reviews Section */}
         <div id="reviews" className="scroll-mt-20">
