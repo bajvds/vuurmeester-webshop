@@ -75,6 +75,16 @@ export function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/gids/beste-haardhout-2026" className="hover:text-orange-400 transition-colors">
+                  Haardhout Gids 2026
+                </Link>
+              </li>
+              <li>
+                <Link href="/brand-facts" className="hover:text-orange-400 transition-colors">
+                  Brand Facts
+                </Link>
+              </li>
+              <li>
                 <Link href="/algemene-voorwaarden" className="hover:text-orange-400 transition-colors">
                   Algemene voorwaarden
                 </Link>

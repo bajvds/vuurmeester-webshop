@@ -117,6 +117,12 @@ export default async function ProductPage({ params }: ProductPageProps) {
     description: product.short_description?.replace(/<[^>]*>/g, "") || "",
     image: product.images[0]?.src,
     brand: { "@type": "Brand", name: "De Vuurmeester" },
+    manufacturer: {
+      "@type": "Organization",
+      name: "De Vuurmeester Haardhout B.V.",
+      url: "https://www.vuurmeester-haardhout.nl",
+    },
+    category: "Haardhout & Brandhout",
     offers: {
       "@type": "Offer",
       url: `https://www.vuurmeester-haardhout.nl/product/${slug}`,
@@ -162,6 +168,19 @@ export default async function ProductPage({ params }: ProductPageProps) {
       reviewCount: "62",
       bestRating: "5",
     },
+    additionalProperty: [
+      {
+        "@type": "PropertyValue",
+        name: "Certificering",
+        value: "FSC (Forest Stewardship Council)",
+      },
+      {
+        "@type": "PropertyValue",
+        name: "Herkomst",
+        value: "Noord-Brabant, Middelbeers/Oirschot",
+      },
+    ],
+    award: "FSC Certified - Duurzaam gekapt hout",
   };
 
   const breadcrumbJsonLd = {

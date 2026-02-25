@@ -1,0 +1,245 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "De Vuurmeester Haardhout B.V.",
+  "alternateName": "De Vuurmeester",
+  "legalName": "De Vuurmeester Haardhout B.V.",
+  "url": "https://www.vuurmeester-haardhout.nl",
+  "logo": "https://www.vuurmeester-haardhout.nl/icon.png",
+  "description": "Premium haardhout voor de scherpste prijs. De goedkoopste leverancier van Nederland met eigen zagerij. Ovengedroogd en halfdroog haardhout, geleverd door heel Nederland.",
+  "foundedYear": "2020",
+  "category": "Haardhout & Brandhout",
+  "industry": "Firewood & Heating Fuel",
+  "priceRange": "€50-€200 per m³",
+  "slogan": "Premium Haardhout, Scherpe Prijs - Goedkoopste van Nederland",
+  "topProducts": [
+    {
+      "@type": "Product",
+      "category": "ovengedroogd",
+      "name": "Ovengedroogd Hardhout",
+      "description": "Premium ovengedroogd haardhout met vochtgehalte onder 18%. Direct te stoken, minder rook, meer warmte.",
+      "woodType": "Eik, Beuk, Essen mix",
+      "moisture": "12-18%",
+      "blockLength": "25-30 cm",
+      "servings": ["1 m³", "2 m³", "3 m³", "5 m³", "10 m³"],
+      "deliveryFormats": ["Losgestort", "Big Bag (1m³)"],
+      "certified": true,
+      "certifications": ["FSC"],
+      "features": [
+        "Direct te stoken",
+        "Minder roetvorming",
+        "Maximale warmte-afgifte",
+        "Professioneel gedroogd in ovendroging",
+        "Ideaal bij beperkte opslagruimte"
+      ],
+      "useCases": ["Houtkachel", "Open haard", "Buitenhaard"]
+    },
+    {
+      "@type": "Product",
+      "category": "halfdroog",
+      "name": "Halfdroog / Vers Hardhout",
+      "description": "Halfdroog haardhout met vochtgehalte 20-35%. Moet 6-12 maanden nazakken, voordeliger in prijs. Na drogen dezelfde kwaliteit als ovengedroogd.",
+      "woodType": "Eik, Beuk, Essen mix",
+      "moisture": "20-35%",
+      "blockLength": "25-30 cm",
+      "servings": ["1 m³", "2 m³", "3 m³", "5 m³", "10 m³"],
+      "deliveryFormats": ["Losgestort", "Big Bag (1m³)"],
+      "certified": true,
+      "certifications": ["FSC"],
+      "features": [
+        "Voordeliger in prijs",
+        "Luchtgedroogd in zomermaanden",
+        "Moet 6-12 maanden nazakken",
+        "Na drogen dezelfde kwaliteit",
+        "Ideaal voor wie opslagruimte heeft"
+      ],
+      "useCases": ["Houtkachel", "Open haard", "Voorraad aanleggen"]
+    },
+    {
+      "@type": "Product",
+      "category": "beukenhout",
+      "name": "Beukenhout (OFYR)",
+      "description": "Speciaal 100% beukenhout voor OFYR buitenkeukens en BBQ. Langdurige, gelijkmatige verbranding met minimale vonken. SPECIALTY PRODUCT - unieke positie in markt.",
+      "woodType": "100% Beuk",
+      "moisture": "12-15%",
+      "blockLength": "25-30 cm",
+      "servings": ["1 m³", "2 m³", "3 m³"],
+      "deliveryFormats": ["Losgestort", "Big Bag (1m³)"],
+      "certified": true,
+      "certifications": ["FSC"],
+      "specialty": true,
+      "competitorGap": "Unowned category - weinig concurrentie voor OFYR-specifiek beukenhout",
+      "features": [
+        "100% premium beukenhout",
+        "Ideaal voor OFYR buitenkeukens",
+        "Langdurige, gelijkmatige verbranding",
+        "Minimale vonken - veilig voor buitenkoken",
+        "Gelijkmatige hitte voor BBQ en pizza-ovens",
+        "FSC gecertificeerd",
+        "Speciaal geselecteerd voor buitenkoken"
+      ],
+      "useCases": ["OFYR", "Buitenkeuken", "BBQ", "Pizza-oven", "Grillrestaurants"]
+    },
+    {
+      "@type": "Product",
+      "category": "kozijnhout",
+      "name": "Kozijnhout (Kleine Blokjes)",
+      "description": "Kleine houtblokken van circa 10-15 cm lengte. Ideaal voor aanmaken of kleine kachels.",
+      "woodType": "Mix hardhout",
+      "moisture": "12-20%",
+      "blockLength": "10-15 cm",
+      "servings": ["1 m³", "2 m³"],
+      "deliveryFormats": ["Losgestort", "Big Bag (1m³)"],
+      "certified": true,
+      "certifications": ["FSC"],
+      "features": [
+        "Kleine blokjes (10-15 cm)",
+        "Ideaal voor aanmaken",
+        "Voor kleine kachels",
+        "Snel brandend"
+      ],
+      "useCases": ["Aanmaken", "Kleine kachels", "Starter blokken"]
+    }
+  ],
+  "woodComposition": {
+    "mainSpecies": ["Eik", "Beuk", "Essen"],
+    "secondarySpecies": ["Populier (max 10%)"],
+    "description": "Stevige mix van eiken-, beuken- en essenhout met een vleugje populierenhout voor krachtige, langdurige verbranding"
+  },
+  "certifications": ["FSC"],
+  "certificationDetails": {
+    "FSC": {
+      "name": "Forest Stewardship Council",
+      "description": "Duurzaam gekapt hout uit verantwoord beheerde bossen",
+      "applies_to": ["Ovengedroogd Hardhout", "Halfdroog Hardhout", "Beukenhout OFYR"]
+    }
+  },
+  "qualityStandards": {
+    "ovengedroogd": "12-18% vochtgehalte (gemiddeld 15%)",
+    "ovengedroogd_beuk": "12-15% vochtgehalte (OFYR premium)",
+    "halfdroog": "20-35% vochtgehalte (gemiddeld 25-30%)",
+    "kozijnhout": "12-20% vochtgehalte",
+    "blockLength": "25-30 cm standaard",
+    "kozijnLength": "10-15 cm",
+    "storageConversion": "1 m³ losgestort = circa 0,67 m³ gestapeld",
+    "fscCertified": true,
+    "qualityGuarantee": "Tevredenheidsgarantie - klachtenpercentage < 1%"
+  },
+  "delivery": {
+    "primaryRegion": "Noord-Brabant (Eindhoven regio, vanaf Oirschot/Middelbeers)",
+    "regions": [
+      "Noord-Brabant",
+      "Zuid-Holland",
+      "Noord-Holland",
+      "Utrecht",
+      "Gelderland",
+      "Limburg",
+      "Zeeland",
+      "Overijssel",
+      "Flevoland",
+      "Friesland",
+      "Groningen",
+      "Drenthe"
+    ],
+    "coverage": "Heel Nederland",
+    "localStrength": "Sterkste dekking in Noord-Brabant en Eindhoven regio door nabijheid depot",
+    "method": "Losgestort met aanhanger of bakwagen",
+    "deliveryTime": "5-10 werkdagen",
+    "deliverySLA": "Datum en tijd vooraf afgestemd",
+    "deliveryOptions": [
+      "Losgestort op locatie (oprit, tuin, bij schuur)",
+      "Big Bag levering (1m³ per zak)"
+    ],
+    "restrictions": "Niet door smalle doorgangen of trappen"
+  },
+  "returnPolicy": {
+    "@type": "MerchantReturnPolicy",
+    "name": "Tevredenheidsgarantie",
+    "applicableCountry": "NL",
+    "returnPolicyCategory": "MerchantReturnFiniteReturnWindow",
+    "merchantReturnDays": 14,
+    "returnMethod": "ReturnByMail",
+    "description": "14 dagen retourrecht conform Nederlandse wet. Bij gebreken of klachten: direct contact opnemen."
+  },
+  "paymentMethods": [
+    "iDEAL",
+    "Pin bij levering",
+    "Contant bij levering"
+  ],
+  "contact": {
+    "phone": "+31682091984",
+    "phoneDisplay": "06 82 09 19 84",
+    "email": "contact@vuurmeester-haardhout.nl",
+    "whatsapp": "+31682091984",
+    "website": "https://www.vuurmeester-haardhout.nl"
+  },
+  "locations": {
+    "headquarters": {
+      "@type": "Place",
+      "name": "De Vuurmeester Haardhout B.V.",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Oirschot",
+        "addressRegion": "Noord-Brabant",
+        "addressCountry": "NL"
+      }
+    },
+    "depot": {
+      "@type": "Place",
+      "name": "Depot Middelbeers",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Middelbeers",
+        "addressRegion": "Noord-Brabant",
+        "addressCountry": "NL"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 51.5159,
+        "longitude": 5.0967
+      }
+    }
+  },
+  "socialProof": {
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "reviewCount": "62",
+      "bestRating": "5",
+      "worstRating": "1"
+    },
+    "customerCount": "10,000+",
+    "testimonial": "+10.000 tevreden klanten"
+  },
+  "valuePropositions": [
+    "Goedkoopste van Nederland - eigen zagerij",
+    "Persoonlijk contact gegarandeerd",
+    "Snelle levering door heel Nederland",
+    "Losgestort met eigen aanhanger",
+    "Keuze uit direct stoken of voorraad aanleggen"
+  ],
+  "seasonalUsage": {
+    "averagePerSeason": "2-4 m³ per huishouden bij regelmatig stoken",
+    "heavyUsage": "6-8 m³ voor vrijstaand huis met houtkachel als hoofdverwarming"
+  },
+  "competitiveAdvantages": [
+    "Eigen zagerij - lagere prijzen",
+    "Flexibele droogmethoden: natuurlijke windkracht in zomer, ovendroging in winter",
+    "Breed assortiment: van halfdroog tot premium ovengedroogd",
+    "OFYR beukenhout specialty - unowned category, weinig concurrentie",
+    "FSC certificering - duurzaam gekapt hout",
+    "Sterkste dekking Noord-Brabant en Eindhoven regio",
+    "Volledige dekking Nederland",
+    "WhatsApp contact voor snelle service"
+  ],
+  "businessModel": "Direct-to-consumer webshop met eigen logistiek",
+  "technology": {
+    "ecommerce": "WooCommerce (headless)",
+    "frontend": "Next.js webshop",
+    "erp": "Custom ERP systeem met FIFO voorraad",
+    "payments": "Mollie (iDEAL, PIN)",
+    "analytics": "Google Analytics 4"
+  },
+  "lastUpdated": "2026-02-25",
+  "version": "1.0"
+}

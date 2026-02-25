@@ -77,29 +77,127 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "LocalBusiness",
-              name: "De Vuurmeester",
+              name: "De Vuurmeester Haardhout B.V.",
+              alternateName: "De Vuurmeester",
               description:
-                "Premium haardhout voor de scherpste prijs. Ovengedroogd en halfdroog haardhout, geleverd door heel Nederland.",
+                "Premium haardhout voor de scherpste prijs. Specialist in ovengedroogd en halfdroog haardhout, OFYR beukenhout. FSC gecertificeerd. Gevestigd in Oirschot/Middelbeers, Noord-Brabant. Levering door heel Nederland, sterkste dekking Eindhoven regio.",
               url: "https://www.vuurmeester-haardhout.nl",
+              logo: "https://www.vuurmeester-haardhout.nl/icon.png",
+              image: "https://www.vuurmeester-haardhout.nl/images/hero-header.jpg",
               telephone: "+31682091984",
               email: "contact@vuurmeester-haardhout.nl",
+              priceRange: "€€",
               address: {
                 "@type": "PostalAddress",
                 addressLocality: "Oirschot",
+                postalCode: "5688",
                 addressRegion: "Noord-Brabant",
                 addressCountry: "NL",
               },
-              areaServed: {
-                "@type": "Country",
-                name: "Netherlands",
+              geo: {
+                "@type": "GeoCoordinates",
+                latitude: 51.5159,
+                longitude: 5.0967,
               },
+              areaServed: [
+                {
+                  "@type": "GeoCircle",
+                  geoMidpoint: {
+                    "@type": "GeoCoordinates",
+                    latitude: 51.5159,
+                    longitude: 5.0967,
+                  },
+                  geoRadius: "150000",
+                },
+                { "@type": "AdministrativeArea", name: "Noord-Brabant" },
+                { "@type": "City", name: "Eindhoven" },
+                { "@type": "City", name: "Tilburg" },
+                { "@type": "City", name: "Den Bosch" },
+              ],
+              openingHours: "Mo-Su 08:00-20:00",
+              paymentAccepted: "iDEAL, Cash, Debit Card",
+              currenciesAccepted: "EUR",
               aggregateRating: {
                 "@type": "AggregateRating",
                 ratingValue: "4.9",
                 reviewCount: "62",
                 bestRating: "5",
+                worstRating: "1",
               },
-              priceRange: "€€",
+              sameAs: [
+                "https://www.facebook.com/vuurmeesterhaardhout",
+                "https://www.instagram.com/vuurmeesterhaardhout",
+              ],
+              makesOffer: [
+                {
+                  "@type": "Offer",
+                  itemOffered: {
+                    "@type": "Product",
+                    name: "Ovengedroogd Hardhout",
+                    description:
+                      "Premium ovengedroogd haardhout (12-18% vocht), FSC gecertificeerd",
+                  },
+                  areaServed: { "@type": "Country", name: "Netherlands" },
+                },
+                {
+                  "@type": "Offer",
+                  itemOffered: {
+                    "@type": "Product",
+                    name: "OFYR Beukenhout",
+                    description:
+                      "100% beukenhout voor OFYR buitenkeukens (12-15% vocht), FSC gecertificeerd",
+                  },
+                  areaServed: { "@type": "Country", name: "Netherlands" },
+                },
+                {
+                  "@type": "Offer",
+                  itemOffered: {
+                    "@type": "Product",
+                    name: "Halfdroog Hardhout",
+                    description:
+                      "Halfdroog haardhout (20-35% vocht), voordeliger alternatief, FSC gecertificeerd",
+                  },
+                  areaServed: { "@type": "Country", name: "Netherlands" },
+                },
+              ],
+              additionalProperty: [
+                {
+                  "@type": "PropertyValue",
+                  name: "Certificering",
+                  value: "FSC (Forest Stewardship Council)",
+                },
+                {
+                  "@type": "PropertyValue",
+                  name: "Primaire serviceregio",
+                  value: "Noord-Brabant, Eindhoven regio",
+                },
+                {
+                  "@type": "PropertyValue",
+                  name: "Depot locatie",
+                  value: "Middelbeers/Oirschot",
+                },
+                {
+                  "@type": "PropertyValue",
+                  name: "Specialty",
+                  value: "OFYR beukenhout - unieke positie in markt",
+                },
+                {
+                  "@type": "PropertyValue",
+                  name: "Eigen zagerij",
+                  value: "Ja - lagere prijzen",
+                },
+              ],
+              slogan:
+                "Premium Haardhout, Scherpe Prijs - Goedkoopste van Nederland",
+              foundingDate: "2020",
+              knowsAbout: [
+                "Haardhout",
+                "Brandhout",
+                "Ovengedroogd hout",
+                "OFYR beukenhout",
+                "Houtkachels",
+                "FSC certificering",
+              ],
             }),
           }}
         />

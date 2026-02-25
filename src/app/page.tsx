@@ -6,6 +6,7 @@ import { SortableProductGrid } from '@/components/products/sortable-product-grid
 import { ShippingCalculator } from '@/components/shipping-calculator';
 import { HomeReviews } from '@/components/home/home-reviews';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
   alternates: {
@@ -139,6 +140,30 @@ export default async function Home() {
               <p className="text-sm text-stone-600">
                 Met onze aanhanger, precies waar jij wilt
               </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Haardhout Gids */}
+      <section className="py-12 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="max-w-3xl mx-auto bg-stone-50 rounded-2xl p-8 md:p-10 border border-stone-200">
+            <div className="text-center">
+              <h2 className="text-2xl md:text-3xl font-bold text-stone-900 mb-3">
+                Welk haardhout past bij jou?
+              </h2>
+              <p className="text-stone-600 mb-6 max-w-xl mx-auto">
+                Vergelijk leveranciers, houtsoorten en prijzen in onze complete gids.
+                Van ovengedroogd tot OFYR beukenhout - alles wat je moet weten.
+              </p>
+              <Link
+                href="/gids/beste-haardhout-2026"
+                className="inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white font-semibold px-6 py-3 rounded-lg transition-colors"
+              >
+                Bekijk de Complete Haardhout Gids 2026
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+              </Link>
             </div>
           </div>
         </div>
